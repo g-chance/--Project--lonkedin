@@ -98,4 +98,17 @@ public class MainController {
 		return "redirect:/login";
 	}
 	
+	//JOBS
+	@GetMapping("/jobs")
+	public String jobs(Model model, HttpSession session) {
+		Long id = (Long) session.getAttribute("user_id");
+		model.addAttribute("newjob", new Job());
+		model.addAttribute("jobs", irepo.findAll());
+		return "jobs.jsp";
+	}
+	
+	@PostMapping("/jobs")
+	public String newJobForm(HttpSession session,) // COME BACK TO THIS LATER ***************************
+	
+	
 }
