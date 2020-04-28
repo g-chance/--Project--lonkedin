@@ -11,9 +11,16 @@
 .nav {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
+	padding: 5px;
+	background-color: green;
 }
 
-.main {
+.dash {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.jobForms {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 }
@@ -27,7 +34,10 @@
 }
 
 @media only screen and (max-width:600px) {
-	.main {
+	.dash {
+		grid-template-columns: 1fr;
+	}
+	.jobForms {
 		grid-template-columns: 1fr;
 	}
 }

@@ -21,7 +21,7 @@
 			
 		</div>
 			
-		<div class="main">
+		<div class="dash">
 			
 		<!-- COLUMN 1 -->
 			<div class="col1">
