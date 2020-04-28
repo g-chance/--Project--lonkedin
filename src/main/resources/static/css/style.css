@@ -1,0 +1,33 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.wrapper {
+	width: 1200px;
+	margin: auto;
+}
+
+.nav {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.main {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+
+
+@media only screen and (max-width:1200px) {
+	.wrapper {
+		width: 100%
+	}
+}
+
+@media only screen and (max-width:600px) {
+	.main {
+		grid-template-columns: 1fr;
+	}
+}

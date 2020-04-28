@@ -12,8 +12,32 @@
 </head>
 
 <body>
-	<h1>Welcome, <c:out value="${user.email}" /></h1>
-	<a href="/logout">Logout</a>
+	<div class="wrapper">
+	
+		<div class="nav">
+		
+			<h1>Welcome, <c:out value="${user.email}" /></h1>
+			<a href="/logout">Logout</a>
+			
+		</div>
+			
+		<div class="main">
+			
+		<!-- COLUMN 1 -->
+			<div class="col1">
+			<!-- Each div you add below here will be a row in column 1 -->
+				
+			</div>
+			
+		<!-- COLUMN 2 -->		
+			<div class="col2">
+			<!-- Each div you add below here will be a row in column 2 -->
+				
+			</div>
+			
+		</div>
+		
+	</div>
 </body>
 
 </html>

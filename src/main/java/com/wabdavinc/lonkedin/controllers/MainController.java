@@ -21,6 +21,7 @@ import com.wabdavinc.lonkedin.services.UserServ;
 import com.wabdavinc.lonkedin.validator.UserValidator;
 
 @Controller
+//@RequestMapping("/lonkedin")
 public class MainController {
 
 	private final UserRepo urepo;
@@ -52,7 +53,7 @@ public class MainController {
 	@GetMapping("/dashboard")
 	public String dashboard(HttpSession session, Model model) {
 		if(session.getAttribute("user_id") == null) {
-			return "redirect:/login";
+			return "redirect:/lonkedin/registration";
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		model.addAttribute("user",urepo.findById(id).orElse(null));
