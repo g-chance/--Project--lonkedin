@@ -1,13 +1,25 @@
 
+/* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */
+
+/* NORMALIZATION */
+
 * {
 	margin: 0;
 	padding: 0;
 }
 
+/* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */
+
+/* WRAPPER */
+
 .wrapper {
 	width: 1200px;
 	margin: auto;
 }
+
+/* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */
+
+/* NAV */
 
 .nav {
 	display: grid;
@@ -20,30 +32,55 @@
 		align-self: center;
 		justify-self: right;
 	}
-	
+
+/* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */
+
+/* DASH */
+
 .dash {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	column-gap: 20px;
 	padding: 20px;
 }
-.dash .col1 {
-	display: grid;
-	row-gap: 20px;
-}
-.dash .col2 {
-	display: grid;
-	row-gap: 20px;
-}
+	.dash .col1 {
+		display: grid;
+		row-gap: 20px;
+	}
+	.dash .col2 {
+		display: grid;
+		row-gap: 20px;
+	}
+
+/* JOBS */
 
 .jobForms {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 }
 
+/* CONNECTIONS */
+
+.connections {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 20px;
+	padding: 20px;
+}
+	.connectionscol1 {
+		display: grid;
+		row-gap: 20px;
+	}
+	.connectionscol2 {
+		display: grid;
+		row-gap: 20px;
+	}
 
 
 
+
+
+/* MEDIA QUERIES */
 
 @media only screen and (max-width:1200px) {
 	.wrapper {

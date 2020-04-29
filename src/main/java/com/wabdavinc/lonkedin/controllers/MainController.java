@@ -23,7 +23,6 @@ import com.wabdavinc.lonkedin.services.UserServ;
 import com.wabdavinc.lonkedin.validator.UserValidator;
 
 @Controller
-//@RequestMapping("/lonkedin")
 public class MainController {
 
 	private final UserRepo urepo;
@@ -52,14 +51,21 @@ public class MainController {
 		this.srepo = srepo;
 	}
 	
-//	Create Character
+	
+//	GREG
+//	============================================================== Create Character
+	
 	@GetMapping("newcharacter")
 	public String newCharacter(Model model, HttpSession session) {
 		model.addAttribute("user", urepo.findById((Long)session.getAttribute("user_id")).orElse(null));
 		return "newCharacter.jsp";
 	}
 	
-//	Dashboard
+	
+//	**************************************************************
+	
+//	VERNNON AND CHRISTINE
+//	============================================================== Dashboard
 	
 	@GetMapping("/dashboard")
 	public String dashboard(HttpSession session, Model model) {
@@ -71,50 +77,20 @@ public class MainController {
 		return "dashboard.jsp";
 	}
 	
-
 	
-//	Login and Registration==============================================================
-
+//	**************************************************************
 	
-	@GetMapping("/registration")
-	public String registerUser(Model model) {
-		model.addAttribute("user", new User());
-		return "register.jsp";
-	}
-	@PostMapping("/registration")
-	public String doRegisterUser(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
-		uvalid.validate(user, result);
-		if(result.hasErrors()) {
-			return "register.jsp";
-		}
-		userv.registerUser(user);
-		session.setAttribute("user_id", user.getId());
-		return "redirect:/newcharacter";
-	}
-	@GetMapping("/login")
-	public String login() {
-		return "login.jsp";
-	}
-	@PostMapping("/login")
-	public String doLogin(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpSession session) {
-		if(!userv.authenticateUser(email, password)) {
-			model.addAttribute("error", "Incorrect email / password combination");
-			return "login.jsp";	
-		}
-		User user = urepo.findByEmail(email);
-		session.setAttribute("user_id", user.getId());
-		if(user.getName() == null) {
-			return "redirect:/newcharacter";
-		}
-		return "redirect:/dashboard";
-	}
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		return "redirect:/login";
-	}
+//	VERNON
+//	============================================================== Connections
 	
-	//JOBS=======================================================================================
+//	@GetMapping("/connections")
+	
+	
+//	**************************************************************
+	
+//	JON AND ASHLEY
+//	============================================================== JOBS
+	
 	@GetMapping("/jobs")
 	public String newJobForm(Model model, HttpSession session) {
 		Long id = (Long) session.getAttribute("user_id");
@@ -154,7 +130,50 @@ public class MainController {
 			}
 		} 
 	
-//	=======================================================================================================
+	
+//	**************************************************************
+	
+//	NO TOUCHY
+//	============================================================== Login and Registration
+
+	@GetMapping("/registration")
+	public String registerUser(Model model) {
+		model.addAttribute("user", new User());
+		return "register.jsp";
+	}
+	@PostMapping("/registration")
+	public String doRegisterUser(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
+		uvalid.validate(user, result);
+		if(result.hasErrors()) {
+			return "register.jsp";
+		}
+		userv.registerUser(user);
+		session.setAttribute("user_id", user.getId());
+		return "redirect:/newcharacter";
+	}
+	@GetMapping("/login")
+	public String login() {
+		return "login.jsp";
+	}
+	@PostMapping("/login")
+	public String doLogin(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpSession session) {
+		if(!userv.authenticateUser(email, password)) {
+			model.addAttribute("error", "Incorrect email / password combination");
+			return "login.jsp";	
+		}
+		User user = urepo.findByEmail(email);
+		session.setAttribute("user_id", user.getId());
+		if(user.getName() == null) {
+			return "redirect:/newcharacter";
+		}
+		return "redirect:/dashboard";
+	}
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/login";
+	}
 	
 	
+//	************************************************************** END	
 }
