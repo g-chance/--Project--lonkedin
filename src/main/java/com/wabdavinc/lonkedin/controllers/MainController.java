@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.wabdavinc.lonkedin.models.Game;
+import com.wabdavinc.lonkedin.models.Job;
 import com.wabdavinc.lonkedin.models.User;
 import com.wabdavinc.lonkedin.repositories.GameRepo;
 import com.wabdavinc.lonkedin.repositories.JobRepo;
@@ -61,7 +63,7 @@ public class MainController {
 	}
 	
 	
-//	Login and Registration
+//	Login and Registration==============================================================
 	
 	@GetMapping("/registration")
 	public String registerUser(Model model) {
@@ -97,5 +99,48 @@ public class MainController {
 		session.invalidate();
 		return "redirect:/login";
 	}
+	
+	//JOBS=======================================================================================
+	@GetMapping("/jobs")
+	public String newJobForm(Model model, HttpSession session) {
+		Long id = (Long) session.getAttribute("user_id");
+		model.addAttribute("job", new Job());
+		model.addAttribute("game", new Game());
+		model.addAttribute("jobs", jrepo.findAll());
+		return "jobs.jsp";
+	}
+	//we need a way to check if company already exists in the database if the user is trying to create one 
+	@PostMapping("/jobs")
+	public String doJobs(Model model, HttpSession session, @Valid @ModelAttribute("job")Job job,BindingResult result) {
+		if(result.hasErrors()) {
+			model.addAttribute("jobs", jrepo.findAll());
+            return "jobs.jsp";
+          
+        }else{
+
+			Long userid=(Long) session.getAttribute("userid");
+			User u =urepo.findById(userid).orElse(null);
+			jrepo.save(job);
+			return "redirect:/jobs";
+			}
+		} 
+	
+	@PostMapping("/game")
+	public String doGames(Model model, HttpSession session, @Valid @ModelAttribute("game")Game game,BindingResult result) {
+		if(result.hasErrors()) {
+			model.addAttribute("game", grepo.findAll());
+            return "jobs.jsp";
+          
+        }else{
+
+			Long userid=(Long) session.getAttribute("userid");
+			User u =urepo.findById(userid).orElse(null);
+			grepo.save(game);
+			return "redirect:/jobs";
+			}
+		} 
+	
+//	=======================================================================================================
+	
 	
 }
