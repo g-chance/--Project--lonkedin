@@ -16,20 +16,22 @@
 	<div class="wrapper">
 	
 		<div class="nav">
-		
 			<div class="nav1">
 				<h1>Welcome, <c:out value="${user.email}" /></h1>/h1>
 			</div>
 			<div class="nav2">
 				<a href="/logout">Logout</a>
 			</div>
-			
 		</div>
 			
+<!-- JOB FORMS -->
+			
 		<div class="jobForms">
-        <!-- jobForms COLUMN 1 **ADDING COMPANIES** -->
-       <!-- //NEED TO FIND A WAY SO THAT ONLY THOSE WITHOUT CURRENT COMPANIES CAN MAKE COMPANIES --> 
+		
+<!-- jobForms COLUMN 1 **ADDING COMPANIES** -->
+       	<!-- //NEED TO FIND A WAY SO THAT ONLY THOSE WITHOUT CURRENT COMPANIES CAN MAKE COMPANIES --> 
         <!-- VERIFY IF SOMEONE HAS ALREADY CREATED THE SAME COMPANY -->
+        
             <div class="col1 companyForm">
                 <h2>ADD A COMPANY</h2>
 				<p><form:errors path="game.*"/></p>
@@ -45,8 +47,10 @@
 				    <input type="submit" value="Create a Company!"/>
 				</form:form>
 			</div>
-      <!-- jobForms COLUMN 2 **ADDING JOBS** -->
-       <!-- NEED TO FIND A WAY SO THAT ONLY COMPANY CEOS/SUPERVISORS CAN MAKE JOBS FOR THE SPECIFIC COMPANY -->
+			
+<!-- jobForms COLUMN 2 **ADDING JOBS** -->
+       	<!-- NEED TO FIND A WAY SO THAT ONLY COMPANY CEOS/SUPERVISORS CAN MAKE JOBS FOR THE SPECIFIC COMPANY -->
+       	
             <div class="col2 jobForm">
                 <h2>ADD A JOB</h2>
 				<p><form:errors path="job.*"/></p>
@@ -75,6 +79,7 @@
 			</div>
 		</div>
 		
+<!-- JOB LISTINGS -->
 
         <div class="jobListings">
          <!-- For loops for displaying current available jobs -->
@@ -96,9 +101,7 @@
                     </c:forEach>
                 </tbody>
             </table>
-
 		</div>
-		
 	</div>
 </body>
 
