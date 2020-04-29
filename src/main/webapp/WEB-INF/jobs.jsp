@@ -17,8 +17,12 @@
 	
 		<div class="nav">
 		
-			<h1>Welcome, <c:out value="${user.email}" /></h1>
-			<a href="/logout">Logout</a>
+			<div class="nav1">
+				<h1>Welcome, <c:out value="${user.email}" /></h1>/h1>
+			</div>
+			<div class="nav2">
+				<a href="/logout">Logout</a>
+			</div>
 			
 		</div>
 			
@@ -51,6 +55,7 @@
 		</div>
 		
 		<div class="jobListings">
+		<!-- Each div you add below here will be a row -->
 		
 		</div>
 		

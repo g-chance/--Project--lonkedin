@@ -12,7 +12,12 @@
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	padding: 5px;
+	margin: 0 0 10px 0;
 	background-color: green;
+}
+.nav2 {
+	align-self: center;
+	justify-self: right;
 }
 
 .dash {

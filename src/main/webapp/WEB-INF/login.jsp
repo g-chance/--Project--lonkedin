@@ -15,9 +15,13 @@
 	<div class="wrapper">
 	
 		<div class="nav">
-		
-			<h1>Login!</h1>
-			<a href="/logout">Logout</a>
+
+			<div class="nav1">
+				<h1>Login!</h1>
+			</div>
+			<div class="nav2">
+				<a href="/logout">Logout</a>
+			</div>
 			
 		</div>	
 	    
