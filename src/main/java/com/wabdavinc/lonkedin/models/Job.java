@@ -50,6 +50,14 @@ public class Job {
 		
 	}
 	
+	public Boolean getMorality() {
+		return morality;
+	}
+
+	public void setMorality(Boolean morality) {
+		this.morality = morality;
+	}
+
 	public Long getId() {
 		return id;
 	}
