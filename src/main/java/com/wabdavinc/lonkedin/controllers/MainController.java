@@ -52,6 +52,15 @@ public class MainController {
 		this.srepo = srepo;
 	}
 	
+//	Create Character
+	@GetMapping("newcharacter")
+	public String newCharacter(Model model, HttpSession session) {
+		model.addAttribute("user", urepo.findById((Long)session.getAttribute("user_id")).orElse(null));
+		return "newCharacter.jsp";
+	}
+	
+//	Dashboard
+	
 	@GetMapping("/dashboard")
 	public String dashboard(HttpSession session, Model model) {
 		if(session.getAttribute("user_id") == null) {
@@ -62,8 +71,10 @@ public class MainController {
 		return "dashboard.jsp";
 	}
 	
+
 	
 //	Login and Registration==============================================================
+
 	
 	@GetMapping("/registration")
 	public String registerUser(Model model) {
@@ -78,7 +89,7 @@ public class MainController {
 		}
 		userv.registerUser(user);
 		session.setAttribute("user_id", user.getId());
-		return "redirect:/dashboard";
+		return "redirect:/newcharacter";
 	}
 	@GetMapping("/login")
 	public String login() {
@@ -92,6 +103,9 @@ public class MainController {
 		}
 		User user = urepo.findByEmail(email);
 		session.setAttribute("user_id", user.getId());
+		if(user.getName() == null) {
+			return "redirect:/newcharacter";
+		}
 		return "redirect:/dashboard";
 	}
 	@GetMapping("logout")

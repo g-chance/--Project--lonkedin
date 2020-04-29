@@ -17,17 +17,17 @@
 	
 		<div class="nav">
 		
-			<h1>Register!</h1>
-			<a href="/logout">Logout</a>
+			<div class="nav1">
+				<h1>Register!</h1>
+			</div>
+			<div class="nav2">
+				<a href="/logout">Logout</a>
+			</div>
 			
 		</div>	    
 	    
 	    <p><form:errors path="user.*"/></p>
 	    <form:form method="POST" action="/registration" modelAttribute="user">
-	        <p>
-	            <form:label path="name">Name:</form:label>
-	            <form:input type="text" path="name"/>
-	        </p>
 	        <p>
 	            <form:label path="email">Email:</form:label>
 	            <form:input type="email" path="email"/>

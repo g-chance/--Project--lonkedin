@@ -17,8 +17,12 @@
 	
 		<div class="nav">
 		
-			<h1>Welcome, <c:out value="${user.email}" /></h1>
-			<a href="/logout">Logout</a>
+			<div class="nav1">
+				<h1>Welcome, <c:out value="${user.email}" /></h1>/h1>
+			</div>
+			<div class="nav2">
+				<a href="/logout">Logout</a>
+			</div>
 			
 		</div>
 			
@@ -71,6 +75,7 @@
 			</div>
 		</div>
 		
+
         <div class="jobListings">
          <!-- For loops for displaying current available jobs -->
             <table>
@@ -91,7 +96,7 @@
                     </c:forEach>
                 </tbody>
             </table>
-		
+
 		</div>
 		
 	</div>
