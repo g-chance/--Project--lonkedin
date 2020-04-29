@@ -13,31 +13,39 @@
 </head>
 <body>
 
-    <h1>Register!</h1>
-    
-    <p><form:errors path="user.*"/></p>
-    
-    <form:form method="POST" action="/registration" modelAttribute="user">
-        <p>
-            <form:label path="name">Name:</form:label>
-            <form:input type="text" path="name"/>
-        </p>
-        <p>
-            <form:label path="email">Email:</form:label>
-            <form:input type="email" path="email"/>
-        </p>
-        <p>
-            <form:label path="password">Password:</form:label>
-            <form:password path="password"/>
-        </p>
-        <p>
-            <form:label path="confirmPassword">Confirm Password:</form:label>
-            <form:password path="confirmPassword"/>
-        </p>
-        <input type="submit" value="Register!"/>
-    </form:form>
-    
-    <p>Already have an account? <a href="/login">Login</a></p>
+	<div class="wrapper">
+	
+		<div class="nav">
+		
+			<div class="nav1">
+				<h1>Register!</h1>
+			</div>
+			<div class="nav2">
+				<a href="/logout">Logout</a>
+			</div>
+			
+		</div>	    
+	    
+	    <p><form:errors path="user.*"/></p>
+	    <form:form method="POST" action="/registration" modelAttribute="user">
+	        <p>
+	            <form:label path="email">Email:</form:label>
+	            <form:input type="email" path="email"/>
+	        </p>
+	        <p>
+	            <form:label path="password">Password:</form:label>
+	            <form:password path="password"/>
+	        </p>
+	        <p>
+	            <form:label path="confirmPassword">Confirm Password:</form:label>
+	            <form:password path="confirmPassword"/>
+	        </p>
+	        <input type="submit" value="Register!"/>
+	    </form:form>
+	    
+	    <p>Already have an account? <a href="/login">Login</a></p>
+	    
+    </div>
     
 </body>
 </html>

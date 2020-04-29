@@ -11,9 +11,21 @@
 .nav {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
+	padding: 5px;
+	margin: 0 0 10px 0;
+	background-color: green;
+}
+.nav2 {
+	align-self: center;
+	justify-self: right;
 }
 
-.main {
+.dash {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.jobForms {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 }
@@ -79,7 +91,10 @@
 }
 
 @media only screen and (max-width:600px) {
-	.main {
+	.dash {
+		grid-template-columns: 1fr;
+	}
+	.jobForms {
 		grid-template-columns: 1fr;
 	}
 }
