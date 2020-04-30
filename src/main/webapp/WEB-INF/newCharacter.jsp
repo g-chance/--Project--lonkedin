@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>New Character</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<script type="text/javascript" src="/js/app.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -21,6 +21,10 @@
 		}
 		randList += random+19;
 		console.log(random)
+		
+		//image randomization 
+		let randomImg = Math.floor((Math.random()*350)+19);
+		console.log(randomImg)
 		
 		const proxyurl = "https://cors-anywhere.herokuapp.com/";
 		const url = "https://api-v3.igdb.com/characters";
@@ -45,6 +49,7 @@
 				console.error(err);
 			});
 		
+		
 		const url2 = "https://api-v3.igdb.com/character_mug_shots";
 		console.log(proxyurl+url2)
 		axios({
@@ -54,12 +59,12 @@
 				'Accept': 'application/json',
 				'user-key': "fad35d151de40e5ff0d5b772bc15b3ef"
 			},
-			"data": "fields url; where id = ("+randList+"); limit 10;"
+			"data": "fields image_id; where image_id!=(null); limit 374;"
 			})
 			.then(response => {
 				console.log(response.data);
-				for(let i=0;i<response.data.length;i++) {
-					images += '<img src='+response.data[i].url+' alt="">'
+				for(let i=randomImg;i<randomImg+19;i++) {
+					images += '<img src= https://images.igdb.com/igdb/image/upload/t_thumb/'+response.data[i].image_id+'.jpg alt="character mug shot">'
 				}
 				document.getElementById("images").innerHTML = images;
 			})
