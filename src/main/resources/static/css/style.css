@@ -21,53 +21,117 @@
 
 /* NAV */
 
+.navwrapper {
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	right: 0;
+	background-color: #284929;
+}
+
 .nav {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
+	width: 1200px;
 	padding: 10px;
-	margin: 0 0 10px 0;
-	background-color: #00b138;
+	margin: auto;
+	color: white;
 }
-	.nav2 {
-		align-self: center;
-		justify-self: right;
-	}
+.nav a {
+	text-decoration: none;
+	color: white;
+}
+.nav .logo {
+	width: fit-content;
+	padding: 5px;
+	font-size: 20px;
+/* 	border: 2px solid white; */
+	
+}
+.nav .logo span {
+	font-weight: bolder;
+	margin: 0 0 0 2px;
+	padding: 0 2px;
+	background-color: white;
+	border-radius: 5%;
+	color: #284929;
+}
+.nav2 {
+	align-self: center;
+	justify-self: right;
+}
+
+.navSpacer {
+	height: 50px;
+}
 
 /* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */
 
-/* REGISTRATION */
+/* LOGIN */
 
-.registration {
+.log .header {
+	margin: 100px 0 40px 0;
+}
+
+/* REGISTRATION AND LOGIN */
+
+.regLog {
 	display: grid;
 	justify-items: center;
 }
-.registration .welcome {
+.regLog .welcome {
 	margin: 100px 0 0 0;
 }
-.registration .form {
+.regLog .error {
+	text-align: center;
+	color: red;
+}
+.regLog .form {
 	display: grid;
 	justify-items: center;
 }
-.registration .blurb {
+.regLog .blurb {
 	width: 900px;
 	margin: 40px 0 40px 0;
 	font-size: 18px;
 	text-align: center;
 	color: #666666;
 }
-.registration .input {
+.regLog .input {
 	width: 370px;
 	margin: 10px 0 0 0;
 	padding: 5px;
 	border-radius: 0%;
 	font-size: 15px;
 }
-.registration .submit {
+.regLog .submit {
 	background-color: #00b138;
 	color: white;
 }
-.registration .already {
+.regLog .switch {
 	margin: 10px 0 0 0;
+}
+
+/* NEW CHARACTER */
+
+.newChar .header {
+	margin: 100px 0 40px 0;
+}
+.newChar .picture {
+	margin: 40px 0 0 0;
+	width: 700px;
+	font-size: 18px;
+	font-weight: bolder;
+	text-align: center;
+}
+.newChar #images {
+	width: 700px;
+	margin: 10px 0 40px 0;
+}
+.newChar #images * {
+	margin: 2px;
+	padding: 2px;
+	border: 1px solid black;
 }
 
 /* DASH */

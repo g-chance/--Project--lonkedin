@@ -55,12 +55,12 @@
                 <h2>ADD A JOB</h2>
 				<p><form:errors path="job.*"/></p>
 				<form:form action="/jobs" method="post" modelAttribute="job">
-					<c:if test="${usersgame!=null}"> 
+<%-- 					<c:if test="${usersgame!=null}"> 
 					<p>
 					<form:label path="game">Game: </form:label>
 					<form:input value="${usersgame}" path="game" disabled="true"/>
 					</p>
-					</c:if>
+					</c:if> --%>
 				    <p>
 				        <form:label path="title">Title: </form:label>
 				        <form:input path="title"/>

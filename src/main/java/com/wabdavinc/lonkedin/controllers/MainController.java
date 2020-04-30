@@ -71,6 +71,7 @@ public class MainController {
 		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
 		u.setName(user.getName());
 		u.setUniverse(user.getUniverse());
+		u.setPicture(user.getPicture());
 		urepo.save(u);
 		return("redirect:/dashboard");
 	}
@@ -203,14 +204,14 @@ public class MainController {
 			return "jobs.jsp";
           
         }else{
-        	Long userid=(Long) session.getAttribute("userid");
+        	Long userid=(Long) session.getAttribute("user_id");
 			User u =urepo.findById(userid).orElse(null);
-        	Game g = grepo.findById(u.getGame().getId()).orElse(null);
+//        	Game g = grepo.findById(u.getGame().getId()).orElse(null);
         	Job j = jrepo.save(job);       	
         	
-        	g.getJobs().add(j);
-        	
-			grepo.save(g);
+//        	g.getJobs().add(j);
+//        	
+//			grepo.save(g);
 
 			return "redirect:/jobs";
 			}

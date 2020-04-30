@@ -14,32 +14,35 @@
 	
 	<div class="wrapper">
 	
-		<div class="nav">
-
-			<div class="nav1">
-				<h1>Login!</h1>
+		<div class="navwrapper">
+			<div class="nav">
+				<div class="nav1">
+					<p class="logo">Lonked<span>in</span></p>
+				</div>
+				<div class="nav2">
+					<a href="/logout">Logout</a>
+				</div>
 			</div>
-			<div class="nav2">
-				<a href="/logout">Logout</a>
-			</div>
-			
-		</div>	
+		</div>
 		
-		<div class="login">
-			<p><c:out value="${error}" /></p>
-			<form method="post" action="/login">
+		<div class="navSpacer"></div>
+		
+		<div class="regLog log">
+			<h1 class="header">Login</h1>
+			<p class="error"><c:out value="${error}" /></p>
+			<form class="form" method="post" action="/login">
+<!-- 				<p>
+					<label for="email">Email</label> -->
+					<input class="input" type="text" id="email" name="email" placeholder="Email"/>
+<!-- 				</p>
 				<p>
-					<label for="email">Email</label>
-					<input type="text" id="email" name="email"/>
-				</p>
-				<p>
-					<label for="password">Password</label>
-					<input type="password" id="password" name="password"/>
-				</p>
-				<input type="submit" value="Login!"/>
+					<label for="password">Password</label> -->
+					<input class="input" type="password" id="password" name="password" placeholder="Password"/>
+<!-- 				</p> -->
+				<input class="input submit" type="submit" value="Login!"/>
 			</form>
 			
-			<p>Don't have an account? <a href="/registration">Register</a></p>
+			<p class="switch">Don't have an account? <a href="/registration">Register</a></p>
 		</div>
 		
     </div>
