@@ -1,5 +1,8 @@
 package com.wabdavinc.lonkedin.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.wabdavinc.lonkedin.models.Game;
+import com.wabdavinc.lonkedin.models.Job;
 import com.wabdavinc.lonkedin.models.User;
 import com.wabdavinc.lonkedin.repositories.GameRepo;
 import com.wabdavinc.lonkedin.repositories.JobRepo;
@@ -21,7 +26,6 @@ import com.wabdavinc.lonkedin.services.UserServ;
 import com.wabdavinc.lonkedin.validator.UserValidator;
 
 @Controller
-//@RequestMapping("/lonkedin")
 public class MainController {
 
 	private final UserRepo urepo;
@@ -50,6 +54,35 @@ public class MainController {
 		this.srepo = srepo;
 	}
 	
+	
+//	GREG
+//	============================================================== Create Character
+	
+	@GetMapping("/newcharacter")
+	public String newCharacter(Model model, HttpSession session) {
+		model.addAttribute("user", urepo.findById((Long)session.getAttribute("user_id")).orElse(null));
+		return "newCharacter.jsp";
+	}
+	
+	@PostMapping("/newcharacter")
+	public String doNewCharacter(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
+		uvalid.validate(user, result);
+		if(result.hasErrors()) {
+			return "newCharacter.jsp";
+		}
+		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+		u.setName(user.getName());
+		u.setUniverse(user.getUniverse());
+		urepo.save(u);
+		return("redirect:/dashboard");
+	}
+	
+	
+//	**************************************************************
+	
+//	VERNNON AND CHRISTINE
+//	============================================================== Dashboard
+	
 	@GetMapping("/dashboard")
 	public String dashboard(HttpSession session, Model model) {
 		if(session.getAttribute("user_id") == null) {
@@ -61,8 +94,93 @@ public class MainController {
 	}
 	
 	
-//	Login and Registration
+//	**************************************************************
 	
+//	VERNON
+//	============================================================== Connections
+	
+//	@GetMapping("/connections")
+	
+	
+//	**************************************************************
+	
+//	JON AND ASHLEY
+//	============================================================== JOBS
+	
+	@GetMapping("/jobs")
+	public String newJobForm(Model model, HttpSession session) {
+		Long id = (Long) session.getAttribute("user_id");
+		User user= urepo.findById(id).orElse(null);
+		
+		model.addAttribute("job", new Job());
+		model.addAttribute("game", new Game());
+		model.addAttribute("jobs", jrepo.findAll());
+		if(user.getGame()!= null) {
+			model.addAttribute("usersgame", user.getGame());
+		}
+		
+		return "jobs.jsp";
+	}
+	
+	
+	
+	
+	
+	//we need a way to check if company already exists in the database if the user is trying to create one 
+	@PostMapping("/jobs")
+	public String doJobs(Model model, HttpSession session, @Valid @ModelAttribute("job")Job job,BindingResult result) {
+		if(result.hasErrors()) {
+			model.addAttribute("game", new Game());
+			model.addAttribute("jobs", jrepo.findAll());
+			return "jobs.jsp";
+          
+        }else{
+        	Long userid=(Long) session.getAttribute("userid");
+			User u =urepo.findById(userid).orElse(null);
+        	Game g = grepo.findById(u.getGame().getId()).orElse(null);
+        	Job j = jrepo.save(job);       	
+        	
+        	g.getJobs().add(j);
+        	
+			grepo.save(g);
+
+			return "redirect:/jobs";
+			}
+		} 
+	
+	@PostMapping("/game")
+	public String doGames(Model model, HttpSession session, @Valid @ModelAttribute("game")Game game,BindingResult result) {
+		if(result.hasErrors()) {
+			System.out.println(game.getId());
+			model.addAttribute("job", new Job());
+			model.addAttribute("jobs", jrepo.findAll());
+            return "jobs.jsp";
+          
+        }else{
+
+//        	setGame
+//        	saveuser
+        	
+		
+		
+			System.out.println(game.getName());
+			System.out.println(game.getId());
+			System.out.println(game.getDescription());
+			grepo.save(game);
+			// u.setGame(game);
+			// urepo.save(u);
+//			set id here?
+
+			return "redirect:/jobs";
+			}
+		} 
+	
+	
+//	**************************************************************
+	
+//	NO TOUCHY
+//	============================================================== Login and Registration
+
 	@GetMapping("/registration")
 	public String registerUser(Model model) {
 		model.addAttribute("user", new User());
@@ -72,11 +190,12 @@ public class MainController {
 	public String doRegisterUser(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
 		uvalid.validate(user, result);
 		if(result.hasErrors()) {
+			System.out.println(user.getId());
 			return "register.jsp";
 		}
 		userv.registerUser(user);
 		session.setAttribute("user_id", user.getId());
-		return "redirect:/dashboard";
+		return "redirect:/newcharacter";
 	}
 	@GetMapping("/login")
 	public String login() {
@@ -90,12 +209,17 @@ public class MainController {
 		}
 		User user = urepo.findByEmail(email);
 		session.setAttribute("user_id", user.getId());
+		if(user.getName() == null) {
+			return "redirect:/newcharacter";
+		}
 		return "redirect:/dashboard";
 	}
-	@GetMapping("logout")
+	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/login";
 	}
 	
+	
+//	************************************************************** END	
 }
