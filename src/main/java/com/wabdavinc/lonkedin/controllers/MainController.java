@@ -58,10 +58,23 @@ public class MainController {
 //	GREG
 //	============================================================== Create Character
 	
-	@GetMapping("newcharacter")
+	@GetMapping("/newcharacter")
 	public String newCharacter(Model model, HttpSession session) {
 		model.addAttribute("user", urepo.findById((Long)session.getAttribute("user_id")).orElse(null));
 		return "newCharacter.jsp";
+	}
+	
+	@PostMapping("/newcharacter")
+	public String doNewCharacter(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
+		uvalid.validate(user, result);
+		if(result.hasErrors()) {
+			return "newCharacter.jsp";
+		}
+		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+		u.setName(user.getName());
+		u.setUniverse(user.getUniverse());
+		urepo.save(u);
+		return("redirect:/dashboard");
 	}
 	
 	
@@ -177,6 +190,7 @@ public class MainController {
 	public String doRegisterUser(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
 		uvalid.validate(user, result);
 		if(result.hasErrors()) {
+			System.out.println(user.getId());
 			return "register.jsp";
 		}
 		userv.registerUser(user);
