@@ -59,12 +59,20 @@ public class User {
 		)
 	private List<Skill> skills;
 
-	@OneToMany(mappedBy = "character", fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name="friends",
+			joinColumns = @JoinColumn(name = "friend_id"),
+			inverseJoinColumns = @JoinColumn(name="other_friend_id"))
 	private List<User> friends;
-	@OneToMany(mappedBy = "character", fetch = FetchType.LAZY)
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name="enemies",
+			joinColumns = @JoinColumn(name = "enemy_id"),
+			inverseJoinColumns = @JoinColumn(name="other_enemy_id"))
 	private List<User> enemies;
-	@ManyToOne(fetch = FetchType.LAZY)
-	private User character;
+	
 	
 	@Column(updatable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -180,13 +188,6 @@ public class User {
 		this.enemies = enemies;
 	}
 
-	public User getCharacter() {
-		return character;
-	}
-
-	public void setCharacter(User character) {
-		this.character = character;
-	}
 
 	public Date getCreatedAt() {
 		return createdAt;

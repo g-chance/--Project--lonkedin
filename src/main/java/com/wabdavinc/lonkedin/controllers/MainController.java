@@ -1,8 +1,5 @@
 package com.wabdavinc.lonkedin.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -11,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -99,8 +97,78 @@ public class MainController {
 //	VERNON
 //	============================================================== Connections
 	
-//	@GetMapping("/connections")
+	@GetMapping("/connections/{user_id}")
+	public String connections(@PathVariable("user_id") Long uId,  HttpSession session, Model model){
+		Long id = (Long) session.getAttribute("user_id");
+		User loggedIn = urepo.findById(id).orElse(null);
+		loggedIn.getFriends().sort((u1,u2)->u1.getEmail().compareTo(u2.getEmail()));
+		model.addAttribute("user",loggedIn);
+		return "connections.jsp";
+	}
+//
+	@GetMapping("/friend/{user_id}")
+	public String addFriend(@PathVariable("user_id")Long fId, HttpSession session) {
+		Long id = (Long) session.getAttribute("user_id");
+		User loggedIn = urepo.findById(id).orElse(null);
+//		Two lines above give us the user id and the User object
+		User friend = urepo.findById(fId).orElse(null);
+		if(loggedIn.getFriends().contains(friend)== false && loggedIn.getEnemies().contains(friend)== false ) {
+			loggedIn.getFriends().add(friend);
+			urepo.save(loggedIn);
+			friend.getFriends().add(loggedIn);
+			urepo.save(friend);
+		}
+		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
+		return "redirect:/connections/" + id;
+	}
 	
+	@GetMapping("/friend/{user_id}/remove")
+	public String removeFriend(@PathVariable("user_id")Long fId, HttpSession session) {
+		Long id = (Long) session.getAttribute("user_id");
+		User loggedIn = urepo.findById(id).orElse(null);
+//		Two lines above give us the user id and the User object
+		User friend = urepo.findById(fId).orElse(null);
+		if(loggedIn.getFriends().contains(friend)) {
+			loggedIn.getFriends().remove(friend);
+			urepo.save(loggedIn);
+			friend.getFriends().remove(loggedIn);
+			urepo.save(friend);
+		}
+		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
+		return "redirect:/connections/" + id;
+	}
+	
+	@GetMapping("/enemy/{user_id}")
+	public String addEnemy(@PathVariable("user_id")Long fId, HttpSession session) {
+		Long id = (Long) session.getAttribute("user_id");
+		User loggedIn = urepo.findById(id).orElse(null);
+//		Two lines above give us the user id and the User object
+		User enemy = urepo.findById(fId).orElse(null);
+		if(loggedIn.getFriends().contains(enemy)== false && loggedIn.getEnemies().contains(enemy)== false ) {
+			loggedIn.getEnemies().add(enemy);
+			urepo.save(loggedIn);
+			enemy.getEnemies().add(loggedIn);
+			urepo.save(enemy);
+		}
+		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
+		return "redirect:/connections/" + id;
+	}
+	
+	@GetMapping("/enemy/{user_id}/remove")
+	public String removeEnemy(@PathVariable("user_id")Long fId, HttpSession session) {
+		Long id = (Long) session.getAttribute("user_id");
+		User loggedIn = urepo.findById(id).orElse(null);
+//		Two lines above give us the user id and the User object
+		User enemy = urepo.findById(fId).orElse(null);
+		if(loggedIn.getEnemies().contains(enemy)) {
+			loggedIn.getEnemies().remove(enemy);
+			urepo.save(loggedIn);
+			enemy.getEnemies().remove(loggedIn);
+			urepo.save(enemy);
+		}
+		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
+		return "redirect:/connections/" + id;
+	}
 	
 //	**************************************************************
 	
