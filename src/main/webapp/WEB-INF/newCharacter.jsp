@@ -41,7 +41,7 @@
 			.then(response => {
 				console.log(response.data);
 				for(let i=0;i<response.data.length;i++) {
-					characters += '<option value='+response.data[i].name+'>'+response.data[i].name+'</option>'
+					characters += '<option value="'+response.data[i].name+'">'+response.data[i].name+'</option>'
 				}
 				document.getElementById("characters").innerHTML = characters
 			})
@@ -93,9 +93,10 @@
 		<form:form action="/newcharacter" method="post" modelAttribute="user">
 			<p>
 				<form:label path="name">Name</form:label>
-				<form:select path="name" id="characters">
+				<form:input list="characters" path="name"></form:input>
+				<datalist id="characters">
 					<!-- AXIOS API RESULT DISPLAYED HERE -->
-				</form:select>
+				</datalist>
 			</p>
 			<p>
 				<form:label path="universe">Universe</form:label>
@@ -105,6 +106,7 @@
 		</form:form>
 
 		<div id="images"></div>
+		
 
 	</div>
 </body>
