@@ -265,6 +265,12 @@ public class MainController {
 		session.setAttribute("user_id", user.getId());
 		return "redirect:/newcharacter";
 	}
+	
+	@GetMapping("/")
+	public String index() {
+		return "login.jsp";
+	}
+	
 	@GetMapping("/login")
 	public String login() {
 		return "login.jsp";
