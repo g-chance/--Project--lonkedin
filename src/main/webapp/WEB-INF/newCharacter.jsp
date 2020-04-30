@@ -37,7 +37,7 @@
 			.then(response => {
 				console.log(response.data);
 				for(let i=0;i<response.data.length;i++) {
-					characters += '<option value='+response.data[i].name+'>'+response.data[i].name+'</option>'
+					characters += '<option value="'+response.data[i].name+'">'+response.data[i].name+'</option>'
 				}
 				document.getElementById("characters").innerHTML = characters
 			})
@@ -54,7 +54,7 @@
 				'Accept': 'application/json',
 				'user-key': "fad35d151de40e5ff0d5b772bc15b3ef"
 			},
-			"data": "fields url; where id = ("+randList+"); limit 10;"
+			"data": "fields url; limit 20;"
 			})
 			.then(response => {
 				console.log(response.data);
@@ -88,9 +88,10 @@
 		<form:form action="/newcharacter" method="post" modelAttribute="user">
 			<p>
 				<form:label path="name">Name</form:label>
-				<form:select path="name" id="characters">
+				<form:input list="characters" path="name"></form:input>
+				<datalist id="characters">
 					<!-- AXIOS API RESULT DISPLAYED HERE -->
-				</form:select>
+				</datalist>
 			</p>
 			<p>
 				<form:label path="universe">Universe</form:label>
@@ -100,6 +101,7 @@
 		</form:form>
 
 		<div id="images"></div>
+		
 
 	</div>
 </body>
