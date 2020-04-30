@@ -24,9 +24,9 @@
 .nav {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	padding: 5px;
+	padding: 10px;
 	margin: 0 0 10px 0;
-	background-color: green;
+	background-color: #00b138;
 }
 	.nav2 {
 		align-self: center;
@@ -34,6 +34,41 @@
 	}
 
 /* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */
+
+/* REGISTRATION */
+
+.registration {
+	display: grid;
+	justify-items: center;
+}
+.registration .welcome {
+	margin: 100px 0 0 0;
+}
+.registration .form {
+	display: grid;
+	justify-items: center;
+}
+.registration .blurb {
+	width: 900px;
+	margin: 40px 0 40px 0;
+	font-size: 18px;
+	text-align: center;
+	color: #666666;
+}
+.registration .input {
+	width: 370px;
+	margin: 10px 0 0 0;
+	padding: 5px;
+	border-radius: 0%;
+	font-size: 15px;
+}
+.registration .submit {
+	background-color: #00b138;
+	color: white;
+}
+.registration .already {
+	margin: 10px 0 0 0;
+}
 
 /* DASH */
 
