@@ -17,7 +17,7 @@
 	
 		<div class="nav">
 			<div class="nav1">
-				<h1>Welcome, <c:out value="${user.email}" /></h1>/h1>
+				<h1>Welcome, <c:out value="${user.email}" /></h1>
 			</div>
 			<div class="nav2">
 				<a href="/logout">Logout</a>
@@ -55,6 +55,12 @@
                 <h2>ADD A JOB</h2>
 				<p><form:errors path="job.*"/></p>
 				<form:form action="/jobs" method="post" modelAttribute="job">
+					<c:if test="${usersgame!=null}"> 
+					<p>
+					<form:label path="game">Game: </form:label>
+					<form:input value="${usersgame}" path="game" disabled="true"/>
+					</p>
+					</c:if>
 				    <p>
 				        <form:label path="title">Title: </form:label>
 				        <form:input path="title"/>
@@ -70,8 +76,8 @@
                     <p>
 				        <form:label path="morality">Morality (for good or bad guys?):</form:label>
                             <form:select path="morality">
-                                <form:option value="good" label="For Good Guys"/>
-                                <form:option value="bad" label="For Bad Guys"/>
+                                <form:option value="true" label="For Good Guys"/>
+                                <form:option value="false" label="For Bad Guys"/>
                             </form:select>
 				    </p>
 				    <input type="submit" value="Create a new Job!"/>
@@ -83,26 +89,9 @@
 
         <div class="jobListings">
          <!-- For loops for displaying current available jobs -->
-            <table>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Salary</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${jobs}" var="job">
-                        <tr>
-                            <td>${job.title}</td>
-                            <td>${job.description}</td>
-                            <td>${job.salary}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+            
 		</div>
 	</div>
 </body>
 
-</html>
+</html> 
