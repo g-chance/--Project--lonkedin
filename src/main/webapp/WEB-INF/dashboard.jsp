@@ -36,14 +36,14 @@
 				</div>
 
 				<div class="icon-box friend">
-					<a href="/friends">
+					<a href="/connections/${user.id}">
 						<img src="/images/friends.png" alt="friends" class="logo" />
 						<!-- <p>friends</p> -->
 					</a>
 				</div>
 				<div class="icon-box">
 
-					<a href=""><img src="/images/skull.png" alt="enemies" class="logo" />
+					<a href="/connections/${user.id}"><img src="/images/skull.png" alt="enemies" class="logo" />
 						<!-- <p>enemies</p> -->
 					</a>
 				</div>
