@@ -1,8 +1,5 @@
 package com.wabdavinc.lonkedin.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
