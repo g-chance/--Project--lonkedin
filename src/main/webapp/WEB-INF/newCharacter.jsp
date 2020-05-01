@@ -150,7 +150,7 @@
 			<h1 class="header">Tell us who you are!</h1>
 			<p class="error"><form:errors path="user.*"/></p>
 			<form:form class="form" action="/newcharacter" method="post" modelAttribute="user">
-				<form:input class="input" list="characters" path="name" placeholder="Select your Name"></form:input>
+				<form:input class="input" list="characters" path="name" placeholder="What's your Name?"></form:input>
 				<datalist id="characters">
 					<!-- AXIOS API RESULT DISPLAYED HERE -->
 				</datalist>

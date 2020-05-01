@@ -91,11 +91,6 @@
 							<p>${ friend.name }</p>
 						</div>
 					</c:forEach>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
 					</div>
 				</div>
 				
@@ -128,17 +123,17 @@
 						<div class="feed">
 	
 							<div class="post">
-								<h3>Posts</h3>
+								<h3 class="feedSubHeader">Posts</h3>
 									<c:forEach items="${ posts }" var="post">
 										<c:if test="${ user.getFriends().contains(post.character) }">
 								<p>${ post.content }</p>
 										</c:if>
 									</c:forEach>
 							</div>
-							<div class="job">
+							<div class="feedSubHeader">
 								<h3>Recent Job Listings</h3>
 							</div>
-							<div class="updates">
+							<div class="feedSubHeader">
 								<h3>Newest Games</h3>
 							</div>
 						</div>

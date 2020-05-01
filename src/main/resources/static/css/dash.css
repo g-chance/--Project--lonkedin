@@ -14,7 +14,6 @@
 	width: 150px;
 }
 h3 {
-	margin: 0 0 10px;
 	padding: 0 5px;
 	background-color: #00b2389e;
 	color: black;
@@ -53,7 +52,9 @@ h3 {
 	display: grid;
 }
 .error {
-	justify-self:center
+	justify-self:center;
+	margin: 0 0 10px 0;
+	color:red;
 }
 .form {
 	justify-self: center;
@@ -69,4 +70,7 @@ h3 {
 	padding: 5px;
 	border-radius: 0%;
 	margin: 0 10px 0 0;
+}
+.feedSubHeader {
+	margin: 0 0 10px 0;
 }
