@@ -71,6 +71,7 @@ public class MainController {
 		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
 		u.setName(user.getName());
 		u.setUniverse(user.getUniverse());
+		u.setPicture(user.getPicture());
 		urepo.save(u);
 		return("redirect:/dashboard");
 	}

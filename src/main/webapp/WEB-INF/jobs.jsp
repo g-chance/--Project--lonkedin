@@ -62,16 +62,21 @@
 					<form:errors path="job.*" />
 				</p>
 				<form:form action="/jobs" method="post" modelAttribute="job">
+<<<<<<< HEAD
 					<c:if test="${usersgame!=null}">
 						<p>
 							<form:label path="game">Game: </form:label>
 							<form:input value="${usersgame.name}" path="game" disabled="true" />
 						</p>
 					</c:if>
+=======
+<%-- 					<c:if test="${usersgame!=null}"> 
+>>>>>>> upstream/master
 					<p>
 						<form:label path="title">Title: </form:label>
 						<form:input path="title" />
 					</p>
+<<<<<<< HEAD
 					<p>
 						<form:label path="description">Description: </form:label>
 						<form:input path="description" />
@@ -89,6 +94,30 @@
 					</p>
 					<input type="submit" value="Create a new Job!" />
 				</form:form>
+=======
+					</c:if> --%>
+				    <p>
+				        <form:label path="title">Title: </form:label>
+				        <form:input path="title"/>
+                    </p>
+                    <p>
+				        <form:label path="description">Description: </form:label>
+				        <form:input path="description"/>
+                    </p>
+                    <p>
+				        <form:label path="salary">Salary: </form:label>
+				        <form:input path="salary"/>
+                    </p>
+                    <p>
+				        <form:label path="morality">Morality (for good or bad guys?):</form:label>
+                            <form:select path="morality">
+                                <form:option value="true" label="For Good Guys"/>
+                                <form:option value="false" label="For Bad Guys"/>
+                            </form:select>
+				    </p>
+				    <input type="submit" value="Create a new Job!"/>
+				</form:form> 
+>>>>>>> upstream/master
 			</div>
 		</div>
 
