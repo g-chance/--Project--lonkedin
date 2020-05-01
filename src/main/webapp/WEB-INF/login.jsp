@@ -21,7 +21,7 @@
 				</div>
 				<div></div>
 				<div class="nav3">
-					<a class="logout" href="/logout">Logout</a>
+					<a class="links" href="/logout">Logout</a>
 				</div>
 			</div>
 		</div>

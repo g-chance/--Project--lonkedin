@@ -37,10 +37,6 @@
 	margin: auto;
 	color: white;
 }
-.nav .logout {
-	text-decoration: none;
-	color: white;
-}
 .nav .llogo {
 	width: fit-content;
 	padding: 5px;
@@ -64,34 +60,56 @@
 	align-self: center;
 	justify-self: right;
 }
-.dashboard .nav1 {
+.nav3 .links {
+	text-decoration: none;
+	color: white;
+}
+
+/* NAV (LOGGED IN) */
+
+.navLI .nav1 {
 	display: grid;
 	grid-template-columns: min-content auto;
 	align-items: center;
 }
-.dashboard .nav p {
+.navLI .nav p {
 	display: inline-block;
 }
-.dashboard .nav .icons {
+.navLI .nav .icons {
 	align-self: center;
 	justify-self: center;
 }
-.dashboard .fafa {
+.navLI .fafa {
 	width: 25px;
 	padding: 2px;
 	margin: 0 5px;
 	background-color: #00b238;
 	border-radius: 50%;
 }
-.dashboard form {
+.navLI form {
 	display: inline-block;
 }
+.navLI .search {
+	width: 200px;
+	padding: 5px;
+	margin: 0 0 0 10px;
+	border-radius: 0%;
+	
+}
+.navLI .searchSubmit {
+	padding: 5px;
+	border-radius: 0%;
+	margin: 0 10px 0 0;
+}
+
+/* NAV SPACERS */
 
 .navSpacer {
 	height: 50px;
 }
-
-/* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */
+.navLISpacer {
+	height: 70px;
+}
 
 /* LOGIN */
 

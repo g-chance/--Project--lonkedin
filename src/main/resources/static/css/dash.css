@@ -1,9 +1,6 @@
 .dash {
 	column-gap: 20px;
 }
-.navSpacer {
-	height: 70px;
-}
 .row {
 	padding: 10px;
 	border: 1px solid black;
@@ -14,6 +11,7 @@
 	width: 150px;
 }
 h3 {
+	margin: 0 0 10px 0;
 	padding: 0 5px;
 	background-color: #00b2389e;
 	color: black;
@@ -59,18 +57,13 @@ h3 {
 .form {
 	justify-self: center;
 }
-.search {
-	width: 200px;
-	padding: 5px;
-	margin: 0 0 0 10px;
-	border-radius: 0%;
-	
-}
-.searchSubmit {
-	padding: 5px;
-	border-radius: 0%;
-	margin: 0 10px 0 0;
-}
 .feedSubHeader {
 	margin: 0 0 10px 0;
+}
+.friendRequests {
+	display: grid;
+	justify-items: center;
+}
+.friendRequests form, .friendRequests p {
+	display: inline-block;
 }
