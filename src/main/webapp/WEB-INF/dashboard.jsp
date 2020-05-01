@@ -72,7 +72,7 @@
 					<div>
 						<h1>${ user.name } (${ user.universe })</h1>
 						<p>${ user.game.name } Game Placeholder</p>
-						<p>${ user.job.name } Job Placeholder</p>
+						<p>${ user.job.title } Job Placeholder</p>
 						<p>(number) Connections -- (num) friends, (num) enemies</p>
 					</div>
 				</div>
