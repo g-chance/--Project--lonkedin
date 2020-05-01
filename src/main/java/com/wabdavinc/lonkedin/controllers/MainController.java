@@ -251,7 +251,7 @@ public class MainController {
 			enemy.getEnemies().add(loggedIn);
 			urepo.save(enemy);
 		}
-		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
+		//TODO: ERROR HANDILING TO SAY IF THEY ARE A FRIEND
 		return "redirect:/connections/" + id;
 	}
 	
@@ -267,7 +267,7 @@ public class MainController {
 			enemy.getEnemies().remove(loggedIn);
 			urepo.save(enemy);
 		}
-		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
+		//TODO: ERROR HANDILING TO SAY IF THEY ARE A FRIEND
 		return "redirect:/connections/" + id;
 	}
 	
@@ -314,6 +314,8 @@ public class MainController {
 		
 		
 	}
+	
+	
 	
 //	**************************************************************
 	
