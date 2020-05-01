@@ -8,7 +8,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Jobs</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<script type="text/javascript" src="/js/app.js"></script>
 </head>
@@ -19,7 +19,7 @@
 		<div class="nav">
 			<div class="nav1">
 				<h1>Welcome,
-					<c:out value="${user.email}" />
+					<c:out value="${user.name}"/> 
 				</h1>
 			</div>
 			<div class="nav2">
@@ -36,6 +36,7 @@
 			<!-- VERIFY IF SOMEONE HAS ALREADY CREATED THE SAME COMPANY -->
 
 			<div class="col1 companyForm">
+				<c:if test="${usersgame.id == null}">
 				<h2>ADD A COMPANY</h2>
 				<p>
 					<form:errors path="game.*" />
@@ -51,24 +52,23 @@
 					</p>
 					<input type="submit" value="Create a Company!" />
 				</form:form>
+			</c:if>
 			</div>
 
 			<!-- jobForms COLUMN 2 **ADDING JOBS** -->
 			<!-- NEED TO FIND A WAY SO THAT ONLY COMPANY CEOS/SUPERVISORS CAN MAKE JOBS FOR THE SPECIFIC COMPANY -->
 
 			<div class="col2 jobForm">
+				<c:if test="${usersgame.id != null}">
 				<h2>ADD A JOB</h2>
 				<p>
 					<form:errors path="job.*" />
 				</p>
 				<form:form action="/jobs" method="post" modelAttribute="job">
-
-					<c:if test="${usersgame!=null}">
 						<p>
 							<form:label path="game">Game: </form:label>
 							<form:input value="${usersgame.name}" path="game" disabled="true" />
 						</p>
-					</c:if>
 
 				    <p>
 				        <form:label path="title">Title: </form:label>
@@ -91,7 +91,7 @@
 				    </p>
 				    <input type="submit" value="Create a new Job!"/>
 				</form:form> 
-
+			</c:if>
 			</div>
 		</div>
 
@@ -104,6 +104,7 @@
 					<tr>
 						<th>Jobs </th>
 						<th>Company </th>
+						<th>Description</th>
 						<th>Salary </th>
 						<th>Morality</th>
 						<th>Apply </th>
@@ -115,6 +116,7 @@
 					<tr>
 						<td>${job.title}</td>
 						<td>${job.game.name}</td>
+						<td>${job.description}</td>
 						<td>${job.salary}</td>
 						<td><c:if test="${job.morality==true }">
 						<p>Good</p>
@@ -124,12 +126,8 @@
 						</c:if>
 						
 						</td>
-						
-						
 						<td>
-						<c:if test="${user.job.id == null}"> 
-						<form:form action="/apply/${job.id}"><button type="submit">Apply!</button></form:form>
-						</c:if>
+						<form:form action="/apply/${job.id}"><button ${userJob.id != null ? "disabled" : null} type="submit">Apply!</button></form:form>
 						</td>
 						
 							<!-- apply button  -->
