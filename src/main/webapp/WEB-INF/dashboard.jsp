@@ -56,7 +56,7 @@
 
 <!-- HEADER -->
 
-		<h1>Welcome,${user.name}</h1>
+		<h1>Welcome, ${user.name}</h1>
 
 <!-- DASH GRID -->
 
@@ -69,7 +69,7 @@
 				<!-- Each div you add below here will be a row in column 1 -->
 
 				<!-- Profile page -->
-				<img class="profile" src="/images/lonk.jpg" alt="logo" class="logo" />
+				<img class="profile" src="${user.picture}" alt="avatar" class="logo" />
 				<div class="profile_content">
 					<h3>Connections</h3>
 					<ul>
