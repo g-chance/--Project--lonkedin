@@ -37,3 +37,36 @@ h3 {
 .connections p {
 	text-align: center;
 }
+.content {
+	width: 370px;
+	padding: 5px;
+	border-radius: 0%;
+	font-size: 15px;
+	margin: 0 0 10px 0;
+}
+.submit {
+	padding: 5px;
+	font-size: 15px;
+	border-radius: 0%;
+}
+.feed {
+	display: grid;
+}
+.error {
+	justify-self:center
+}
+.form {
+	justify-self: center;
+}
+.search {
+	width: 200px;
+	padding: 5px;
+	margin: 0 0 0 10px;
+	border-radius: 0%;
+	
+}
+.searchSubmit {
+	padding: 5px;
+	border-radius: 0%;
+	margin: 0 10px 0 0;
+}

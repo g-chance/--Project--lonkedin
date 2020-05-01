@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!DOCTYPE html>
 <html>
@@ -22,12 +23,15 @@
 			<div class="nav">
 				
 				<div class="nav1">
+
 					<p class="llogo">Lonked<span>in</span></p>
 					<form action="/search" method="POST">
-						<input type="text" placeholder="search">
-						<button type="button">Search</button>
+						<input class="search" name="search" type="text" placeholder="Search Users">
+						<input class="searchSubmit" type="submit" value="Search" />
 					</form>
-					<div>
+				</div>
+				<div class="nav2">
+					<div class="icons">
 						<img class="icon-box fafa" src="/images/friends.png" alt="logo"  />
 						<a class="icon-box" href="/dashboard">
 							<img class="fafa" src="/images/home.png" alt="home" >
@@ -40,7 +44,7 @@
 						</a>
 					</div>
 				</div>
-				<div class="nav2">
+				<div class="nav3">
 					<a class = "logout" href="/logout">Logout</a>
 				</div>
 				
@@ -111,25 +115,32 @@
 			
 			<div class="col2">
 				<!-- Each div you add below here will be a row in column 2 -->
-				<div class="row connection">
+				<div class="row">
 					<h3>Feed</h3>
 					<div class="feed">
-						<div class="job">
-							<h4>Job Postings</h4>
-							<a href="/job">Plummer Needed</a>
-						</div>
-
-						<div class="post">
-							<h4>Posts</h4>
-								<c:forEach items="${ posts }" var="post">
-									<c:if test="${ user.getFriends().contains(post.character) }">
-							<p>${ post.content }</p>
-									</c:if>
-								</c:forEach>
-						</div>
-						<div class="updates">
-							<h4>Updates</h4>
-							<p>Lonk gets new job as a plummer!</p>
+						<p class="error"><form:errors path="post.*"/></p>
+						<form:form class="form" action="/newpost" method="post" modelAttribute="post">
+						    <p>
+						        <form:input class="content" path="content" placeholder="Share what's on your mind!"/>
+						    	<input class="submit" type="submit" value="Post"/>
+	   					    </p>
+						</form:form> 
+						<div class="feed">
+	
+							<div class="post">
+								<h3>Posts</h3>
+									<c:forEach items="${ posts }" var="post">
+										<c:if test="${ user.getFriends().contains(post.character) }">
+								<p>${ post.content }</p>
+										</c:if>
+									</c:forEach>
+							</div>
+							<div class="job">
+								<h3>Recent Job Listings</h3>
+							</div>
+							<div class="updates">
+								<h3>Newest Games</h3>
+							</div>
 						</div>
 					</div>
 					<!-- job postings, comments, updates from friends etc... -->
