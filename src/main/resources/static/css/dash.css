@@ -9,7 +9,7 @@
 	width: 25px;
 	height: 25px;
 	vertical-align: top;
-	
+	margin-left: 30px;
 	margin-right: 30px;
 	margin-top: 13px;
 }
@@ -44,7 +44,7 @@
 
 .logout {
 	display: inline-block;
-	margin-left: 25px;
+	margin-left: 500px;
 	margin-top: 19px;
 	
 }
