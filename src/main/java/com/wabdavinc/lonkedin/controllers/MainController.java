@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import com.wabdavinc.lonkedin.models.Game;
 import com.wabdavinc.lonkedin.models.Job;
 import com.wabdavinc.lonkedin.models.Post;
@@ -286,7 +287,7 @@ public class MainController {
 		model.addAttribute("jobs", jrepo.findAll());
 		model.addAttribute("userJob",user.getJob());
 		model.addAttribute("usersgame", user.getGame());
-	
+		model.addAttribute("user", user);
 		return "jobs.jsp";
 	}
 	
@@ -314,6 +315,20 @@ public class MainController {
 			}
 		} 
 	
+	@PostMapping("/jobs/quit/{job_id}")
+	public String quitJob(Model model, HttpSession session, @PathVariable("job_id") Long jId){
+		Long userid=(Long) session.getAttribute("user_id");
+		User u =urepo.findById(userid).orElse(null);
+		Game g = grepo.findById(u.getGame().getId()).orElse(null);
+		Job j =jrepo.findById(jId).orElse(null);
+		u.setJob(null);
+		u.setGame(null);
+		urepo.save(u);
+		j.getCharacters().remove(u);
+		jrepo.save(j);
+		return "redirect:/jobs";
+	}
+
 	@PostMapping("/game")
 	public String doGames(Model model, HttpSession session, @Valid @ModelAttribute("game")Game game,BindingResult result) {
 		if(result.hasErrors()) {
@@ -349,7 +364,9 @@ public class MainController {
 		public String apply(@PathVariable("job_id") Long id, HttpSession session, Model model){
 			Job job= jrepo.findById(id).orElse(null);
 			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+			Game game = grepo.findById(job.getGame().getId()).orElse(null);
 			user.setJob(job);
+			user.setGame(game);
 			urepo.save(user);
 			return "redirect:/jobs";
 		}
@@ -379,7 +396,7 @@ public class MainController {
 	
 	@GetMapping("/")
 	public String index() {
-		return "login.jsp";
+		return "redirect:/login";
 	}
 	
 	@GetMapping("/login")
