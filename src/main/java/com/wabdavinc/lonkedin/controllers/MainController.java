@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wabdavinc.lonkedin.models.Game;
 import com.wabdavinc.lonkedin.models.Job;
+import com.wabdavinc.lonkedin.models.Skill;
 import com.wabdavinc.lonkedin.models.User;
 import com.wabdavinc.lonkedin.repositories.GameRepo;
 import com.wabdavinc.lonkedin.repositories.JobRepo;
@@ -100,7 +101,7 @@ public class MainController {
 	
 //	**************************************************************
 	
-//	VERNON
+//	VERNON AND 
 //	============================================================== Connections
 	
 	@GetMapping("/connections/{user_id}")
@@ -174,6 +175,50 @@ public class MainController {
 		}
 		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
 		return "redirect:/connections/" + id;
+	}
+	
+	@GetMapping("/skill")
+	public String newSkill(Model model, HttpSession session) {
+		Long id = (Long) session.getAttribute("user_id");
+		model.addAttribute("skill", new Skill());
+		model.addAttribute("allSkills", srepo.findAll());
+		model.addAttribute("user",urepo.findById(id).orElse(null));
+		return "skill.jsp";
+	}
+	
+	@PostMapping("/skill/new")
+	public String submitSkill(@Valid @ModelAttribute("skill") Skill skill, 
+			BindingResult result, Model model, HttpSession session
+			) {
+		model.addAttribute("skill", new Skill());
+		if(result.hasErrors()) {
+			return "skill.jsp";
+		}
+		//Add Validator to prevent duplicate skills later
+		else {
+			srepo.save(skill);
+		}
+		return "redirect:/dashboard";
+		
+		
+	}
+	
+	@PostMapping("/skill/add")
+	public String addSkill(@Valid @ModelAttribute("skill") Skill skill, 
+			BindingResult result, Model model, HttpSession session, @RequestParam("userSkill") Long sId) {
+		model.addAttribute("skill", new Skill());
+		if(result.hasErrors()) {
+			return "skill.jsp";
+		}else {
+			Long id = (Long) session.getAttribute("user_id");
+			User loggedIn = urepo.findById(id).orElse(null);
+			Skill thisSkill =srepo.findById(sId).orElse(null);
+			loggedIn.getSkills().add(thisSkill);
+			urepo.save(loggedIn);
+		}
+		return "redirect:/dashboard";
+		
+		
 	}
 	
 //	**************************************************************
