@@ -70,9 +70,9 @@
 				<div class = "row profileRow">
 					<img id="profileImage" src="${ user.picture }" alt="logo" class="logo" />
 					<div>
-						<h1>${ user.name } (${ user.universe })</h1>
-						<p>${ user.game.name } Game Placeholder</p>
-						<p>${ user.job.name } Job Placeholder</p>
+						<h1>${ user.name } (${user.universe})</h1>
+						<p style="font-weight: bold; color:green">${user.game.name}</p>
+						<p style="font-weight: bold;color:green"> ${user.job.title}</p>
 						<p>(number) Connections -- (num) friends, (num) enemies</p>
 					</div>
 				</div>
