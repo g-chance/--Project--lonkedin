@@ -31,24 +31,20 @@
 
 .nav {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr;
 	width: 1200px;
 	padding: 10px;
 	margin: auto;
 	color: white;
 }
-.nav a {
-	text-decoration: none;
-	color: white;
-}
-.nav .logo {
+.nav .llogo {
 	width: fit-content;
 	padding: 5px;
 	font-size: 20px;
 /* 	border: 2px solid white; */
 	
 }
-.nav .logo span {
+.nav .llogo span {
 	font-weight: bolder;
 	margin: 0 0 0 2px;
 	padding: 0 2px;
@@ -58,14 +54,62 @@
 }
 .nav2 {
 	align-self: center;
+	justify-self: center;	
+}
+.nav3 {
+	align-self: center;
 	justify-self: right;
 }
+.nav3 .links {
+	text-decoration: none;
+	color: white;
+}
+
+/* NAV (LOGGED IN) */
+
+.navLI .nav1 {
+	display: grid;
+	grid-template-columns: min-content auto;
+	align-items: center;
+}
+.navLI .nav p {
+	display: inline-block;
+}
+.navLI .nav .icons {
+	align-self: center;
+	justify-self: center;
+}
+.navLI .fafa {
+	width: 25px;
+	padding: 2px;
+	margin: 0 5px;
+	background-color: #00b238;
+	border-radius: 50%;
+}
+.navLI form {
+	display: inline-block;
+}
+.navLI .search {
+	width: 200px;
+	padding: 5px;
+	margin: 0 0 0 10px;
+	border-radius: 0%;
+	
+}
+.navLI .searchSubmit {
+	padding: 5px;
+	border-radius: 0%;
+	margin: 0 10px 0 0;
+}
+
+/* NAV SPACERS */
 
 .navSpacer {
 	height: 50px;
 }
-
-/* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */
+.navLISpacer {
+	height: 70px;
+}
 
 /* LOGIN */
 

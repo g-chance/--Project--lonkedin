@@ -135,10 +135,11 @@
 		<div class="navwrapper">
 			<div class="nav">
 				<div class="nav1">
-					<p class="logo">Lonked<span>in</span></p>
+					<p class="llogo">Lonked<span>in</span></p>
 				</div>
-				<div class="nav2">
-					<a href="/logout">Logout</a>
+				<div></div>
+				<div class="nav3">
+					<a class="links" href="/logout">Logout</a>
 				</div>
 			</div>
 		</div>	
@@ -149,7 +150,7 @@
 			<h1 class="header">Tell us who you are!</h1>
 			<p class="error"><form:errors path="user.*"/></p>
 			<form:form class="form" action="/newcharacter" method="post" modelAttribute="user">
-				<form:input class="input" list="characters" path="name" placeholder="Select your Name"></form:input>
+				<form:input class="input" list="characters" path="name" placeholder="What's your Name?"></form:input>
 				<datalist id="characters">
 					<!-- AXIOS API RESULT DISPLAYED HERE -->
 				</datalist>

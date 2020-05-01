@@ -17,10 +17,11 @@
 		<div class="navwrapper">
 			<div class="nav">
 				<div class="nav1">
-					<p class="logo">Lonked<span>in</span></p>
+					<p class="llogo">Lonked<span>in</span></p>
 				</div>
-				<div class="nav2">
-					<a href="/logout">Logout</a>
+				<div></div>
+				<div class="nav3">
+					<a class="links" href="/logout">Logout</a>
 				</div>
 			</div>
 		</div>
