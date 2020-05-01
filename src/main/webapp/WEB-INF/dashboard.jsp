@@ -47,17 +47,16 @@
 						<!-- <p>enemies</p> -->
 					</a>
 				</div>
-				<div class="logout">
-					<a href="/logout">Logout</a>
-				</div>
+				
+			</div>
+			<div class="logout">
+				<a href="/logout">Logout</a>
 			</div>
 		</div>
 
 <!-- HEADER -->
 
-		<h1>Welcome,
-			<c:out value="${user.name}" />
-		</h1>
+		<h1>Welcome,${user.name}</h1>
 
 <!-- DASH GRID -->
 
@@ -73,9 +72,20 @@
 				<img class="profile" src="/images/lonk.jpg" alt="logo" class="logo" />
 				<div class="profile_content">
 					<h3>Connections</h3>
-					<p>Blah blah blah</p>
+					<ul>
+						
+						<c:forEach items="${connections}" var ="list">
+							<c:if test = "${list.getFriends().contains(user) == false && list.getEnemies().contains(user) == false && list != user }">
+								
+									<li>${list.email}</li>
+								
+							</c:if>
+						</c:forEach>
+
+					</ul>
 
 				</div>
+				
 
 				<div class="missions">
 					<h3>Current Missions Accepted</h3>

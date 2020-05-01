@@ -1,5 +1,7 @@
 package com.wabdavinc.lonkedin.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -71,6 +73,7 @@ public class MainController {
 		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
 		u.setName(user.getName());
 		u.setUniverse(user.getUniverse());
+		u.setPicture(user.getPicture());
 		urepo.save(u);
 		return("redirect:/dashboard");
 	}
@@ -78,7 +81,7 @@ public class MainController {
 	
 //	**************************************************************
 	
-//	VERNNON AND CHRISTINE
+//	Greg
 //	============================================================== Dashboard
 	
 	@GetMapping("/dashboard")
@@ -87,7 +90,10 @@ public class MainController {
 			return "redirect:/lonkedin/registration";
 		}
 		Long id = (Long) session.getAttribute("user_id");
+		List <User> connections = urepo.findAll();
 		model.addAttribute("user",urepo.findById(id).orElse(null));
+		model.addAttribute("connections",connections);
+		
 		return "dashboard.jsp";
 	}
 	
@@ -179,21 +185,17 @@ public class MainController {
 	public String newJobForm(Model model, HttpSession session) {
 		Long id = (Long) session.getAttribute("user_id");
 		User user= urepo.findById(id).orElse(null);
-		
+		 
 		model.addAttribute("job", new Job());
 		model.addAttribute("game", new Game());
 		model.addAttribute("jobs", jrepo.findAll());
 		if(user.getGame()!= null) {
 			model.addAttribute("usersgame", user.getGame());
 		}
-		
 		return "jobs.jsp";
 	}
 	
-	
-	
-	
-	
+
 	//we need a way to check if company already exists in the database if the user is trying to create one 
 	@PostMapping("/jobs")
 	public String doJobs(Model model, HttpSession session, @Valid @ModelAttribute("job")Job job,BindingResult result) {
@@ -203,14 +205,15 @@ public class MainController {
 			return "jobs.jsp";
           
         }else{
-        	Long userid=(Long) session.getAttribute("userid");
+        	Long userid=(Long) session.getAttribute("user_id");
 			User u =urepo.findById(userid).orElse(null);
-        	Game g = grepo.findById(u.getGame().getId()).orElse(null);
-        	Job j = jrepo.save(job);       	
-        	
-        	g.getJobs().add(j);
-        	
-			grepo.save(g);
+			Game g = grepo.findById(u.getGame().getId()).orElse(null);
+			System.out.println(g);
+			Job j = jrepo.save(job);
+			j.setGame(g);       	
+        	// g.getJobs().add(j);
+			// grepo.save(g);
+			jrepo.save(j);
 
 			return "redirect:/jobs";
 			}
@@ -224,24 +227,39 @@ public class MainController {
 			model.addAttribute("jobs", jrepo.findAll());
             return "jobs.jsp";
           
-        }else{
-
-//        	setGame
-//        	saveuser
-        	
-		
-		
-			System.out.println(game.getName());
-			System.out.println(game.getId());
-			System.out.println(game.getDescription());
+        } else {
+			// create game
 			grepo.save(game);
-			// u.setGame(game);
-			// urepo.save(u);
-//			set id here?
+
+			// create job
+			Job job = new Job();
+			job.setTitle("CEO");
+			job.setDescription("Head honcho");
+			job.setSalary(10);
+			job.setMorality(true);
+			job.setGame(game);
+			jrepo.save(job);
+
+			// add game and job to user
+			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+			user.setGame(game);
+			user.setJob(job);
+			urepo.save(user);
 
 			return "redirect:/jobs";
 			}
 		} 
+
+		@PostMapping("/apply")
+		public String apply(HttpSession session, Model model){
+			// attach the job id to the user
+//			Job jobs=jrepo.findAll().orElse(null);
+//			Job job= jrepo.findById(jobs.getJob.getId().orElse(null));
+//			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+//			user.setJob(job);
+			
+			return "jobs.jsp";
+		}
 	
 	
 //	**************************************************************
