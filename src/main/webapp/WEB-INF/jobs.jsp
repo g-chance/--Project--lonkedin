@@ -17,10 +17,12 @@
 	<div class="wrapper">
 
 		<div class="nav">
-			<div class="nav1">
-				<h1>Welcome,
-					<c:out value="${user.name}"/> 
+			<div>
+				<h1 style="color:black">Welcome,
+					<c:out value= "${user.name}"/> 
 				</h1>
+				<h3 style="color:grey">Current Job: ${userJob == null? "Unemployed" :userJob.title } <form:form action="/jobs/quit/${userJob.id}"><button ${userJob.id == null ? "hidden" : null} type="submit">Quit!</button></form:form>
+			</h3>
 			</div>
 			<div class="nav2">
 				<a href="/logout">Logout</a>
@@ -60,7 +62,7 @@
 
 			<div class="col2 jobForm">
 				<c:if test="${usersgame.id != null}">
-				<h2>ADD A JOB</h2>
+				<h2>Add a Job for your Company</h2>
 				<p>
 					<form:errors path="job.*" />
 				</p>
