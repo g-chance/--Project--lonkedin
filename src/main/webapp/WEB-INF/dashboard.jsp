@@ -26,7 +26,7 @@
 
 					<p class="llogo">Lonked<span>in</span></p>
 					<form action="/search" method="POST">
-						<input class="search" type="text" placeholder="search">
+						<input class="search" name="search" type="text" placeholder="Search Users">
 						<input class="searchSubmit" type="submit" value="Search" />
 					</form>
 				</div>

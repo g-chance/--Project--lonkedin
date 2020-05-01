@@ -11,6 +11,7 @@ import com.wabdavinc.lonkedin.models.User;
 public interface UserRepo extends CrudRepository<User, Long> {
 
 	List<User> findAll();
+	List<User> findByNameContaining(String str);
 	User findByEmail(String email);
 	User findByNameAndUniverse(String name, String universe);
 }

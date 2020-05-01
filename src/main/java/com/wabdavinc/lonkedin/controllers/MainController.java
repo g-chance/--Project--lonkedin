@@ -1,6 +1,7 @@
 package com.wabdavinc.lonkedin.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -135,6 +136,16 @@ public class MainController {
 		}
 		prepo.save(post);
 		return "redirect:/dashboard";
+	}
+	
+	@PostMapping("/search")
+	public String search(@RequestParam("search") String str, Model model) {
+		List<User> searchResults = urepo.findByNameContaining(str);
+		for(int i=0;i<urepo.findByNameContaining(str).size();i++) {
+			System.out.println(urepo.findByNameContaining(str).get(i).getName());
+		}
+		model.addAttribute("searchResults", searchResults);
+		return "searchResults.jsp";
 	}
 	
 	
