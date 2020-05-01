@@ -317,15 +317,13 @@ public class MainController {
 			}
 		} 
 
-		@PostMapping("/apply")
-		public String apply(HttpSession session, Model model){
-			// attach the job id to the user
-//			Job jobs=jrepo.findAll().orElse(null);
-//			Job job= jrepo.findById(jobs.getJob.getId().orElse(null));
-//			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
-//			user.setJob(job);
-			
-			return "jobs.jsp";
+		@PostMapping("/apply/{job_id}")
+		public String apply(@PathVariable("job_id") Long id, HttpSession session, Model model){
+			Job job= jrepo.findById(id).orElse(null);
+			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+			user.setJob(job);
+			urepo.save(user);
+			return "redirect:/jobs";
 		}
 	
 	

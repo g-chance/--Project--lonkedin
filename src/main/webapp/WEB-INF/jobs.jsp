@@ -62,40 +62,14 @@
 					<form:errors path="job.*" />
 				</p>
 				<form:form action="/jobs" method="post" modelAttribute="job">
-<<<<<<< HEAD
+
 					<c:if test="${usersgame!=null}">
 						<p>
 							<form:label path="game">Game: </form:label>
 							<form:input value="${usersgame.name}" path="game" disabled="true" />
 						</p>
 					</c:if>
-=======
-<%-- 					<c:if test="${usersgame!=null}"> 
->>>>>>> upstream/master
-					<p>
-						<form:label path="title">Title: </form:label>
-						<form:input path="title" />
-					</p>
-<<<<<<< HEAD
-					<p>
-						<form:label path="description">Description: </form:label>
-						<form:input path="description" />
-					</p>
-					<p>
-						<form:label path="salary">Salary: </form:label>
-						<form:input path="salary" />
-					</p>
-					<p>
-						<form:label path="morality">Morality (for good or bad guys?):</form:label>
-						<form:select path="morality">
-							<form:option value="true" label="For Good Guys" />
-							<form:option value="false" label="For Bad Guys" />
-						</form:select>
-					</p>
-					<input type="submit" value="Create a new Job!" />
-				</form:form>
-=======
-					</c:if> --%>
+
 				    <p>
 				        <form:label path="title">Title: </form:label>
 				        <form:input path="title"/>
@@ -117,7 +91,7 @@
 				    </p>
 				    <input type="submit" value="Create a new Job!"/>
 				</form:form> 
->>>>>>> upstream/master
+
 			</div>
 		</div>
 
@@ -136,19 +110,32 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:if test="${!job.contains(userid)}">
+				
 					<c:forEach var="job" items="${jobs}">
 					<tr>
 						<td>${job.title}</td>
 						<td>${job.game.name}</td>
 						<td>${job.salary}</td>
-						<td>${job.morality}</td>
-						<td><a href="/apply">Take this job!</a></td>
+						<td><c:if test="${job.morality==true }">
+						<p>Good</p>
+						</c:if>
+						<c:if test="${job.morality==false }">
+						<p>Bad</p>
+						</c:if>
+						
+						</td>
+						
+						
+						<td>
+						<c:if test="${user.job.id == null}"> 
+						<form:form action="/apply/${job.id}"><button type="submit">Apply!</button></form:form>
+						</c:if>
+						</td>
 						
 							<!-- apply button  -->
 					</tr>
 				</c:forEach>
-			</c:if>	
+			
 				</tbody>
 			</table>
 		</div>
