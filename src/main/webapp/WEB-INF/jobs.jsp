@@ -7,9 +7,10 @@
 <html>
 
 <head>
+<link rel="stylesheet" type="text/css" href="/css/jobs.css" media="screen" />
 	<meta charset="UTF-8">
 	<title>Jobs</title>
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
+
 	<script type="text/javascript" src="/js/app.js"></script>
 </head>
 
@@ -21,8 +22,9 @@
 				<h1 style="color:black">Welcome,
 					<c:out value= "${user.name}"/> 
 				</h1>
-				<h3 style="color:grey">Current Job: ${userJob == null? "Unemployed" :userJob.title } <form:form action="/jobs/quit/${userJob.id}"><button ${userJob.id == null ? "hidden" : null} type="submit">Quit!</button></form:form>
+				<h3 style="color:grey">Current Job: ${userJob == null? "Unemployed" :userJob.title.concat(", ").concat(userJob.game.name)}<form:form action="/jobs/quit/${userJob.id}"><button ${userJob.id == null ? "hidden" : null} type="submit">Quit!</button></form:form> 
 			</h3>
+			
 			</div>
 			<div class="nav2">
 				<a href="/logout">Logout</a>

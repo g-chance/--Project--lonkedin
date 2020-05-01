@@ -1,0 +1,28 @@
+@charset "ISO-8859-1";
+
+table{
+	border:2px solid black;
+	padding:2px;
+	margin:5px;
+}
+table td{
+	border:2px solid black;
+	padding:2px;
+	margin:5px;
+}
+.jobForms{
+	max-width:400px;
+	border:2px solid black;
+	padding:2px;
+	margin:5px;
+}
+h1{
+	background-color:green;
+}
+h2{
+	background-color: #00b238;
+}
+
+table th{
+	background-color: #00b238;
+}
