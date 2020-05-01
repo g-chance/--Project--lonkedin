@@ -1,5 +1,7 @@
 package com.wabdavinc.lonkedin.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -88,7 +90,7 @@ public class MainController {
 			return "redirect:/lonkedin/registration";
 		}
 		Long id = (Long) session.getAttribute("user_id");
-		List<User> connections = urepo.findAll();
+		List <User> connections = urepo.findAll();
 		model.addAttribute("user",urepo.findById(id).orElse(null));
 		model.addAttribute("connections",connections);
 		
