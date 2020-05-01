@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wabdavinc.lonkedin.models.Game;
 import com.wabdavinc.lonkedin.models.Job;
+import com.wabdavinc.lonkedin.models.Post;
 import com.wabdavinc.lonkedin.models.Skill;
 import com.wabdavinc.lonkedin.models.User;
 import com.wabdavinc.lonkedin.repositories.GameRepo;
@@ -109,15 +110,31 @@ public class MainController {
 		for(User friend : user.getFriends()) {
 			friend.getPosts().size();
 		}
-//		user.getFriends().add(urepo.findByEmail("yourmom@gmail.com"));
+//		user.getFriends().add(urepo.findByEmail("secondfall@gmail.com"));
 //		urepo.save(user);
+//		for(int i=0;i<user.getFriends().size();i++) {
+//			System.out.println(user.getFriends().size());
+//			System.out.println(user.getName());
+//		}
 		model.addAttribute("friends", friends);
 		model.addAttribute("enemies", enemies);
 		model.addAttribute("posts",prepo.findAll());
+		model.addAttribute("post", new Post());
 		// List <User> connections = urepo.findAll();
 		// model.addAttribute("user",urepo.findById(id).orElse(null));
 		// model.addAttribute("connections",connections);
 		return "dashboard.jsp";
+	}
+	
+	@PostMapping("/newpost")
+	public String newPost(@Valid @ModelAttribute("post") Post post, BindingResult result, Model model, HttpSession session) {
+		if(result.hasErrors()) {
+			User user = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+			model.addAttribute("user", user);
+			return "dashboard.jsp";
+		}
+		prepo.save(post);
+		return "redirect:/dashboard";
 	}
 	
 	

@@ -137,7 +137,8 @@
 				<div class="nav1">
 					<p class="llogo">Lonked<span>in</span></p>
 				</div>
-				<div class="nav2">
+				<div></div>
+				<div class="nav3">
 					<a class="logout" href="/logout">Logout</a>
 				</div>
 			</div>
