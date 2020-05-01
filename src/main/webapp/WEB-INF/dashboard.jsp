@@ -53,7 +53,6 @@
 <!-- HEADER -->
 
 
-
 <!-- DASH GRID -->
 
 		<div class="dash">
@@ -99,6 +98,13 @@
 				<div class="row">
 					<h3>Skills</h3>
 				</div>
+				<!-- <c:forEach items="${connections}" var ="list">
+					<c:if test = "${list.getFriends().contains(user) == false && list.getEnemies().contains(user) == false && list != user }">
+						
+							<li>${list.email}</li>
+						
+					</c:if>
+				</c:forEach> -->
 			</div>
 
 			<!-- COLUMN 2 -->
