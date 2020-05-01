@@ -102,8 +102,8 @@
 					<div class="connections">
 					<c:forEach items="${ friends }" var="friend">
 						<div>
-							<img src="${ friend.picture }"></>
-							<p>${ friend.name }</p>
+							<img src="${ friend.picture }" />
+							<p>${ friend.name } (${ friend.universe })</p>
 						</div>
 					</c:forEach>
 					</div>

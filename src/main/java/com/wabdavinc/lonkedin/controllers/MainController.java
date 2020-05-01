@@ -155,6 +155,15 @@ public class MainController {
 		return "searchResults.jsp";
 	}
 	
+	@PostMapping("/accept/{user_id}")
+	public String accept(@PathVariable("user_id") Long id, HttpSession session) {
+		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+		User friend = urepo.findById(id).orElse(null);
+		u.getFriends().add(friend);
+		u.getFriendRequests().remove(friend);
+		urepo.save(u);
+		return "redirect:/dashboard";
+	}
 	@PostMapping("/reject/{user_id}")
 	public String reject(@PathVariable("user_id") Long id, HttpSession session) {
 		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
