@@ -81,7 +81,7 @@ public class MainController {
 	
 //	**************************************************************
 	
-//	VERNNON AND CHRISTINE
+//	Greg
 //	============================================================== Dashboard
 	
 	@GetMapping("/dashboard")
@@ -90,7 +90,10 @@ public class MainController {
 			return "redirect:/lonkedin/registration";
 		}
 		Long id = (Long) session.getAttribute("user_id");
+		List<User> connections = urepo.findAll();
 		model.addAttribute("user",urepo.findById(id).orElse(null));
+		model.addAttribute("connections",connections);
+		
 		return "dashboard.jsp";
 	}
 	
