@@ -1,5 +1,7 @@
 package com.wabdavinc.lonkedin.controllers;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -79,16 +81,39 @@ public class MainController {
 	
 //	**************************************************************
 	
-//	VERNNON AND CHRISTINE
+//	GREG
 //	============================================================== Dashboard
 	
 	@GetMapping("/dashboard")
 	public String dashboard(HttpSession session, Model model) {
 		if(session.getAttribute("user_id") == null) {
-			return "redirect:/lonkedin/registration";
+			return "redirect:/registration";
 		}
 		Long id = (Long) session.getAttribute("user_id");
-		model.addAttribute("user",urepo.findById(id).orElse(null));
+		User user = urepo.findById(id).orElse(null);
+		model.addAttribute("user",user);
+		ArrayList<User> friends = new ArrayList<User>();
+		if(user.getFriends().size() != 0) {
+			for(int i=0;i<user.getFriends().size();i++) {
+				friends.add(user.getFriends().get(i));
+			}	
+		}
+		ArrayList<User> enemies = new ArrayList<User>();
+		if(user.getEnemies().size() != 0) {
+			for(int i=0;i<5;i++) {
+				enemies.add(user.getEnemies().get(i));
+			}	
+		}
+		String[] myArr;
+		for(User friend : user.getFriends()) {
+			friend.getPosts().size();
+		}
+//		user.getFriends().add(urepo.findByEmail("yourmom@gmail.com"));
+//		urepo.save(user);
+		model.addAttribute("friends", friends);
+		model.addAttribute("enemies", enemies);
+		model.addAttribute("posts",prepo.findAll());
+//		prepo.findById(id).orElse(null).getCharacter();
 		return "dashboard.jsp";
 	}
 	
