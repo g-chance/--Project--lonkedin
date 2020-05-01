@@ -1,6 +1,6 @@
 package com.wabdavinc.lonkedin.controllers;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wabdavinc.lonkedin.models.Game;
 import com.wabdavinc.lonkedin.models.Job;
+import com.wabdavinc.lonkedin.models.Skill;
 import com.wabdavinc.lonkedin.models.User;
 import com.wabdavinc.lonkedin.repositories.GameRepo;
 import com.wabdavinc.lonkedin.repositories.JobRepo;
@@ -81,26 +82,48 @@ public class MainController {
 	
 //	**************************************************************
 	
-//	Greg
+//	GREG
 //	============================================================== Dashboard
 	
 	@GetMapping("/dashboard")
 	public String dashboard(HttpSession session, Model model) {
 		if(session.getAttribute("user_id") == null) {
-			return "redirect:/lonkedin/registration";
+			return "redirect:/registration";
 		}
 		Long id = (Long) session.getAttribute("user_id");
-		List <User> connections = urepo.findAll();
-		model.addAttribute("user",urepo.findById(id).orElse(null));
-		model.addAttribute("connections",connections);
-		
+		User user = urepo.findById(id).orElse(null);
+		model.addAttribute("user",user);
+		ArrayList<User> friends = new ArrayList<User>();
+		if(user.getFriends().size() != 0) {
+			for(int i=0;i<user.getFriends().size();i++) {
+				friends.add(user.getFriends().get(i));
+			}	
+		}
+		ArrayList<User> enemies = new ArrayList<User>();
+		if(user.getEnemies().size() != 0) {
+			for(int i=0;i<5;i++) {
+				enemies.add(user.getEnemies().get(i));
+			}	
+		}
+		String[] myArr;
+		for(User friend : user.getFriends()) {
+			friend.getPosts().size();
+		}
+//		user.getFriends().add(urepo.findByEmail("yourmom@gmail.com"));
+//		urepo.save(user);
+		model.addAttribute("friends", friends);
+		model.addAttribute("enemies", enemies);
+		model.addAttribute("posts",prepo.findAll());
+		// List <User> connections = urepo.findAll();
+		// model.addAttribute("user",urepo.findById(id).orElse(null));
+		// model.addAttribute("connections",connections);
 		return "dashboard.jsp";
 	}
 	
 	
 //	**************************************************************
 	
-//	VERNON
+//	VERNON AND 
 //	============================================================== Connections
 	
 	@GetMapping("/connections/{user_id}")
@@ -174,6 +197,50 @@ public class MainController {
 		}
 		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
 		return "redirect:/connections/" + id;
+	}
+	
+	@GetMapping("/skill")
+	public String newSkill(Model model, HttpSession session) {
+		Long id = (Long) session.getAttribute("user_id");
+		model.addAttribute("skill", new Skill());
+		model.addAttribute("allSkills", srepo.findAll());
+		model.addAttribute("user",urepo.findById(id).orElse(null));
+		return "skill.jsp";
+	}
+	
+	@PostMapping("/skill/new")
+	public String submitSkill(@Valid @ModelAttribute("skill") Skill skill, 
+			BindingResult result, Model model, HttpSession session
+			) {
+		model.addAttribute("skill", new Skill());
+		if(result.hasErrors()) {
+			return "skill.jsp";
+		}
+		//Add Validator to prevent duplicate skills later
+		else {
+			srepo.save(skill);
+		}
+		return "redirect:/dashboard";
+		
+		
+	}
+	
+	@PostMapping("/skill/add")
+	public String addSkill(@Valid @ModelAttribute("skill") Skill skill, 
+			BindingResult result, Model model, HttpSession session, @RequestParam("userSkill") Long sId) {
+		model.addAttribute("skill", new Skill());
+		if(result.hasErrors()) {
+			return "skill.jsp";
+		}else {
+			Long id = (Long) session.getAttribute("user_id");
+			User loggedIn = urepo.findById(id).orElse(null);
+			Skill thisSkill =srepo.findById(sId).orElse(null);
+			loggedIn.getSkills().add(thisSkill);
+			urepo.save(loggedIn);
+		}
+		return "redirect:/dashboard";
+		
+		
 	}
 	
 //	**************************************************************
@@ -250,15 +317,13 @@ public class MainController {
 			}
 		} 
 
-		@PostMapping("/apply")
-		public String apply(HttpSession session, Model model){
-			// attach the job id to the user
-//			Job jobs=jrepo.findAll().orElse(null);
-//			Job job= jrepo.findById(jobs.getJob.getId().orElse(null));
-//			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
-//			user.setJob(job);
-			
-			return "jobs.jsp";
+		@PostMapping("/apply/{job_id}")
+		public String apply(@PathVariable("job_id") Long id, HttpSession session, Model model){
+			Job job= jrepo.findById(id).orElse(null);
+			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+			user.setJob(job);
+			urepo.save(user);
+			return "redirect:/jobs";
 		}
 	
 	

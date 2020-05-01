@@ -15,48 +15,43 @@
 
 <body>
 
-	<div class="wrapper">
-		<div class="nav">
-			<div class="strip">
-				<div class="icon-box">
-					<img src="/images/friends.png" alt="logo" class="logo" />
-				</div>
-				<div class="search">
+	<div class="wrapper dashboard">
+
+		<div class="navwrapper">
+		
+			<div class="nav">
+				
+				<div class="nav1">
+					<p class="llogo">Lonked<span>in</span></p>
 					<form action="/search" method="POST">
 						<input type="text" placeholder="search">
 						<button type="button">Search</button>
 					</form>
+					<div>
+						<img class="icon-box fafa" src="/images/friends.png" alt="logo"  />
+						<a class="icon-box" href="/dashboard">
+							<img class="fafa" src="/images/home.png" alt="home" >
+						</a>
+						<a class="icon-box" href="/connections/${user.id}">
+							<img class="fafa" src="/images/friends.png" alt="friends"  />
+						</a>
+						<a class="icon-box" href="/connections/${user.id}">
+							<img class="fafa" src="/images/skull.png" alt="enemies" />
+						</a>
+					</div>
 				</div>
-
-				<div class="icon-box">
-					<a href="/dashboard">
-						<img src="/images/home.png" alt="home" class="logo">
-						<!-- <p>home</p> -->
-					</a>
-				</div>
-
-				<div class="icon-box friend">
-					<a href="/connections/${user.id}">
-						<img src="/images/friends.png" alt="friends" class="logo" />
-						<!-- <p>friends</p> -->
-					</a>
-				</div>
-				<div class="icon-box">
-
-					<a href="/connections/${user.id}"><img src="/images/skull.png" alt="enemies" class="logo" />
-						<!-- <p>enemies</p> -->
-					</a>
+				<div class="nav2">
+					<a class = "logout" href="/logout">Logout</a>
 				</div>
 				
 			</div>
-			<div class="logout">
-				<a href="/logout">Logout</a>
-			</div>
+			
 		</div>
+
+		<div class="navSpacer"></div>
 
 <!-- HEADER -->
 
-		<h1>Welcome, ${user.name}</h1>
 
 <!-- DASH GRID -->
 
@@ -65,57 +60,75 @@
 			<!-- COLUMN 1 -->
 			
 			<div class="col1">
-				<h2>You are currently on your dashboard!</h2>
 				<!-- Each div you add below here will be a row in column 1 -->
 
 				<!-- Profile page -->
-				<img class="profile" src="${user.picture}" alt="avatar" class="logo" />
-				<div class="profile_content">
+				<div class = "row profileRow">
+					<img id="profileImage" src="${ user.picture }" alt="logo" class="logo" />
+					<div>
+						<h1>${ user.name } (${ user.universe })</h1>
+						<p>${ user.game.name } Game Placeholder</p>
+						<p>${ user.job.name } Job Placeholder</p>
+						<p>(number) Connections -- (num) friends, (num) enemies</p>
+					</div>
+				</div>
+				<div class="row"> 
+					<h3>Friend Requests</h3>
+				</div>
+				<div class="row"> 
+					<h3>Enemy Requests</h3>
+				</div>
+				<div class="row">
 					<h3>Connections</h3>
-					<ul>
-						
-						<c:forEach items="${connections}" var ="list">
-							<c:if test = "${list.getFriends().contains(user) == false && list.getEnemies().contains(user) == false && list != user }">
-								
-									<li>${list.email}</li>
-								
-							</c:if>
-						</c:forEach>
-
-					</ul>
-
+					<div class="connections">
+					<c:forEach items="${ friends }" var="friend">
+						<div>
+							<img src="${ friend.picture }"></>
+							<p>${ friend.name }</p>
+						</div>
+					</c:forEach>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
 				</div>
 				
-
-				<div class="missions">
-					<h3>Current Missions Accepted</h3>
-					<ol>
-						<li>Job 1</li>
-						<li>Job 2</li>
-						<li>Job 3</li>
-					</ol>
+				<div class="row">
+					<h3>Skills</h3>
 				</div>
+				<!-- <c:forEach items="${connections}" var ="list">
+					<c:if test = "${list.getFriends().contains(user) == false && list.getEnemies().contains(user) == false && list != user }">
+						
+							<li>${list.email}</li>
+						
+					</c:if>
+				</c:forEach> -->
 			</div>
 
 			<!-- COLUMN 2 -->
 			
 			<div class="col2">
 				<!-- Each div you add below here will be a row in column 2 -->
-				<div class="connection">
-					<h3>Friend/Fight Requests</h3>
+				<div class="row connection">
+					<h3>Feed</h3>
 					<div class="feed">
-						<h2>Feed</h2>
 						<div class="job">
-							<h3>Job Postings</h3>
+							<h4>Job Postings</h4>
 							<a href="/job">Plummer Needed</a>
 						</div>
 
 						<div class="post">
-							<h3>Posts</h3>
-							<p>Bought some new shows</p>
+							<h4>Posts</h4>
+								<c:forEach items="${ posts }" var="post">
+									<c:if test="${ user.getFriends().contains(post.character) }">
+							<p>${ post.content }</p>
+									</c:if>
+								</c:forEach>
 						</div>
 						<div class="updates">
-							<h3>Updates</h3>
+							<h4>Updates</h4>
 							<p>Lonk gets new job as a plummer!</p>
 						</div>
 					</div>
