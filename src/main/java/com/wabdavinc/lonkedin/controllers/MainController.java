@@ -284,9 +284,9 @@ public class MainController {
 		model.addAttribute("job", new Job());
 		model.addAttribute("game", new Game());
 		model.addAttribute("jobs", jrepo.findAll());
-		if(user.getGame()!= null) {
-			model.addAttribute("usersgame", user.getGame());
-		}
+		model.addAttribute("userJob",user.getJob());
+		model.addAttribute("usersgame", user.getGame());
+	
 		return "jobs.jsp";
 	}
 	
@@ -296,6 +296,7 @@ public class MainController {
 	public String doJobs(Model model, HttpSession session, @Valid @ModelAttribute("job")Job job,BindingResult result) {
 		if(result.hasErrors()) {
 			model.addAttribute("game", new Game());
+			model.addAttribute("job", new Job());
 			model.addAttribute("jobs", jrepo.findAll());
 			return "jobs.jsp";
           
@@ -305,9 +306,8 @@ public class MainController {
 			Game g = grepo.findById(u.getGame().getId()).orElse(null);
 			System.out.println(g);
 			Job j = jrepo.save(job);
-			j.setGame(g);       	
-        	// g.getJobs().add(j);
-			// grepo.save(g);
+			j.setGame(g);
+			
 			jrepo.save(j);
 
 			return "redirect:/jobs";
