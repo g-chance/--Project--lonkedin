@@ -120,6 +120,8 @@
 				$('img').click(function(){
 					let picValue = $(this).attr("src");
 					$("#picinput").attr("value", picValue);
+					$("img").css("outline", "none");
+					$(this).css("outline","3px solid green");
 				}) 
 			})
 
@@ -147,7 +149,7 @@
 			<h1 class="header">Tell us who you are!</h1>
 			<p class="error"><form:errors path="user.*"/></p>
 			<form:form class="form" action="/newcharacter" method="post" modelAttribute="user">
-				<form:input class="input" list="characters" path="name" placeholder="Your Name"></form:input>
+				<form:input class="input" list="characters" path="name" placeholder="Select your Name"></form:input>
 				<datalist id="characters">
 					<!-- AXIOS API RESULT DISPLAYED HERE -->
 				</datalist>
