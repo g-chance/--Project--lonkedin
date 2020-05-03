@@ -18,7 +18,7 @@
 
 	<div class="wrapper dashboard">
 
-		<div class="navwrapper">
+		<div class="navwrapper navLI">
 		
 			<div class="nav">
 				
@@ -45,7 +45,7 @@
 					</div>
 				</div>
 				<div class="nav3">
-					<a class = "logout" href="/logout">Logout</a>
+					<a class = "links" href="/logout">Logout</a>
 				</div>
 				
 			</div>
@@ -55,7 +55,6 @@
 		<div class="navSpacer"></div>
 
 <!-- HEADER -->
-
 
 <!-- DASH GRID -->
 
@@ -71,14 +70,29 @@
 					<img id="profileImage" src="${ user.picture }" alt="logo" class="logo" />
 					<div>
 						<h1>${ user.name } (${user.universe})</h1>
-						<p style="font-weight: bold; color:green">${user.game.name}</p>
-						<p style="font-weight: bold;color:green"> ${user.job.title}</p>
+						<p style="font-weight: bold; color:green">${user.game.name} Game Placeholder</p>
+						<p style="font-weight: bold; color:green"> ${user.job.title} Job Placeholder</p>
 						<p>(number) Connections -- (num) friends, (num) enemies</p>
 					</div>
 				</div>
+				<c:if test="${ user.getFriendRequests().size() != 0 }">
 				<div class="row"> 
 					<h3>Friend Requests</h3>
+					<div class="friendRequests">
+					<c:forEach items="${ friendRequests }" var="request">
+						<div>
+							<p>${ request.name } (${ request.universe })</p>
+							<form action="/accept/${ request.id }" method="post">
+								<input type="submit" value="Accept" />
+							</form>
+							<form action="/reject/${ request.id }" method="post">
+								<input type="submit" value="Reject" />
+							</form>
+						</div>
+					</c:forEach>
+					</div>
 				</div>
+				</c:if>
 				<div class="row"> 
 					<h3>Enemy Requests</h3>
 				</div>
@@ -87,15 +101,10 @@
 					<div class="connections">
 					<c:forEach items="${ friends }" var="friend">
 						<div>
-							<img src="${ friend.picture }"></>
-							<p>${ friend.name }</p>
+							<img src="${ friend.picture }" />
+							<p>${ friend.name } (${ friend.universe })</p>
 						</div>
 					</c:forEach>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
 					</div>
 				</div>
 				
@@ -127,7 +136,7 @@
 						</form:form> 
 						<div class="feed">
 	
-							<div class="post">
+							<div class="feedSubHeader post">
 								<h3>Posts</h3>
 									<c:forEach items="${ posts }" var="post">
 										<c:if test="${ user.getFriends().contains(post.character) }">
@@ -135,10 +144,10 @@
 										</c:if>
 									</c:forEach>
 							</div>
-							<div class="job">
+							<div class="feedSubHeader">
 								<h3>Recent Job Listings</h3>
 							</div>
-							<div class="updates">
+							<div class="feedSubHeader">
 								<h3>Newest Games</h3>
 							</div>
 						</div>

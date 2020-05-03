@@ -118,10 +118,12 @@ public class MainController {
 //			System.out.println(user.getFriends().size());
 //			System.out.println(user.getName());
 //		}
-		model.addAttribute("friends", friends);
+		model.addAttribute("friends", user.getFriends());
+		System.out.println(user.getFriends());
 		model.addAttribute("enemies", enemies);
 		model.addAttribute("posts",prepo.findAll());
 		model.addAttribute("post", new Post());
+		model.addAttribute("friendRequests", user.getFriendRequests());
 		// List <User> connections = urepo.findAll();
 		// model.addAttribute("user",urepo.findById(id).orElse(null));
 		// model.addAttribute("connections",connections);
@@ -140,17 +142,58 @@ public class MainController {
 	}
 	
 	@PostMapping("/search")
-	public String search(@RequestParam("search") String str, Model model) {
+	public String search(@RequestParam("search") String str, Model model, HttpSession session) {
 		List<User> searchResults = urepo.findByNameContaining(str);
 		for(int i=0;i<urepo.findByNameContaining(str).size();i++) {
 			System.out.println(urepo.findByNameContaining(str).get(i).getName());
 		}
-		model.addAttribute("searchResults", searchResults);
+		System.out.println(searchResults);
+		model.addAttribute("searchResults", urepo.findByNameContaining(str));
+		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+		model.addAttribute("user", u);
+		model.addAttribute("friends", u.getFriends());
 		return "searchResults.jsp";
 	}
 	
+	@PostMapping("/accept/{user_id}")
+	public String accept(@PathVariable("user_id") Long id, HttpSession session) {
+		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+		User friend = urepo.findById(id).orElse(null);
+		u.getFriends().add(friend);
+		u.getFriendRequests().remove(friend);
+		urepo.save(u);
+		return "redirect:/dashboard";
+	}
+	@PostMapping("/reject/{user_id}")
+	public String reject(@PathVariable("user_id") Long id, HttpSession session) {
+		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+		User friend = urepo.findById(id).orElse(null);
+		u.getFriendRequests().remove(friend);
+		urepo.save(u);
+		return "redirect:/dashboard";
+	}
+	
+//	============================================================== searchResults
+	
+	@GetMapping("/requestConnection/{userid}")
+	public String requestConnection(@PathVariable("userid") Long connectionID, HttpSession session) {
+		User connection = urepo.findById(connectionID).orElse(null);
+		User user = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+//		System.out.println(connection.getName());
+//		System.out.println(user.getName());
+		System.out.println(connection.getFriendRequests());
+		System.out.println(connection.getFriendRequests().size());
+		if(connection.getFriendRequests().contains(user)) {
+			return "redirect:/dashboard";
+		}
+		connection.getFriendRequests().add(user);
+		urepo.save(connection);
+		System.out.println(connection.getFriendRequests().size());
+		return "redirect:/dashboard";
+	}
 	
 //	**************************************************************
+	
 	
 //	VERNON AND 
 //	============================================================== Connections
@@ -208,7 +251,7 @@ public class MainController {
 			enemy.getEnemies().add(loggedIn);
 			urepo.save(enemy);
 		}
-		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
+		//TODO: ERROR HANDILING TO SAY IF THEY ARE A FRIEND
 		return "redirect:/connections/" + id;
 	}
 	
@@ -224,7 +267,7 @@ public class MainController {
 			enemy.getEnemies().remove(loggedIn);
 			urepo.save(enemy);
 		}
-		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
+		//TODO: ERROR HANDILING TO SAY IF THEY ARE A FRIEND
 		return "redirect:/connections/" + id;
 	}
 	
@@ -271,6 +314,8 @@ public class MainController {
 		
 		
 	}
+	
+	
 	
 //	**************************************************************
 	

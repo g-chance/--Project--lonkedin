@@ -1,5 +1,6 @@
 package com.wabdavinc.lonkedin.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -68,6 +69,13 @@ public class User {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
+			name="friendRequests",
+			joinColumns = @JoinColumn(name = "friend_id"),
+			inverseJoinColumns = @JoinColumn(name="other_friend_id"))
+	private List<User> friendRequests;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
 			name="enemies",
 			joinColumns = @JoinColumn(name = "enemy_id"),
 			inverseJoinColumns = @JoinColumn(name="other_enemy_id"))
@@ -82,6 +90,14 @@ public class User {
 	
 	public User() {
 		
+	}
+
+	public List<User> getFriendRequests() {
+		return friendRequests;
+	}
+
+	public void setFriendRequests(List<User> friendRequests) {
+		this.friendRequests = friendRequests;
 	}
 
 	public Long getId() {
@@ -213,4 +229,5 @@ public class User {
 	protected void onUpdate() {
 		this.updatedAt = new Date();
 	}
+
 }
