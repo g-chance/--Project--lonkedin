@@ -156,6 +156,7 @@
 				</datalist>
 				<form:input class="input" path="universe" placeholder="What Universe are you from?"/>
 				<form:label class="input picture" path="picture">Select your avatar:</form:label>
+				<img src="/images/lonk.jpg" alt="" />
 				<div id="images"></div>
 				<form:input id="picinput" type="hidden" class="input" path="picture" value=""/>
 				<input class="input submit" type="submit" value="Submit"/>

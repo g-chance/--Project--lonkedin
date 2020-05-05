@@ -5,6 +5,7 @@
 .row {
 	padding: 10px;
 	border: 1px solid black;
+	background-color: rgba(255, 255, 255, 0.502);
 }
 #profileImage {
 	margin: 0 15px 0 0;
@@ -26,26 +27,19 @@ h3 {
 	grid-template-columns: repeat(5, 1fr);
 	justify-items: center;
 }
+/* .connectionsRow {
+	width: 100%;
+} */
 .connections img {
-	width: 75px;
-	height: 75px;
+/* 	width: 75px;
+	height: 75px; */
+	width: 100%;
 	padding: 2px;
 	border: 1px solid black;
 }
 .connections p {
+	/* font-size: 1vw; */
 	text-align: center;
-}
-.content {
-	width: 370px;
-	padding: 5px;
-	border-radius: 0%;
-	font-size: 15px;
-	margin: 0 0 10px 0;
-}
-.submit {
-	padding: 5px;
-	font-size: 15px;
-	border-radius: 0%;
 }
 .feed {
 	display: grid;
@@ -56,8 +50,22 @@ h3 {
 	color:red;
 }
 .form {
+	display: grid;
+	grid-template-columns: 5fr 1fr;
+	column-gap: 5px;
 	justify-self: center;
-	margin: 0 0 10px 0;
+	margin: 0 0 20px 0;
+	width: 80%;
+}
+.content {
+	padding: 5px;
+	border-radius: 0%;
+	font-size: 15px;
+}
+.submit {
+	padding: 5px;
+	font-size: 15px;
+	border-radius: 0%;
 }
 .feedSubHeader {
 	margin: 0 0 10px 0;

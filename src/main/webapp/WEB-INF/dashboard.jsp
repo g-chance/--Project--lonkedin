@@ -112,7 +112,7 @@
 					<h3>Connections</h3>
 					<div class="connections">
 					<c:forEach items="${ friends }" var="friend">
-						<div>
+						<div class="connectionsRow">
 							<img src="${ friend.picture }" />
 							<a href="/dashboard/${ friend.id }">
 								<p>${ friend.name } (${ friend.universe })</p>
@@ -143,10 +143,8 @@
 					<div class="feed">
 						<p class="error"><form:errors path="post.*"/></p>
 						<form:form class="form" action="/newpost" method="post" modelAttribute="post">
-						    <p>
-						        <form:input class="content" path="content" placeholder="Share what's on your mind!"/>
-       	   					    <input class="submit" type="submit" value="Post"/>
-	   					    </p>
+						    <form:input class="content" path="content" placeholder="Share what's on your mind!"/>
+	   					    <input class="submit" type="submit" value="Post"/>
 						</form:form> 
 						<div class="feed">
 	

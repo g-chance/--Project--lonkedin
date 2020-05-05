@@ -148,7 +148,7 @@ public class MainController {
 		model.addAttribute("user",user);
 		model.addAttribute("post", new Post());
 		model.addAttribute("friendRequests", user.getFriendRequests());
-//	Get a list of 5 games
+//	Get a list of 10 games
 		List<Game> games = new ArrayList<Game>();
 		if(grepo.findAll().size() != 0) {
 			for(int i=0;i<grepo.findAll().size() && i<10;i++) {
@@ -156,11 +156,13 @@ public class MainController {
 			}
 		}
 		model.addAttribute("games", games);
-//	Get a list of 5 jobs
+//	Get a list of 10 jobs
 		List<Job> jobs = new ArrayList<Job>();
 		if(jrepo.findAll().size() != 0) {
-			for(int i=0;i<jrepo.findAll().size() && i<10;i++) {
-				jobs.add(jrepo.findAll().get(i));
+			for(int i=0;i<jrepo.findAll().size() && jobs.size()<10;i++) {
+				if(jrepo.findAll().get(i).getCharacters().size() == 0) {
+					jobs.add(jrepo.findAll().get(i));	
+				}
 			}
 		}
 		model.addAttribute("jobs", jobs);
@@ -400,21 +402,27 @@ public class MainController {
 		model.addAttribute("jobs", jrepo.findAll());
 		model.addAttribute("userJob",user.getJob());
 		model.addAttribute("usersgame", user.getGame());
-		model.addAttribute("user", user);
+//		model.addAttribute("user", user);
 		return "jobs.jsp";
 	}
 	
 
 	//we need a way to check if company already exists in the database if the user is trying to create one 
 	@PostMapping("/jobs")
-	public String doJobs(Model model, HttpSession session, @Valid @ModelAttribute("job")Job job,BindingResult result) {
+	public String doJobs(Model model, HttpSession session, @Valid @ModelAttribute("job")Job job, BindingResult result) {
 		if(result.hasErrors()) {
+			System.out.println("butts");
+			Long id = (Long) session.getAttribute("user_id");
+			User user= urepo.findById(id).orElse(null);
+			
 			model.addAttribute("game", new Game());
-			model.addAttribute("job", new Job());
 			model.addAttribute("jobs", jrepo.findAll());
+			model.addAttribute("userJob",user.getJob());
+			model.addAttribute("usersgame", user.getGame());
+			model.addAttribute("user", user);
 			return "jobs.jsp";
           
-        }else{
+        } else {
         	Long userid=(Long) session.getAttribute("user_id");
 			User u =urepo.findById(userid).orElse(null);
 			Game g = grepo.findById(u.getGame().getId()).orElse(null);
@@ -443,7 +451,7 @@ public class MainController {
 	}
 
 	@PostMapping("/game")
-	public String doGames(Model model, HttpSession session, @Valid @ModelAttribute("game")Game game,BindingResult result) {
+	public String doGames(Model model, HttpSession session, @Valid @ModelAttribute("game")Game game, BindingResult result) {
 		if(result.hasErrors()) {
 			System.out.println(game.getId());
 			model.addAttribute("job", new Job());
@@ -451,9 +459,10 @@ public class MainController {
             return "jobs.jsp";
           
         } else {
-			// create game
+			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+        	// create game
 			grepo.save(game);
-
+			
 			// create job
 			Job job = new Job();
 			job.setTitle("CEO");
@@ -461,10 +470,12 @@ public class MainController {
 			job.setSalary(10);
 			job.setMorality(true);
 			job.setGame(game);
+			List<User> userList = new ArrayList<User>();
+			userList.add(user);
+			job.setCharacters(userList);
 			jrepo.save(job);
 
 			// add game and job to user
-			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 			user.setGame(game);
 			user.setJob(job);
 			urepo.save(user);

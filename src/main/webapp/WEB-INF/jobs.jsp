@@ -62,13 +62,12 @@
 			<!-- jobForms COLUMN 1 **ADDING COMPANIES** -->
 			<!-- //NEED TO FIND A WAY SO THAT ONLY THOSE WITHOUT CURRENT COMPANIES CAN MAKE COMPANIES -->
 			<!-- VERIFY IF SOMEONE HAS ALREADY CREATED THE SAME COMPANY -->
-
-			<div class="companyForm">
+			
 			<c:if test="${usersgame.id == null}">
+			<div class="companyForm">
+			
 				<h1 class="header">Add a Game</h1>
-				<p>
-					<form:errors path="game.*" />
-				</p>
+				<p> <form:errors path="game.*" /> </p>
 				<form:form action="/game" method="post" modelAttribute="game">
 					<p>
 						<form:input path="name" placeholder="Company Name"/>
@@ -76,20 +75,18 @@
 					<p>
 						<form:input path="description" placeholder="Company Description"/>
 					</p>
-					<input type="submit" value="Create a Company!" />
+					<input type="submit" value="Create Game!" />
 				</form:form>
-			</c:if>
 			</div>
+			</c:if>
 
 			<!-- jobForms COLUMN 2 **ADDING JOBS** -->
 			<!-- NEED TO FIND A WAY SO THAT ONLY COMPANY CEOS/SUPERVISORS CAN MAKE JOBS FOR THE SPECIFIC COMPANY -->
 
-			<div class="jobForm">
 			<c:if test="${usersgame.id != null}">
+			<div class="jobForm">
 				<h1 class="header">Add a Job</h1>
-				<p>
-					<form:errors path="job.*" />
-				</p>
+				<p> <form:errors path="job.*" /> </p>
 				<form:form action="/jobs" method="post" modelAttribute="job">
 					<p>
 						<form:input value="${usersgame.name}" path="game" disabled="true" />
@@ -112,8 +109,9 @@
 				    </p>
 				    <input class="submit" type="submit" value="Create Job!"/>
 				</form:form> 
-			</c:if>
+
 			</div>
+			</c:if>
 		</div>
 
 		<!-- JOB LISTINGS -->
@@ -135,6 +133,7 @@
 				<tbody>
 				
 					<c:forEach var="job" items="${jobs}">
+					<c:if test="${ job.characters.size() == 0 }">
 					<tr>
 						<td class="lgCol">${job.title}</td>
 						<td class="lgCol">${job.game.name}</td>
@@ -154,6 +153,7 @@
 						
 							<!-- apply button  -->
 					</tr>
+					</c:if>
 				</c:forEach>
 			
 				</tbody>
