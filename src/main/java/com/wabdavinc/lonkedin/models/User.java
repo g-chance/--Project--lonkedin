@@ -80,6 +80,13 @@ public class User {
 			inverseJoinColumns = @JoinColumn(name="other_enemy_id"))
 	private List<User> enemies;
 	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name="enemyRequests",
+			joinColumns = @JoinColumn(name = "friend_id"),
+			inverseJoinColumns = @JoinColumn(name="other_friend_id"))
+	private List<User> enemyRequests;
+	
 	@Column(updatable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date createdAt;
@@ -88,6 +95,14 @@ public class User {
 	
 	public User() {
 		
+	}
+
+	public List<User> getEnemyRequests() {
+		return enemyRequests;
+	}
+
+	public void setEnemyRequests(List<User> enemyRequests) {
+		this.enemyRequests = enemyRequests;
 	}
 
 	public Long getId() {

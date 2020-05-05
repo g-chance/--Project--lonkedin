@@ -57,6 +57,7 @@ h3 {
 }
 .form {
 	justify-self: center;
+	margin: 0 0 10px 0;
 }
 .feedSubHeader {
 	margin: 0 0 10px 0;
@@ -68,10 +69,33 @@ h3 {
 .friendRequests form, .friendRequests p {
 	display: inline-block;
 }
-.jobListing, .gameListing {
+.jobListing, .gameListing, .postContent, .postPic {
 	padding: 2px 5px;
-	margin: 0 5px;
+	margin: 0 5px 5px 5px;
 }
 .connectionsCount {
-	margin: 20px 0 0 0;
+	margin: 10px 0 0 0;
+}
+.postPic {
+	width: 50px;
+	border-radius: 50%;
+}
+.postGrid {
+	display: grid;
+	grid-template-columns: auto 1fr;
+}
+.postName {
+	font-weight: bold;
+}
+.postJob, .postCreated {
+	font-size: 15px;
+	color: gray;
+}
+.postContent {
+	margin: 5px 5px 0 5px
+}
+.post {
+	padding: 10px 0;
+	margin: 0 0 10px 0;
+	border: 1px solid black;
 }

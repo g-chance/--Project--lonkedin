@@ -71,6 +71,8 @@ public class MainController {
 			lonk.setUniverse("Hyrool");
 			lonk.setEmail("lonk@lonkedin.com");
 			lonk.setPicture("/images/lonk.jpg");
+			List<User> lonksFriends = new ArrayList<User>();
+			lonk.setFriends(lonksFriends);
 			urepo.save(lonk);
 			
 			Game zorlda = new Game();
@@ -86,6 +88,11 @@ public class MainController {
 			ceo.setGame(zorlda);
 			jrepo.save(ceo);
 			
+			Post welcome = new Post();
+			welcome.setContent("Welcome to LonkedIn, friend! Looking forward to getting to know you better! We're always looking for good people at The Legend of Zorlda, check out our Game page for new job listings :)");
+			welcome.setCharacter(lonk);
+			prepo.save(welcome);
+			
 			lonk.setGame(zorlda);
 			lonk.setJob(ceo);
 			urepo.save(lonk);
@@ -96,8 +103,8 @@ public class MainController {
 		System.out.println(u);
 		System.out.println(lonk);
 		if(!u.getFriends().contains(lonk)) {
-			System.out.println(u);
-			System.out.println(lonk);
+			System.out.println(u.getFriends());
+			System.out.println(lonk.getFriends());
 			u.getFriends().add(lonk);
 			lonk.getFriends().add(u);
 			urepo.save(u);
@@ -140,7 +147,6 @@ public class MainController {
 //	Add model attributes
 		model.addAttribute("user",user);
 		model.addAttribute("post", new Post());
-		model.addAttribute("posts",prepo.findAll());
 		model.addAttribute("friendRequests", user.getFriendRequests());
 //	Get a list of 5 games
 		List<Game> games = new ArrayList<Game>();
@@ -178,18 +184,28 @@ public class MainController {
 		model.addAttribute("connectionsCount", user.getFriends().size()+user.getEnemies().size());
 		model.addAttribute("friendsCount", user.getFriends().size());
 		model.addAttribute("enemiesCount", user.getEnemies().size());
+//	Get friend's latest posts
+		List<Post> posts = new ArrayList<Post>();
+		for(User friend : user.getFriends()) {
+			if(friend.getPosts().size() > 0) {
+				posts.add(friend.getPosts().get(friend.getPosts().size()-1));	
+			}
+		}
+		model.addAttribute("posts", posts);
+		
 		return "dashboard.jsp";
 	}
 	
 	@PostMapping("/newpost")
 	public String newPost(@Valid @ModelAttribute("post") Post post, BindingResult result, Model model, HttpSession session) {
+		User user = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
 		if(result.hasErrors()) {
-			User user = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
 			model.addAttribute("user", user);
 			return "dashboard.jsp";
 		}
+		post.setCharacter(user);
 		prepo.save(post);
-		return "redirect:/dashboard";
+		return "redirect:/dashboard/"+user.getId();
 	}
 	
 	@PostMapping("/search")
@@ -215,7 +231,7 @@ public class MainController {
 		friend.getFriends().add(u);
 		urepo.save(u);
 		urepo.save(friend);
-		return "redirect:/dashboard";
+		return "redirect:/dashboard/"+u.getId();
 	}
 	@PostMapping("/reject/{user_id}")
 	public String reject(@PathVariable("user_id") Long id, HttpSession session) {
@@ -223,7 +239,7 @@ public class MainController {
 		User friend = urepo.findById(id).orElse(null);
 		u.getFriendRequests().remove(friend);
 		urepo.save(u);
-		return "redirect:/dashboard";
+		return "redirect:/dashboard/"+u.getId();
 	}
 
 	

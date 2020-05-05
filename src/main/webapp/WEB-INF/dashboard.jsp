@@ -103,9 +103,11 @@
 					</div>
 				</div>
 				</c:if>
+				<c:if test="${ user.getEnemyRequests().size() != 0 }">
 				<div class="row"> 
 					<h3>Enemy Requests</h3>
 				</div>
+				</c:if>
 				<div class="row">
 					<h3>Connections</h3>
 					<div class="connections">
@@ -143,17 +145,25 @@
 						<form:form class="form" action="/newpost" method="post" modelAttribute="post">
 						    <p>
 						        <form:input class="content" path="content" placeholder="Share what's on your mind!"/>
-						    	<input class="submit" type="submit" value="Post"/>
+       	   					    <input class="submit" type="submit" value="Post"/>
 	   					    </p>
 						</form:form> 
 						<div class="feed">
 	
-							<div class="feedSubHeader post">
+							<div class="feedSubHeader">
 								<h3>Posts</h3>
 									<c:forEach items="${ posts }" var="post">
-										<c:if test="${ user.getFriends().contains(post.character) }">
-								<p>${ post.content }</p>
-										</c:if>
+									<div class="post">
+								<div class="postGrid">
+									<img class="postPic" src="${ post.character.picture }" alt="" />
+									<div>
+										<p class="postName">${ post.character.name } (${ post.character.universe })</p>
+										<p class="postJob">${ post.character.job.title } -- ${ post.character.game.name }</p>
+										<p class="postCreated">${ post.createdAt }</p>
+									</div>
+								</div>
+								<p class="postContent">${ post.content }</p>
+								</div>
 									</c:forEach>
 							</div>
 							<div class="feedSubHeader">
