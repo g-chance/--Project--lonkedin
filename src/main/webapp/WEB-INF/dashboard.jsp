@@ -32,8 +32,10 @@
 				</div>
 				<div class="nav2">
 					<div class="icons">
-						<img class="icon-box fafa" src="/images/friends.png" alt="logo"  />
-						<a class="icon-box" href="/dashboard">
+						<a href="/jobs">
+							<img class="icon-box fafa" src="/images/friends.png" alt="logo"  />
+						</a>
+						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
 							<img class="fafa" src="/images/home.png" alt="home" >
 						</a>
 						<a class="icon-box" href="/connections/${user.id}">
@@ -45,7 +47,7 @@
 					</div>
 				</div>
 				<div class="nav3">
-					<a class = "links" href="/logout">Logout</a>
+					<a class = "links" href="/logout">Lonkout</a>
 				</div>
 				
 			</div>
@@ -70,9 +72,17 @@
 					<img id="profileImage" src="${ user.picture }" alt="logo" class="logo" />
 					<div>
 						<h1>${ user.name } (${user.universe})</h1>
-						<p style="font-weight: bold; color:green">${user.game.name} Game Placeholder</p>
-						<p style="font-weight: bold; color:green"> ${user.job.title} Job Placeholder</p>
-						<p>(number) Connections -- (num) friends, (num) enemies</p>
+						<c:choose>
+						<c:when test="${ user.job != null }">
+						<p style="font-weight: bold; color:green">${user.game.name}</p>
+						<p style="font-weight: bold; color:green"> ${user.job.title}</p>
+						</c:when>
+						<c:otherwise>
+						<p style="font-weight: bold; color:green">Seeking Work</p>
+						</c:otherwise>
+						</c:choose>
+						<p class="connectionsCount">${ connectionsCount } Connections</p>
+						<p>${ friendsCount } Friends -- ${ enemiesCount } Enemies</p>
 					</div>
 				</div>
 				<c:if test="${ user.getFriendRequests().size() != 0 }">
@@ -102,7 +112,9 @@
 					<c:forEach items="${ friends }" var="friend">
 						<div>
 							<img src="${ friend.picture }" />
-							<p>${ friend.name } (${ friend.universe })</p>
+							<a href="/dashboard/${ friend.id }">
+								<p>${ friend.name } (${ friend.universe })</p>
+							</a>
 						</div>
 					</c:forEach>
 					</div>
@@ -146,9 +158,15 @@
 							</div>
 							<div class="feedSubHeader">
 								<h3>Recent Job Listings</h3>
+								<c:forEach items="${ jobs }" var="job">
+								<p class="jobListing">${ job.game.name } is hiring! Checkout their new posting for ${ job.title }! </p>
+								</c:forEach>
 							</div>
 							<div class="feedSubHeader">
 								<h3>Newest Games</h3>
+								<c:forEach items="${ games }" var="game">
+								<p class="gameListing">${ game.name }</p>
+								</c:forEach>
 							</div>
 						</div>
 					</div>

@@ -49,14 +49,6 @@ public class Job {
 	public Job() {
 		
 	}
-	
-	public Boolean getMorality() {
-		return morality;
-	}
-
-	public void setMorality(Boolean morality) {
-		this.morality = morality;
-	}
 
 	public Long getId() {
 		return id;
@@ -80,6 +72,14 @@ public class Job {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Boolean getMorality() {
+		return morality;
+	}
+
+	public void setMorality(Boolean morality) {
+		this.morality = morality;
 	}
 
 	public Integer getSalary() {

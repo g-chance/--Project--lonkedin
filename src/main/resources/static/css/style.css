@@ -28,7 +28,6 @@
 	right: 0;
 	background-color: #284929;
 }
-
 .nav {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
@@ -199,7 +198,11 @@
 
 .jobForms {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr;
+}
+.jobForms .companyForm, .jobForms .jobForm {
+	justify-self: center;
+	text-align: center;
 }
 
 /* CONNECTIONS */

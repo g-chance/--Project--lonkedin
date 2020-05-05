@@ -1,3 +1,4 @@
+
 .dash {
 	column-gap: 20px;
 }
@@ -66,4 +67,11 @@ h3 {
 }
 .friendRequests form, .friendRequests p {
 	display: inline-block;
+}
+.jobListing, .gameListing {
+	padding: 2px 5px;
+	margin: 0 5px;
+}
+.connectionsCount {
+	margin: 20px 0 0 0;
 }
