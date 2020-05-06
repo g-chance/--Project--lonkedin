@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.luciewang.studygroup.models.Task;
 import com.wabdavinc.lonkedin.models.Game;
 import com.wabdavinc.lonkedin.models.Job;
 import com.wabdavinc.lonkedin.models.Post;
@@ -139,6 +140,15 @@ public class MainController {
 //	GREG
 //	============================================================== Dashboard
 	
+	@GetMapping("/dashboard")
+	public String dashboardcatch(HttpSession session, Model model) {
+		if(session.getAttribute("user_id") == null) {
+			return "redirect:/registration";
+		}
+		Long id = (Long) session.getAttribute("user_id");	
+		return "redirect:/"+ id;
+	}
+	
 	@GetMapping("/dashboard/{user_id}")
 	public String dashboard(@PathVariable("user_id") Long userId, HttpSession session, Model model) {
 		if(session.getAttribute("user_id") == null) {
@@ -232,6 +242,20 @@ public class MainController {
 		return "redirect:/dashboard/"+otherUser.getId();
 	}
 	
+//	@GetMapping("/dashboard/{user_id}/loadmore")
+//	public String loadmorePost(@PathVariable("user_id") Long userId, HttpSession session, Model model) {
+//	if (session.getAttribute("user_id")==null){
+//		return "redirect:/";
+//	}
+//	User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+//	List<Post> mylist = prepo.findAll();
+//	mylist.sort((c1, c2) -> c2.getCreatedAt() - c1.getCreatedAt());
+//	model.addAttribute("posts", mylist);
+//
+//	return "dashboard.jsp";
+//}
+	
+	
 	@PostMapping("/search")
 	public String search(@RequestParam("search") String str, Model model, HttpSession session) {
 //		List<User> searchResults = urepo.findByNameContaining(str);
@@ -274,6 +298,9 @@ public class MainController {
 	
 	@GetMapping("/requestConnection/{userid}")
 	public String requestConnection(@PathVariable("userid") Long connectionID, HttpSession session) {
+		if (session.getAttribute("user_id")==null){
+			return "redirect:/";
+		}
 		User user = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
 		User connection = urepo.findById(connectionID).orElse(null);
 //		System.out.println(connection.getName());
@@ -297,7 +324,10 @@ public class MainController {
 	
 	@GetMapping("/connections/{user_id}")
 	public String connections(@PathVariable("user_id") Long uId,  HttpSession session, Model model){
-//		Long id = (Long) session.getAttribute("user_id");
+		if (session.getAttribute("user_id")==null){
+			return "redirect:/";
+		}		
+		Long id = (Long) session.getAttribute("user_id");
 		User u = urepo.findById(uId).orElse(null);
 		u.getFriends().sort((u1,u2)->u1.getEmail().compareTo(u2.getEmail()));
 		model.addAttribute("user",u);
@@ -322,6 +352,9 @@ public class MainController {
 	
 	@GetMapping("/friend/{user_id}/remove")
 	public String removeFriend(@PathVariable("user_id")Long fId, HttpSession session) {
+		if (session.getAttribute("user_id")==null){
+			return "redirect:/";
+		}
 		Long id = (Long) session.getAttribute("user_id");
 		User loggedIn = urepo.findById(id).orElse(null);
 //		Two lines above give us the user id and the User object
@@ -370,6 +403,9 @@ public class MainController {
 	
 	@GetMapping("/skill")
 	public String newSkill(Model model, HttpSession session) {
+		if (session.getAttribute("user_id")==null){
+			return "redirect:/";
+		}
 		Long id = (Long) session.getAttribute("user_id");
 		model.addAttribute("skill", new Skill());
 		model.addAttribute("allSkills", srepo.findAll());
@@ -382,14 +418,16 @@ public class MainController {
 			BindingResult result, Model model, HttpSession session
 			) {
 		model.addAttribute("skill", new Skill());
+		Long id = (Long) session.getAttribute("user_id");
 		if(result.hasErrors()) {
 			return "skill.jsp";
 		}
 		//Add Validator to prevent duplicate skills later
 		else {
+			
 			srepo.save(skill);
 		}
-		return "redirect:/dashboard";
+		return "redirect:/dashboard/" + id;
 	}
 	
 	@PostMapping("/skill/add")
@@ -416,6 +454,9 @@ public class MainController {
 	
 	@GetMapping("/jobs")
 	public String newJobForm(Model model, HttpSession session) {
+		if (session.getAttribute("user_id")==null){
+			return "redirect:/";
+		}
 		Long id = (Long) session.getAttribute("user_id");
 		User user= urepo.findById(id).orElse(null);
 		
