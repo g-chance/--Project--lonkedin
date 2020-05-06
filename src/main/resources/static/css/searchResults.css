@@ -1,4 +1,7 @@
 
+h1 {
+	margin: 0 0 10px 0;
+}
 .main {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -7,9 +10,16 @@
 }
 .row {
 	display: grid;
-	grid-template-columns: auto auto;
+	grid-template-columns: min-content auto auto;
+	align-items: center;
 	border: 1px solid black;
 	padding: 10px;
+}
+.row img {
+	width: 35px;
+	margin: 0 5px 0 0;
+	border: 1px solid black;
+	border-radius: 50%;
 }
 .row a {
 	justify-self: right;

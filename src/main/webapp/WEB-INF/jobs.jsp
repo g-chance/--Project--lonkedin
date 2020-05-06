@@ -31,22 +31,23 @@
 				</div>
 				<div class="nav2">
 					<div class="icons">
-						<a href="/jobs">
-							<img class="icon-box fafa" src="/images/friends.png" alt="logo"  />
-						</a>
 						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
 							<img class="fafa" src="/images/home.png" alt="home" >
 						</a>
-						<a class="icon-box" href="/connections/${user.id}">
-							<img class="fafa" src="/images/friends.png" alt="friends"  />
+						<a href="/jobs">
+							<img class="icon-box fafa" src="/images/friendsI_Icon.jpg" alt="logo"  />
 						</a>
 						<a class="icon-box" href="/connections/${user.id}">
-							<img class="fafa" src="/images/skull.png" alt="enemies" />
+							<img class="fafa" src="/images/friends2.png" alt="friends"  />
+						</a>
+						<a class="icon-box" href="/skill">
+							<img class="fafa" src="/images/chost.png" alt="friends"  />
 						</a>
 					</div>
 				</div>
 				<div class="nav3">
-					<a class = "links" href="/logout">Logout</a>
+					<a class = "links" href="/dashboard">Dashboard</a>
+					<a class = "links" href="/logout">Lonkout</a>
 				</div>
 				
 			</div>
@@ -56,7 +57,6 @@
 		<div class="navSpacer"></div>
 
 		<!-- JOB FORMS -->
-
 		<div class="jobForms">
 
 			<!-- jobForms COLUMN 1 **ADDING COMPANIES** -->
@@ -115,10 +115,15 @@
 		</div>
 
 		<!-- JOB LISTINGS -->
-
 		<div class="jobListings">
 			<!-- For loops for displaying current available jobs -->
 			<h1 class="jobListings">Job Listings</h1>
+			<div class="currentJob">
+				<h3 style="color:grey">Current Job: ${userJob == null? "Unemployed" :userJob.title.concat(", ").concat(userJob.game.name)}</h3>
+				<form:form action="/jobs/quit/${userJob.id}">
+					<button ${userJob.id == null ? "hidden" : null} type="submit">Quit</button>
+				</form:form>
+            </div>
 			<table>
 				<thead>
 					<tr>
@@ -148,7 +153,7 @@
 						
 						</td>
 						<td class="smCol">
-						<form:form action="/apply/${job.id}"><button ${userJob.id != null ? "disabled" : null} type="submit">Apply!</button></form:form>
+						<form:form action="/apply/${job.id}"><button ${userJob.id != null ? "disabled style='background-color:lightgray'" : null} type="submit">Apply!</button></form:form>
 						</td>
 						
 							<!-- apply button  -->

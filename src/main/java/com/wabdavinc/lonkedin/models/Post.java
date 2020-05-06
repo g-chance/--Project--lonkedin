@@ -27,6 +27,8 @@ public class Post {
 	private String content;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	private User creator;
+	@ManyToOne(fetch = FetchType.LAZY)
 	private User character;
 	
 	@Column(updatable = false)
@@ -37,6 +39,14 @@ public class Post {
 	
 	public Post() {
 		
+	}
+
+	public User getCreator() {
+		return creator;
+	}
+
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 
 	public Long getId() {

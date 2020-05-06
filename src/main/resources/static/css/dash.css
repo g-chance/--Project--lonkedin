@@ -107,3 +107,12 @@ h3 {
 	margin: 0 0 10px 0;
 	border: 1px solid black;
 }
+.skillLink {
+	width: fit-content;
+	margin: auto;
+}
+.skillLink button {
+	padding: 5px;
+	font-size: 15px;
+	border-radius: 0%;
+}

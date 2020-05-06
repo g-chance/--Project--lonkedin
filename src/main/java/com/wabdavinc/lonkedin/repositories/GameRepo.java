@@ -11,4 +11,5 @@ import com.wabdavinc.lonkedin.models.Game;
 public interface GameRepo extends CrudRepository<Game, Long> {
 
 	List<Game> findAll();
+	Game findByName(String str);
 }

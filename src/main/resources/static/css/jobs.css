@@ -58,4 +58,18 @@ table th{
 }
 button {
 	padding: 4px 5px;
+	background-color: #00b238;
+	color: white;
+
+}
+.currentJob button {
+	color: white;
+	background-color: red;
+}
+.currentJob {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	column-gap: 10px;
+	padding: 0 10px;
+	margin: 10px 0 0 0;
 }

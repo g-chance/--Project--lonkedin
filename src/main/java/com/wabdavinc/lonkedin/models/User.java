@@ -45,6 +45,8 @@ public class User {
 	
 	@OneToMany(mappedBy = "character", fetch = FetchType.LAZY)
 	private List<Post> posts;
+	@OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
+	private List<Post> createdPosts;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Game game;
@@ -95,6 +97,14 @@ public class User {
 	
 	public User() {
 		
+	}
+
+	public List<Post> getCreatedPosts() {
+		return createdPosts;
+	}
+
+	public void setCreatedPosts(List<Post> createdPosts) {
+		this.createdPosts = createdPosts;
 	}
 
 	public List<User> getEnemyRequests() {

@@ -31,20 +31,20 @@
 				</div>
 				<div class="nav2">
 					<div class="icons">
-						<img class="icon-box fafa" src="/images/friends.png" alt="logo"  />
-						<a class="icon-box" href="/dashboard">
+						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
 							<img class="fafa" src="/images/home.png" alt="home" >
 						</a>
-						<a class="icon-box" href="/connections/${user.id}">
-							<img class="fafa" src="/images/friends.png" alt="friends"  />
+						<a href="/jobs">
+							<img class="icon-box fafa" src="/images/friendsI_Icon.jpg" alt="logo"  />
 						</a>
 						<a class="icon-box" href="/connections/${user.id}">
-							<img class="fafa" src="/images/skull.png" alt="enemies" />
+							<img class="fafa" src="/images/friends2.png" alt="friends"  />
 						</a>
 					</div>
 				</div>
 				<div class="nav3">
-					<a class = "links" href="/logout">Logout</a>
+					<a class = "links" href="/dashboard">Dashboard</a>
+					<a class = "links" href="/logout">Lonkout</a>
 				</div>
 				
 			</div>
