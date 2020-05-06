@@ -152,6 +152,7 @@ public class MainController {
 		model.addAttribute("user",user);
 		model.addAttribute("post", new Post());
 		model.addAttribute("posts", user.getPosts());
+		model.addAttribute("skills", user.getSkills());
 		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
 		model.addAttribute("friendRequests", user.getFriendRequests());
 //	Get a list of 10 games

@@ -141,6 +141,11 @@
 					<div class="skillLink">
 						<a href="/skill">
 							<button>Add Skill</button>
+							<div class="skillsGrid">
+							<c:forEach items="${ skills }" var="skill">
+								<p>${ skill.name }</p>
+							</c:forEach>
+							</div>
 						</a>
 					</div>
 				</div>
