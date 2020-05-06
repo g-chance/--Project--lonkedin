@@ -23,8 +23,6 @@ public class Post {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-//	@Size(min = 1, message = "Post must include a Title")
-//	private String title;
 	@Size(min = 1, message = "Post must include content")
 	private String content;
 	
@@ -40,7 +38,7 @@ public class Post {
 	public Post() {
 		
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -48,14 +46,6 @@ public class Post {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-//	public String getTitle() {
-//		return title;
-//	}
-//
-//	public void setTitle(String title) {
-//		this.title = title;
-//	}
 
 	public String getContent() {
 		return content;

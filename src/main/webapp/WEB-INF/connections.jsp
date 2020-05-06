@@ -16,42 +16,42 @@
 <body>
 
 	<div class="wrapper">
-		<div class="nav">
-			<div class="strip">
-				<div class="icon-box">
-					<img src="/images/friends.png" alt="logo" class="logo" />
-				</div>
-				<div class="search">
+	
+		<div class="navwrapper navLI">
+		
+			<div class="nav">
+				
+				<div class="nav1">
+
+					<p class="llogo">Lonked<span>in</span></p>
 					<form action="/search" method="POST">
-						<input type="text" placeholder="search">
-						<button type="button">Search</button>
+						<input class="search" name="search" type="text" placeholder="Search Users">
+						<input class="searchSubmit" type="submit" value="Search" />
 					</form>
 				</div>
-
-				<div class="icon-box">
-					<a href="/dashboard">
-						<img src="/images/home.png" alt="home" class="logo">
-						<!-- <p>home</p> -->
-					</a>
+				<div class="nav2">
+					<div class="icons">
+						<img class="icon-box fafa" src="/images/friends.png" alt="logo"  />
+						<a class="icon-box" href="/dashboard">
+							<img class="fafa" src="/images/home.png" alt="home" >
+						</a>
+						<a class="icon-box" href="/connections/${user.id}">
+							<img class="fafa" src="/images/friends.png" alt="friends"  />
+						</a>
+						<a class="icon-box" href="/connections/${user.id}">
+							<img class="fafa" src="/images/skull.png" alt="enemies" />
+						</a>
+					</div>
 				</div>
-
-				<div class="icon-box friend">
-					<a href="/connections/${user.id}">
-						<img src="/images/friends.png" alt="friends" class="logo" />
-						<!-- <p>friends</p> -->
-					</a>
+				<div class="nav3">
+					<a class = "links" href="/logout">Logout</a>
 				</div>
-				<div class="icon-box">
-
-					<a href="/connections/${user.id}"><img src="/images/skull.png" alt="enemies" class="logo" />
-						<!-- <p>enemies</p> -->
-					</a>
-				</div>
-				<div class="logout">
-					<a href="/logout">Logout</a>
-				</div>
+				
 			</div>
+			
 		</div>
+
+		<div class="navSpacer"></div>
 		
 <!-- CONNECTIONS GRID -->
 		

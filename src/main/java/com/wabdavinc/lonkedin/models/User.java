@@ -1,6 +1,5 @@
 package com.wabdavinc.lonkedin.models;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -81,6 +80,12 @@ public class User {
 			inverseJoinColumns = @JoinColumn(name="other_enemy_id"))
 	private List<User> enemies;
 	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name="enemyRequests",
+			joinColumns = @JoinColumn(name = "friend_id"),
+			inverseJoinColumns = @JoinColumn(name="other_friend_id"))
+	private List<User> enemyRequests;
 	
 	@Column(updatable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -92,12 +97,12 @@ public class User {
 		
 	}
 
-	public List<User> getFriendRequests() {
-		return friendRequests;
+	public List<User> getEnemyRequests() {
+		return enemyRequests;
 	}
 
-	public void setFriendRequests(List<User> friendRequests) {
-		this.friendRequests = friendRequests;
+	public void setEnemyRequests(List<User> enemyRequests) {
+		this.enemyRequests = enemyRequests;
 	}
 
 	public Long getId() {
@@ -196,6 +201,14 @@ public class User {
 		this.friends = friends;
 	}
 
+	public List<User> getFriendRequests() {
+		return friendRequests;
+	}
+
+	public void setFriendRequests(List<User> friendRequests) {
+		this.friendRequests = friendRequests;
+	}
+
 	public List<User> getEnemies() {
 		return enemies;
 	}
@@ -203,7 +216,6 @@ public class User {
 	public void setEnemies(List<User> enemies) {
 		this.enemies = enemies;
 	}
-
 
 	public Date getCreatedAt() {
 		return createdAt;
