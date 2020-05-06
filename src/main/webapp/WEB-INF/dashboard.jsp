@@ -210,18 +210,30 @@
 										<img class="postPic" src="${ lonkpost.creator.picture }"
 											alt="" />
 										<div>
-											<p class="postName">${ lonkpost.creator.name } (${ lonkpost.creator.universe })</p>
+											<p class="postName">${ lonkpost.creator.name } (${ lonkpost.creator.universe }) Default</p>
 											<p class="postJob">${ lonkpost.creator.job.title } -- ${ lonkpost.creator.game.name }</p>
 											<p class="postCreated">${ lonkpost.createdAt }</p>
 										</div>
 									</div>
 									<p class="postContent">${ lonkpost.content }</p>
 								</div>
+								
 								<div class="loadMore">
+								
+								<c:if test="${posts.size() < allPosts.size()}">
 									<a href="/dashboard/${user.id}/loadmore">
 										<button>Load More</button>
 									</a>
+									</c:if>
+									
+									<c:if test="${posts.size() >= allPosts.size()}">
+									<a href="/dashboard/${user.id}">
+										Not more posts...click to fold
+									</a>
+									</c:if>
+									
 								</div>
+								
 							</div>
 							<div class="feedSubHeader">
 								<h3>Recent Job Listings</h3>
