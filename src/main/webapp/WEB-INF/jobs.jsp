@@ -127,8 +127,8 @@
 			<table>
 				<thead>
 					<tr>
-						<th class="lgCol">Job </th>
-						<th class="lgCol">Game </th>
+						<th class="mdCol">Job </th>
+						<th class="mdCol">Game </th>
 						<th class="lgCol">Description</th>
 						<th class="smCol">Rupees </th>
 						<th class="smCol">Morality</th>
@@ -140,8 +140,8 @@
 					<c:forEach var="job" items="${jobs}">
 					<c:if test="${ job.characters.size() == 0 }">
 					<tr>
-						<td class="lgCol">${job.title}</td>
-						<td class="lgCol">${job.game.name}</td>
+						<td class="mdCol">${job.title}</td>
+						<td class="mdCol">${job.game.name}</td>
 						<td class="lgCol">${job.description}</td>
 						<td class="smCol">${job.salary}</td>
 						<td class="smCol"><c:if test="${job.morality==true }">

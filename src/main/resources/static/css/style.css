@@ -232,6 +232,7 @@ button {
 	.dash .col2 {
 		display: grid;
 		row-gap: 20px;
+		max-width: 100%;
 	}
 
 /* JOBS */
@@ -241,6 +242,17 @@ button {
 	grid-template-columns: 1fr;
 }
 .jobForms .companyForm, .jobForms .jobForm {
+	justify-self: center;
+	text-align: center;
+}
+
+/* SKILLS */
+
+.skillForms {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+.skillForm {
 	justify-self: center;
 	text-align: center;
 }
@@ -271,6 +283,9 @@ button {
 @media only screen and (max-width:1200px) {
 	.wrapper, .nav {
 		width: 100%
+	}
+	.dash .col2 {
+		margin-top: 20px;
 	}
 }
 
