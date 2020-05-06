@@ -151,10 +151,16 @@ public class MainController {
 //	Add model attributes
 		model.addAttribute("user", user);
 		model.addAttribute("post", new Post());
-
-		List<Post> mylist = prepo.findAll();
+//	Sort and filter posts to be descending per created date and to 5 by default
+		List<Post> mylist = user.getPosts();
 		mylist.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
-		List<Post> myPosts = mylist.subList(0, 4);
+		int defaultDisplayIndex = 2;
+		if (defaultDisplayIndex > user.getPosts().size()) { 
+			defaultDisplayIndex = user.getPosts().size();
+		}
+		List<Post> myPosts = mylist.subList(0, defaultDisplayIndex);
+		session.setAttribute("currentDisplayIndex", defaultDisplayIndex);
+		model.addAttribute("allPosts",mylist);
 		model.addAttribute("posts", myPosts);
 		model.addAttribute("skills", user.getSkills());
 		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
@@ -242,7 +248,84 @@ public class MainController {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
-		User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+		User user = urepo.findById(userId).orElse(null);
+
+//	Add model attributes
+		model.addAttribute("user", user);
+		model.addAttribute("post", new Post());
+		int currentDisplayIndex = (int)session.getAttribute("currentDisplayIndex") + 3;
+		session.setAttribute("currentDisplayIndex",currentDisplayIndex);
+		if (currentDisplayIndex >= user.getPosts().size()) {
+			currentDisplayIndex = user.getPosts().size();
+		}
+		List<Post> mylist = user.getPosts();
+		mylist.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
+		List<Post> myPosts = mylist.subList(0, currentDisplayIndex);
+		model.addAttribute("allPosts",mylist);
+		model.addAttribute("posts", myPosts);
+		model.addAttribute("skills", user.getSkills());
+		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
+		model.addAttribute("friendRequests", user.getFriendRequests());
+//	Get a list of 10 games
+		List<Game> games = new ArrayList<Game>();
+		if (grepo.findAll().size() != 0) {
+			for (int i = 0; i < grepo.findAll().size() && i < 10; i++) {
+				games.add(grepo.findAll().get(i));
+			}
+		}
+		model.addAttribute("games", games);
+//	Get a list of 10 jobs
+		List<Job> jobs = new ArrayList<Job>();
+		if (jrepo.findAll().size() != 0) {
+			for (int i = 0; i < jrepo.findAll().size() && jobs.size() < 10; i++) {
+				if (jrepo.findAll().get(i).getCharacters().size() == 0) {
+					jobs.add(jrepo.findAll().get(i));
+				}
+			}
+		}
+		model.addAttribute("jobs", jobs);
+//	Get a list of 5 friends
+		ArrayList<User> friends = new ArrayList<User>();
+		if(user.getFriends().size() != 0) {
+			for(int i=0;i<user.getFriends().size() && i<4;i++) {
+				friends.add(user.getFriends().get(i));
+			}
+		}
+		model.addAttribute("friends", friends);
+//	Get a list of 5 enemies
+		ArrayList<User> enemies = new ArrayList<User>();
+//		if(user.getEnemies().size() != 0) {
+//			for(int i=0;i<user.getFriends().size() && i<4;i++) {
+//				enemies.add(user.getEnemies().get(i));
+//			}	
+//		}
+		int enemyCount = 0;
+		if(user.getGame() != null) {
+			for(User character : user.getGame().getCharacters()) {
+				if(user.getJob().getMorality() != character.getJob().getMorality()) {
+					if(enemyCount < 4) {
+						enemies.add(character);
+						enemyCount += 1;
+					} else {
+						enemyCount += 1;
+					}
+				}
+			}
+		}
+		model.addAttribute("enemies", enemies);
+//	Get number of connections
+		model.addAttribute("connectionsCount", user.getFriends().size() + user.getEnemies().size());
+		model.addAttribute("friendsCount", user.getFriends().size());
+		model.addAttribute("enemiesCount", enemyCount);
+//	Get friend's latest posts
+		List<Post> friendPosts = new ArrayList<Post>();
+		for (User friend : user.getFriends()) {
+			if (friend.getPosts().size() > 0) {
+				friendPosts.add(friend.getPosts().get(friend.getPosts().size() - 1));
+			}
+		}
+		model.addAttribute("friendPosts", friendPosts);
+
 		return "dashboard.jsp";
 	}
 
@@ -596,6 +679,7 @@ public class MainController {
 		if (user.getName() == null) {
 			return "redirect:/newcharacter";
 		}
+		session.setAttribute("defaultDisplayIndex", 4);
 		return "redirect:/dashboard/" + user.getId();
 	}
 
