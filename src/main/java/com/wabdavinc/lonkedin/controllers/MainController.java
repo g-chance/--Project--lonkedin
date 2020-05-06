@@ -26,6 +26,7 @@ import com.wabdavinc.lonkedin.repositories.PostRepo;
 import com.wabdavinc.lonkedin.repositories.SkillRepo;
 import com.wabdavinc.lonkedin.repositories.UserRepo;
 import com.wabdavinc.lonkedin.services.UserServ;
+import com.wabdavinc.lonkedin.validator.GameValidator;
 import com.wabdavinc.lonkedin.validator.UserValidator;
 
 @Controller
@@ -34,6 +35,7 @@ public class MainController {
 	private final UserRepo urepo;
 	private final UserServ userv;
 	private final UserValidator uvalid;
+	private final GameValidator gvalid;
 	private final GameRepo grepo;
 	private final JobRepo jrepo;
 	private final PostRepo prepo;
@@ -44,6 +46,7 @@ public class MainController {
 			UserServ userv,
 			UserValidator uvalid,
 			GameRepo grepo,
+			GameValidator gvalid,
 			JobRepo jrepo,
 			PostRepo prepo,
 			SkillRepo srepo
@@ -52,6 +55,7 @@ public class MainController {
 		this.userv = userv;
 		this.uvalid = uvalid;
 		this.grepo = grepo;
+		this.gvalid = gvalid;
 		this.jrepo = jrepo;
 		this.prepo = prepo;
 		this.srepo = srepo;
@@ -90,7 +94,7 @@ public class MainController {
 			
 			Post welcome = new Post();
 			welcome.setContent("Welcome to LonkedIn, friend! Looking forward to getting to know you better! We're always looking for good people at The Legend of Zorlda, check out our Game page for new job listings :)");
-			welcome.setCharacter(lonk);
+			welcome.setCreator(lonk);
 			prepo.save(welcome);
 			
 			lonk.setGame(zorlda);
@@ -147,6 +151,8 @@ public class MainController {
 //	Add model attributes
 		model.addAttribute("user",user);
 		model.addAttribute("post", new Post());
+		model.addAttribute("posts", user.getPosts());
+		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
 		model.addAttribute("friendRequests", user.getFriendRequests());
 //	Get a list of 10 games
 		List<Game> games = new ArrayList<Game>();
@@ -176,38 +182,53 @@ public class MainController {
 		model.addAttribute("friends", friends);
 //	Get a list of 5 enemies
 		ArrayList<User> enemies = new ArrayList<User>();
-		if(user.getEnemies().size() != 0) {
-			for(int i=0;i<user.getFriends().size() && i<5;i++) {
-				enemies.add(user.getEnemies().get(i));
+//		if(user.getEnemies().size() != 0) {
+//			for(int i=0;i<user.getFriends().size() && i<5;i++) {
+//				enemies.add(user.getEnemies().get(i));
+//			}	
+//		}
+		int enemyCount = 0;
+		if(user.getGame() != null) {
+			for(User character : user.getGame().getCharacters()) {
+				if(user.getJob().getMorality() != character.getJob().getMorality()) {
+					if(enemyCount < 5) {
+						enemies.add(character);
+						enemyCount += 1;
+					} else {
+						enemyCount += 1;						
+					}
+				}
 			}	
 		}
 		model.addAttribute("enemies", enemies);
 //	Get number of connections
 		model.addAttribute("connectionsCount", user.getFriends().size()+user.getEnemies().size());
 		model.addAttribute("friendsCount", user.getFriends().size());
-		model.addAttribute("enemiesCount", user.getEnemies().size());
+		model.addAttribute("enemiesCount", enemyCount);
 //	Get friend's latest posts
-		List<Post> posts = new ArrayList<Post>();
+		List<Post> friendPosts = new ArrayList<Post>();
 		for(User friend : user.getFriends()) {
 			if(friend.getPosts().size() > 0) {
-				posts.add(friend.getPosts().get(friend.getPosts().size()-1));	
+				friendPosts.add(friend.getPosts().get(friend.getPosts().size()-1));	
 			}
 		}
-		model.addAttribute("posts", posts);
+		model.addAttribute("friendPosts", friendPosts);
 		
 		return "dashboard.jsp";
 	}
 	
-	@PostMapping("/newpost")
-	public String newPost(@Valid @ModelAttribute("post") Post post, BindingResult result, Model model, HttpSession session) {
+	@PostMapping("/newpost/{otherUser_id}")
+	public String newPost(@PathVariable("otherUser_id") Long otherUserId, @Valid @ModelAttribute("post") Post post, BindingResult result, Model model, HttpSession session) {
 		User user = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+		User otherUser = urepo.findById(otherUserId).orElse(null);
 		if(result.hasErrors()) {
 			model.addAttribute("user", user);
 			return "dashboard.jsp";
 		}
-		post.setCharacter(user);
+		post.setCreator(user);
+		post.setCharacter(otherUser);
 		prepo.save(post);
-		return "redirect:/dashboard/"+user.getId();
+		return "redirect:/dashboard/"+otherUser.getId();
 	}
 	
 	@PostMapping("/search")
@@ -259,12 +280,12 @@ public class MainController {
 //		System.out.println(connection.getFriendRequests());
 //		System.out.println(connection.getFriendRequests().size());
 		if(connection.getFriendRequests().contains(user)) {
-			return "redirect:/dashboard";
+			return "redirect:/dashboard/"+user.getId();
 		}
 		connection.getFriendRequests().add(user);
 		urepo.save(connection);
 //		System.out.println(connection.getFriendRequests().size());
-		return "redirect:/dashboard";
+		return "redirect:/dashboard/"+user.getId();
 	}
 
 	
@@ -275,28 +296,28 @@ public class MainController {
 	
 	@GetMapping("/connections/{user_id}")
 	public String connections(@PathVariable("user_id") Long uId,  HttpSession session, Model model){
-		Long id = (Long) session.getAttribute("user_id");
-		User loggedIn = urepo.findById(id).orElse(null);
-		loggedIn.getFriends().sort((u1,u2)->u1.getEmail().compareTo(u2.getEmail()));
-		model.addAttribute("user",loggedIn);
-		return "connections.jsp";
+//		Long id = (Long) session.getAttribute("user_id");
+		User u = urepo.findById(uId).orElse(null);
+		u.getFriends().sort((u1,u2)->u1.getEmail().compareTo(u2.getEmail()));
+		model.addAttribute("user",u);
+		return "connectionsV2.jsp";
 	}
 //
-	@GetMapping("/friend/{user_id}")
-	public String addFriend(@PathVariable("user_id")Long fId, HttpSession session) {
-		Long id = (Long) session.getAttribute("user_id");
-		User loggedIn = urepo.findById(id).orElse(null);
-//		Two lines above give us the user id and the User object
-		User friend = urepo.findById(fId).orElse(null);
-		if(loggedIn.getFriends().contains(friend)== false && loggedIn.getEnemies().contains(friend)== false ) {
-			loggedIn.getFriends().add(friend);
-			urepo.save(loggedIn);
-			friend.getFriends().add(loggedIn);
-			urepo.save(friend);
-		}
-		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
-		return "redirect:/connections/" + id;
-	}
+//	@GetMapping("/friend/{user_id}")
+//	public String addFriend(@PathVariable("user_id")Long fId, HttpSession session) {
+//		Long id = (Long) session.getAttribute("user_id");
+//		User loggedIn = urepo.findById(id).orElse(null);
+////		Two lines above give us the user id and the User object
+//		User friend = urepo.findById(fId).orElse(null);
+//		if(loggedIn.getFriends().contains(friend)== false && loggedIn.getEnemies().contains(friend)== false ) {
+//			loggedIn.getFriends().add(friend);
+//			urepo.save(loggedIn);
+//			friend.getFriends().add(loggedIn);
+//			urepo.save(friend);
+//		}
+//		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
+//		return "redirect:/connections/" + id;
+//	}
 	
 	@GetMapping("/friend/{user_id}/remove")
 	public String removeFriend(@PathVariable("user_id")Long fId, HttpSession session) {
@@ -314,37 +335,37 @@ public class MainController {
 		return "redirect:/connections/" + id;
 	}
 	
-	@GetMapping("/enemy/{user_id}")
-	public String addEnemy(@PathVariable("user_id")Long fId, HttpSession session) {
-		Long id = (Long) session.getAttribute("user_id");
-		User loggedIn = urepo.findById(id).orElse(null);
-//		Two lines above give us the user id and the User object
-		User enemy = urepo.findById(fId).orElse(null);
-		if(loggedIn.getFriends().contains(enemy)== false && loggedIn.getEnemies().contains(enemy)== false ) {
-			loggedIn.getEnemies().add(enemy);
-			urepo.save(loggedIn);
-			enemy.getEnemies().add(loggedIn);
-			urepo.save(enemy);
-		}
-		//TODO: ERROR HANDILING TO SAY IF THEY ARE A FRIEND
-		return "redirect:/connections/" + id;
-	}
-	
-	@GetMapping("/enemy/{user_id}/remove")
-	public String removeEnemy(@PathVariable("user_id")Long fId, HttpSession session) {
-		Long id = (Long) session.getAttribute("user_id");
-		User loggedIn = urepo.findById(id).orElse(null);
-//		Two lines above give us the user id and the User object
-		User enemy = urepo.findById(fId).orElse(null);
-		if(loggedIn.getEnemies().contains(enemy)) {
-			loggedIn.getEnemies().remove(enemy);
-			urepo.save(loggedIn);
-			enemy.getEnemies().remove(loggedIn);
-			urepo.save(enemy);
-		}
-		//TODO: ERROR HANDILING TO SAY IF THEY ARE A FRIEND
-		return "redirect:/connections/" + id;
-	}
+//	@GetMapping("/enemy/{user_id}")
+//	public String addEnemy(@PathVariable("user_id")Long fId, HttpSession session) {
+//		Long id = (Long) session.getAttribute("user_id");
+//		User loggedIn = urepo.findById(id).orElse(null);
+////		Two lines above give us the user id and the User object
+//		User enemy = urepo.findById(fId).orElse(null);
+//		if(loggedIn.getFriends().contains(enemy)== false && loggedIn.getEnemies().contains(enemy)== false ) {
+//			loggedIn.getEnemies().add(enemy);
+//			urepo.save(loggedIn);
+//			enemy.getEnemies().add(loggedIn);
+//			urepo.save(enemy);
+//		}
+//		//TODO: ERROR HANDILING TO SAY IF THEY ARE A FRIEND
+//		return "redirect:/connections/" + id;
+//	}
+//	
+//	@GetMapping("/enemy/{user_id}/remove")
+//	public String removeEnemy(@PathVariable("user_id")Long fId, HttpSession session) {
+//		Long id = (Long) session.getAttribute("user_id");
+//		User loggedIn = urepo.findById(id).orElse(null);
+////		Two lines above give us the user id and the User object
+//		User enemy = urepo.findById(fId).orElse(null);
+//		if(loggedIn.getEnemies().contains(enemy)) {
+//			loggedIn.getEnemies().remove(enemy);
+//			urepo.save(loggedIn);
+//			enemy.getEnemies().remove(loggedIn);
+//			urepo.save(enemy);
+//		}
+//		//TODO: ERROR HANDILING TO SAY IF THEY ARE A FRIEND
+//		return "redirect:/connections/" + id;
+//	}
 	
 	@GetMapping("/skill")
 	public String newSkill(Model model, HttpSession session) {
@@ -396,13 +417,13 @@ public class MainController {
 	public String newJobForm(Model model, HttpSession session) {
 		Long id = (Long) session.getAttribute("user_id");
 		User user= urepo.findById(id).orElse(null);
-		 
+		
 		model.addAttribute("job", new Job());
 		model.addAttribute("game", new Game());
 		model.addAttribute("jobs", jrepo.findAll());
 		model.addAttribute("userJob",user.getJob());
 		model.addAttribute("usersgame", user.getGame());
-//		model.addAttribute("user", user);
+		model.addAttribute("user", user);
 		return "jobs.jsp";
 	}
 	
@@ -452,6 +473,7 @@ public class MainController {
 
 	@PostMapping("/game")
 	public String doGames(Model model, HttpSession session, @Valid @ModelAttribute("game")Game game, BindingResult result) {
+		gvalid.validate(game, result);
 		if(result.hasErrors()) {
 			System.out.println(game.getId());
 			model.addAttribute("job", new Job());

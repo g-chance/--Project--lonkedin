@@ -33,6 +33,15 @@ body:after {
     right: 0;
 }
 
+button {
+	background-color: #00b138;
+	color: white;
+}
+.submit {
+	background-color: #00b138;
+	color: white;
+}
+
 .wrapper {
 	width: 1200px;
 	margin: auto;

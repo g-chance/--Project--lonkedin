@@ -15,6 +15,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,8 +31,10 @@ public class Job {
 	private String title;
 	@Size(min = 10, message = "Job description must be at least 10 characters")
 	private String description;
+	@NotNull(message = "Select a Morality")
 	private Boolean morality;
-	@Min(0)
+	@NotNull(message = "Please enter Rupees")
+	@Min(value = 0, message = "Rupees cannot be less than 0")
 	private Integer salary;
 	
 	@OneToMany(mappedBy = "job", fetch = FetchType.LAZY)
