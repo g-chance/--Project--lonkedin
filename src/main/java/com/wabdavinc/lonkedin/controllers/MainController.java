@@ -151,10 +151,12 @@ public class MainController {
 //	Add model attributes
 		model.addAttribute("user", user);
 		model.addAttribute("post", new Post());
+
 		List<Post> mylist = prepo.findAll();
 		mylist.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
 		List<Post> myPosts = mylist.subList(0, 4);
 		model.addAttribute("posts", myPosts);
+		model.addAttribute("skills", user.getSkills());
 		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
 		model.addAttribute("friendRequests", user.getFriendRequests());
 //	Get a list of 10 games

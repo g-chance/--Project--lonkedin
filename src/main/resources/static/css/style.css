@@ -197,12 +197,17 @@ button {
 	font-weight: bolder;
 	text-align: center;
 }
-.newChar #images {
+.newChar #images, .newChar .images {
 	width: 700px;
 	margin: 10px 0 40px 0;
 }
 .newChar #images * {
 	margin: 2px;
+	padding: 2px;
+	border: 1px solid black;
+}
+.lonkImage {
+	width: 90px;
 	padding: 2px;
 	border: 1px solid black;
 }
