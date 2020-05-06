@@ -269,16 +269,13 @@ button {
 /* MEDIA QUERIES */
 
 @media only screen and (max-width:1200px) {
-	.wrapper {
+	.wrapper, .nav {
 		width: 100%
 	}
 }
 
 @media only screen and (max-width:768px) {
-	.dash {
-		grid-template-columns: 1fr;
-	}
-	.jobForms {
+	.dash, .jobForms {
 		grid-template-columns: 1fr;
 	}
 }

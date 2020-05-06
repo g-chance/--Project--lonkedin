@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.luciewang.studygroup.models.Task;
 import com.wabdavinc.lonkedin.models.Game;
 import com.wabdavinc.lonkedin.models.Job;
 import com.wabdavinc.lonkedin.models.Post;
@@ -186,7 +185,7 @@ public class MainController {
 //	Get a list of 5 friends
 		ArrayList<User> friends = new ArrayList<User>();
 		if(user.getFriends().size() != 0) {
-			for(int i=0;i<user.getFriends().size() && i<5;i++) {
+			for(int i=0;i<user.getFriends().size() && i<4;i++) {
 				friends.add(user.getFriends().get(i));
 			}	
 		}
@@ -194,7 +193,7 @@ public class MainController {
 //	Get a list of 5 enemies
 		ArrayList<User> enemies = new ArrayList<User>();
 //		if(user.getEnemies().size() != 0) {
-//			for(int i=0;i<user.getFriends().size() && i<5;i++) {
+//			for(int i=0;i<user.getFriends().size() && i<4;i++) {
 //				enemies.add(user.getEnemies().get(i));
 //			}	
 //		}
@@ -202,7 +201,7 @@ public class MainController {
 		if(user.getGame() != null) {
 			for(User character : user.getGame().getCharacters()) {
 				if(user.getJob().getMorality() != character.getJob().getMorality()) {
-					if(enemyCount < 5) {
+					if(enemyCount < 4) {
 						enemies.add(character);
 						enemyCount += 1;
 					} else {
@@ -328,9 +327,12 @@ public class MainController {
 			return "redirect:/";
 		}		
 		Long id = (Long) session.getAttribute("user_id");
+		User loggedIn = urepo.findById(id).orElse(null);
 		User u = urepo.findById(uId).orElse(null);
 		u.getFriends().sort((u1,u2)->u1.getEmail().compareTo(u2.getEmail()));
 		model.addAttribute("user",u);
+		model.addAttribute("loggedIn", loggedIn);
+		model.addAttribute("lonk", urepo.findByEmail("lonk@lonkedin.com"));
 		return "connectionsV2.jsp";
 	}
 //
@@ -442,8 +444,8 @@ public class MainController {
 			Skill thisSkill =srepo.findById(sId).orElse(null);
 			loggedIn.getSkills().add(thisSkill);
 			urepo.save(loggedIn);
+			return "redirect:/dashboard/" + id;
 		}
-		return "redirect:/dashboard";
 	}
 	
 	

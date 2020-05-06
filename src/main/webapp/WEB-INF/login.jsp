@@ -21,7 +21,6 @@
 				</div>
 				<div></div>
 				<div class="nav3">
-					<a class="links" href="/logout">Logout</a>
 				</div>
 			</div>
 		</div>
@@ -29,7 +28,7 @@
 		<div class="navSpacer"></div>
 		
 		<div class="regLog log">
-			<h1 class="header">Login</h1>
+			<h1 class="header">Lonkin</h1>
 			<p class="error"><c:out value="${error}" /></p>
 			<form class="form" method="post" action="/login">
 <!-- 				<p>
@@ -40,7 +39,7 @@
 					<label for="password">Password</label> -->
 					<input class="input" type="password" id="password" name="password" placeholder="Password"/>
 <!-- 				</p> -->
-				<input class="input submit" type="submit" value="Login!"/>
+				<input class="input submit" type="submit" value="Lonkin!"/>
 			</form>
 			
 			<p class="switch">Don't have an account? <a href="/registration">Register</a></p>

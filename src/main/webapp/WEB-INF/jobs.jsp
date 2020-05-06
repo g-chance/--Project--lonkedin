@@ -119,7 +119,7 @@
 			<!-- For loops for displaying current available jobs -->
 			<h1 class="jobListings">Job Listings</h1>
 			<div class="currentJob">
-				<h3 style="color:grey">Current Job: ${userJob == null? "Unemployed" :userJob.title.concat(", ").concat(userJob.game.name)}</h3>
+				<h3 style="color:grey">Your Current Job: ${userJob == null? "Unemployed" :userJob.title.concat(" in ").concat(userJob.game.name)}</h3>
 				<form:form action="/jobs/quit/${userJob.id}">
 					<button ${userJob.id == null ? "hidden" : null} type="submit">Quit</button>
 				</form:form>
