@@ -157,6 +157,20 @@
 						<div>
 							<p>${ skill.name }</p>
 							<p class="skillLevel">${ skill.level } Novice</p>
+							<c:if test="${ user != loggedIn }">
+							<c:choose>
+								<c:when test="${ user.friends.contains(loggedIn) && user.game.characters.contains(loggedIn) && user.job.morality == loggedIn.job.morality}">
+							<button class="endorse">Endorse</button>
+								</c:when>
+								<c:when test="${ user.game.characters.contains(loggedIn) && user.job.morality != loggedIn.job.morality}">
+							<button class="discredit">Discredit</button>
+								</c:when>
+								<c:when test="${ user.friends.contains(loggedIn) }">
+							<button class="endorse">Endorse</button>
+								</c:when>
+								<c:otherwise>${ null }</c:otherwise>
+							</c:choose>
+							</c:if>
 						</div>
 					</c:forEach>
 					</div>

@@ -147,9 +147,11 @@ public class MainController {
 
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(userId).orElse(null);
+		User loggedIn = urepo.findById(id).orElse(null);
 
 //	Add model attributes
 		model.addAttribute("user", user);
+		model.addAttribute("loggedIn", loggedIn);
 		model.addAttribute("post", new Post());
 //	Sort and filter posts to be descending per created date and to 5 by default
 		List<Post> mylist = user.getPosts();
@@ -328,19 +330,28 @@ public class MainController {
 
 		return "dashboard.jsp";
 	}
-
-	@PostMapping("/search")
-	public String search(@RequestParam("search") String str, Model model, HttpSession session) {
-//		List<User> searchResults = urepo.findByNameContaining(str);
-//		for(int i=0;i<urepo.findByNameContaining(str).size();i++) {
-//			System.out.println(urepo.findByNameContaining(str).get(i).getName());
-//		}
-//		System.out.println(searchResults);
+	@GetMapping("/search/{str}")
+	public String search(@PathVariable("str") String str, Model model, HttpSession session) {
 		User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 		model.addAttribute("user", u);
 		model.addAttribute("friends", u.getFriends());
-		model.addAttribute("searchResults", urepo.findByNameContaining(str));
+		model.addAttribute("str", str);
+		
+		if(str.equals("zxcvbnm")) {
+			model.addAttribute("searchResults", urepo.findAll());
+		} else {
+			model.addAttribute("searchResults", urepo.findByNameContaining(str));
+		}
 		return "searchResults.jsp";
+	}
+	
+	@PostMapping("/search")
+	public String doSearch(@RequestParam("search") String str, Model model, HttpSession session) {
+		session.setAttribute("searchResults", urepo.findByNameContaining(str));
+		if(str.equals("")) {
+			str = "zxcvbnm";
+		}
+		return "redirect:/search/"+str;
 	}
 
 	@PostMapping("/accept/{user_id}")
@@ -369,13 +380,14 @@ public class MainController {
 //	GREG
 //	============================================================== searchResults
 
-	@GetMapping("/requestConnection/{userid}")
-	public String requestConnection(@PathVariable("userid") Long connectionID, HttpSession session) {
+//	Request Connection from Search Results Page
+	@GetMapping("/requestConnection/{userid}/{str}")
+	public String requestConnection(@PathVariable("userid") Long connectionId, @PathVariable("str") String str, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
 		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
-		User connection = urepo.findById(connectionID).orElse(null);
+		User connection = urepo.findById(connectionId).orElse(null);
 //		System.out.println(connection.getName());
 //		System.out.println(user.getName());
 //		System.out.println(connection.getFriendRequests());
@@ -386,7 +398,20 @@ public class MainController {
 		connection.getFriendRequests().add(user);
 		urepo.save(connection);
 //		System.out.println(connection.getFriendRequests().size());
-		return "redirect:/dashboard/" + user.getId();
+		return "redirect:/search/"+str;
+	}
+	
+//	Request Connection from Connections page
+	@GetMapping("/requestConnection2/{connectionid}/{pageviewid}")
+	public String requestConnection2(@PathVariable("connectionid") Long connectionId, @PathVariable("pageviewid") Long pageViewId, HttpSession session) {
+		if (session.getAttribute("user_id") == null) {
+			return "redirect:/";
+		}
+		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+		User connection = urepo.findById(connectionId).orElse(null);
+		connection.getFriendRequests().add(user);
+		urepo.save(connection);
+		return "redirect:/connections/"+pageViewId;
 	}
 
 //	**************************************************************
