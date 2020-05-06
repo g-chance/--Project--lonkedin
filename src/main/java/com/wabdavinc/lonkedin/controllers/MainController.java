@@ -154,7 +154,7 @@ public class MainController {
 //	Sort and filter posts to be descending per created date and to 5 by default
 		List<Post> mylist = user.getPosts();
 		mylist.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
-		int defaultDisplayIndex = 2;
+		int defaultDisplayIndex = 3;
 		if (defaultDisplayIndex > user.getPosts().size()) { 
 			defaultDisplayIndex = user.getPosts().size();
 		}

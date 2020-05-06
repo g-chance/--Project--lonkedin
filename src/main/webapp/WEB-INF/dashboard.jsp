@@ -204,29 +204,30 @@
 										<p class="postContent">${ post.content }</p>
 									</div>
 								</c:forEach>
-
+								<c:if test="${allPosts.size() <= 2}">
 								<div class="post">
 									<div class="postGrid">
 										<img class="postPic" src="${ lonkpost.creator.picture }"
 											alt="" />
 										<div>
-											<p class="postName">${ lonkpost.creator.name } (${ lonkpost.creator.universe }) Default</p>
+											<p class="postName">${ lonkpost.creator.name } (${ lonkpost.creator.universe })</p>
 											<p class="postJob">${ lonkpost.creator.job.title } -- ${ lonkpost.creator.game.name }</p>
 											<p class="postCreated">${ lonkpost.createdAt }</p>
 										</div>
 									</div>
 									<p class="postContent">${ lonkpost.content }</p>
 								</div>
+								</c:if>
 								
 								<div class="loadMore">
 								
-								<c:if test="${posts.size() < allPosts.size()}">
+								<c:if test="${posts.size() < allPosts.size() && allPosts.size() >= 4}">
 									<a href="/dashboard/${user.id}/loadmore">
 										<button>Load More</button>
 									</a>
 									</c:if>
 									
-									<c:if test="${posts.size() >= allPosts.size()}">
+									<c:if test="${posts.size() >= allPosts.size() && allPosts.size() > 3}">
 									<a href="/dashboard/${user.id}">
 										Not more posts...click to fold
 									</a>
