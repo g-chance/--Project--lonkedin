@@ -22,7 +22,6 @@
 				</div>
 				<div></div>
 				<div class="nav3">
-					<a class="links" href="/logout">Logout</a>
 				</div>
 			</div>
 		</div>	
@@ -41,7 +40,7 @@
 				<input class="input submit" type="submit" value="Register!"/>
 			</form:form>
 			
-			<p class="switch">Already have an account? <a href="/login">Login</a></p>
+			<p class="switch">Already have an account? <a href="/login">Lonkin</a></p>
 		</div>
     </div>
     

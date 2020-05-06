@@ -22,24 +22,27 @@ h3 {
 	display: grid;
 	grid-template-columns: auto 1fr;
 }
-.connections {
+.dashConnections {
 	display: grid;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(4, 1fr);
 	justify-items: center;
 }
-/* .connectionsRow {
-	width: 100%;
-} */
-.connections img {
-/* 	width: 75px;
-	height: 75px; */
-	width: 100%;
+.dashConnectionsRow {
+	display: grid;
+	margin: 0 0 10px 0;
+}
+.dashConnections img {
+	justify-self:center;
+	width: 75px;
 	padding: 2px;
 	border: 1px solid black;
 }
-.connections p {
+.dashConnections p {
 	/* font-size: 1vw; */
+	width: 75px;
 	text-align: center;
+	overflow-x: hidden;
+	font-size: 15px;
 }
 .feed {
 	display: grid;
@@ -109,9 +112,30 @@ h3 {
 }
 .skillLink {
 	width: fit-content;
-	margin: auto;
+	margin: 15px auto 15px auto;
 }
 .skillLink button {
+	padding: 5px;
+	font-size: 15px;
+	border-radius: 0%;
+}
+.skillsGrid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	row-gap: 15px;
+	padding: 15px 10px 5px 10px;
+	border-top: 1px solid black;
+	font-size: 18px;
+}
+.skillLevel {
+	font-size: 15px;
+	color: gray;
+}
+.loadMore {
+	width: fit-content;
+	margin: 15px auto 5px auto;
+}
+.loadMore button {
 	padding: 5px;
 	font-size: 15px;
 	border-radius: 0%;

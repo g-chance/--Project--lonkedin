@@ -72,7 +72,7 @@
 					<img id="profileImage" src="${ user.picture }" alt="logo"
 						class="logo" />
 					<div>
-						<h1>${ user.name }(${user.universe})</h1>
+						<h1>${ user.name } (${user.universe})</h1>
 						<c:choose>
 							<c:when test="${ user.job != null }">
 								<p style="font-weight: bold; color: green">${user.game.name}</p>
@@ -87,16 +87,17 @@
 							<a href="/connections/${ user.id }">${ connectionsCount }
 								Connections</a>
 						</p>
-						<p>${ enemiesCount }Enemies</p>
+						<p>${ enemiesCount } Enemies</p>
 					</div>
 				</div>
+				<c:if test="${ sessionScope.user_id == user.id }">
 				<c:if test="${ user.getFriendRequests().size() != 0 }">
 					<div class="row">
 						<h3>Friend Requests</h3>
 						<div class="friendRequests">
 							<c:forEach items="${ friendRequests }" var="request">
 								<div>
-									<p>${ request.name }(${ request.universe })</p>
+									<p>${ request.name } (${ request.universe })</p>
 									<form action="/accept/${ request.id }" method="post">
 										<input type="submit" value="Accept" />
 									</form>
@@ -113,28 +114,29 @@
 						<h3>Enemy Requests</h3>
 					</div>
 				</c:if>
+				</c:if>
 				<div class="row">
 					<h3>Connections</h3>
-					<div class="connections">
+					<div class="dashConnections">
 						<c:forEach items="${ friends }" var="friend">
-							<div class="connectionsRow">
+							<div class="dashConnectionsRow">
 								<img src="${ friend.picture }" /> <a
 									href="/dashboard/${ friend.id }">
-									<p>${ friend.name }(${ friend.universe })</p>
+									<p>${ friend.name } (${ friend.universe })</p>
 								</a>
 							</div>
 						</c:forEach>
 					</div>
 					<h3>Enemies</h3>
-					<div class="connections">
+					<div class="dashConnections">
 						<c:if test="${ enemies.size() == 0 }">
-							<p>You have no enemies</p>
+							<p>${ sessionScope.user_id == user.id ? "You have" : user.name.concat(" has") }  no enemies</p>
 						</c:if>
 						<c:forEach items="${ enemies }" var="enemy">
-							<div class="connectionsRow">
+							<div class="dashConnectionsRow">
 								<img src="${ enemy.picture }" /> <a
 									href="/dashboard/${ enemy.id }">
-									<p>${ enemy.name }(${ enemy.universe })</p>
+									<p>${ enemy.name } (${ enemy.universe })</p>
 								</a>
 							</div>
 						</c:forEach>
@@ -143,15 +145,20 @@
 
 				<div class="row">
 					<h3>Skills</h3>
+					<c:if test="${ user.id == sessionScope.user_id }">
 					<div class="skillLink">
 						<a href="/skill">
 							<button>Add Skill</button>
-							<div class="skillsGrid">
-							<c:forEach items="${ skills }" var="skill">
-								<p>${ skill.name }</p>
-							</c:forEach>
-							</div>
 						</a>
+					</div>
+					</c:if>
+					<div class="skillsGrid">
+					<c:forEach items="${ skills }" var="skill">
+						<div>
+							<p>${ skill.name }</p>
+							<p class="skillLevel">${ skill.level } Novice</p>
+						</div>
+					</c:forEach>
 					</div>
 				</div>
 				<!-- <c:forEach items="${connections}" var ="list">
@@ -189,8 +196,8 @@
 										<div class="postGrid">
 											<img class="postPic" src="${ post.creator.picture }" alt="" />
 											<div>
-												<p class="postName">${ post.creator.name }(${ post.creator.universe })</p>
-												<p class="postJob">${ post.creator.job.title }--${ post.creator.game.name }</p>
+												<p class="postName">${ post.creator.name } (${ post.creator.universe })</p>
+												<p class="postJob">${ post.creator.job.title } -- ${ post.creator.game.name }</p>
 												<p class="postCreated">${ post.createdAt }</p>
 											</div>
 										</div>
@@ -203,14 +210,14 @@
 										<img class="postPic" src="${ lonkpost.creator.picture }"
 											alt="" />
 										<div>
-											<p class="postName">${ lonkpost.creator.name }(${ lonkpost.creator.universe })</p>
-											<p class="postJob">${ lonkpost.creator.job.title }--${ lonkpost.creator.game.name }</p>
+											<p class="postName">${ lonkpost.creator.name } (${ lonkpost.creator.universe })</p>
+											<p class="postJob">${ lonkpost.creator.job.title } -- ${ lonkpost.creator.game.name }</p>
 											<p class="postCreated">${ lonkpost.createdAt }</p>
 										</div>
 									</div>
 									<p class="postContent">${ lonkpost.content }</p>
 								</div>
-								<div class="skillLink">
+								<div class="loadMore">
 									<a href="/dashboard/${user.id}/loadmore">
 										<button>Load More</button>
 									</a>
@@ -219,7 +226,7 @@
 							<div class="feedSubHeader">
 								<h3>Recent Job Listings</h3>
 								<c:forEach items="${ jobs }" var="job">
-									<p class="jobListing">${ job.game.name }is hiring! Checkout
+									<p class="jobListing">${ job.game.name } is hiring! Checkout
 										their new posting for ${ job.title }!</p>
 								</c:forEach>
 							</div>
