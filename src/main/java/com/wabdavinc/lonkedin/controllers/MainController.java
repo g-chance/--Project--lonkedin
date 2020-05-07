@@ -272,7 +272,7 @@ public class MainController {
 		List<Post> myPosts = mylist.subList(0, currentDisplayIndex);
 		model.addAttribute("allPosts",mylist);
 		model.addAttribute("posts", myPosts);
-		model.addAttribute("skills", user.getSkills());
+		model.addAttribute("skills", usrepo.findAllByUser(user));
 		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
 		model.addAttribute("friendRequests", user.getFriendRequests());
 //	Get a list of 10 games

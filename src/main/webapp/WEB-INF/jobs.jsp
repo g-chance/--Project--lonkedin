@@ -9,9 +9,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Jobs</title>
-	<script type="text/javascript" src="/js/app.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/jobs.css" media="screen" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
 </head>
 
 <body>
@@ -20,38 +21,53 @@
 		<div class="navwrapper navLI">
 		
 			<div class="nav">
-				
+
 				<div class="nav1">
 
-					<p class="llogo">Lonked<span>in</span></p>
-					<form action="/search" method="POST">
-						<input class="search" name="search" type="text" placeholder="Search Users">
-						<input class="searchSubmit" type="submit" value="Search" />
+					<p class="llogo">
+						Lonked<span>in</span>
+					</p>
+					<form class="searchForm" action="/search" method="POST">
+						<input class="search" name="search" type="text"
+							placeholder="Search Users"> 
+						<input class="searchSubmit"
+							type="submit" value="Search" />
 					</form>
 				</div>
-				<div class="nav2">
+				<div class="nav2 smHide">
 					<div class="icons">
 						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
-							<img class="fafa" src="/images/home.png" alt="home" >
-						</a>
-						<a href="/jobs">
-							<img class="icon-box fafa" src="/images/friendsI_Icon.jpg" alt="logo"  />
-						</a>
-						<a class="icon-box" href="/connections/${user.id}">
-							<img class="fafa" src="/images/friends2.png" alt="friends"  />
-						</a>
-						<a class="icon-box" href="/skill">
-							<img class="fafa" src="/images/chost.png" alt="friends"  />
+							<img class="fafa" src="/images/home.png" alt="home">
+						</a> <a href="/jobs"> <img class="icon-box fafa"
+							src="/images/friendsI_Icon.jpg" alt="logo" />
+						</a> <a class="icon-box" href="/connections/${sessionScope.user_id}">
+							<img class="fafa" src="/images/friends2.png" alt="friends" />
+						</a> <a class="icon-box" href="/skill"> <img class="fafa"
+							src="/images/chost.png" alt="friends" />
 						</a>
 					</div>
 				</div>
-				<div class="nav3">
-					<a class = "links" href="/dashboard">Dashboard</a>
-					<a class = "links" href="/logout">Lonkout</a>
+				<div class="nav3 smHide">
+					<a class="links" href="/logout">Lonkout</a>
 				</div>
 				
+				<div class="dropdown lgHide">
+					<div class="hamburger">
+					    <div></div>
+					    <div></div>
+					    <div></div>
+					</div>
+                     <div class="ddlinks">
+						<a class="ddlink" href="/dashboard/${ sessionScope.user_id }">Dashboard</a>
+						<a class="ddlink" href="/jobs">Jobs</a>
+						<a class="ddlink" href="/connections/${sessionScope.user_id}">Connections</a>
+						<a class="ddlink" href="/skill">Skills</a>
+						<a class="ddlink" href="/logout">Lonkout</a>
+                     </div>
+                 </div>
+
 			</div>
-			
+
 		</div>
 
 		<div class="navSpacer"></div>
@@ -124,9 +140,11 @@
 					<button ${userJob.id == null ? "hidden" : null} type="submit">Quit</button>
 				</form:form>
             </div>
-            <p><a href="/job/highpay"> <button class="action">Salary High - Low</button></a> 
-            <a href="/job/lowpay"><button class="action">Salary Low - High</button></a> 
-            <a href="/jobs"><button class="action">Default Listing</button></a></p>
+            <div class="sortRow">
+	            <a href="/job/highpay"> <button class="action">Salary High - Low</button></a> 
+	            <a href="/job/lowpay"><button class="action">Salary Low - High</button></a> 
+	            <a href="/jobs"><button class="action">Default Sort</button></a>
+            </div>
 			<table>
 				<thead>
 					<tr>
@@ -144,7 +162,7 @@
 					<c:if test="${job.characters.size() == 0 }">
 					<tr>
 						<td class="mdCol">${job.title}</td>
-						<td class="mdCol">${job.game.name}</td>
+						<td class="mdCol"><a href="/game/${ job.game.id }">${job.game.name}</a></td>
 						<td class="lgCol">${job.description}</td>
 						<td class="smCol">${job.salary}</td>
 						<td class="smCol"><c:if test="${job.morality==true }">

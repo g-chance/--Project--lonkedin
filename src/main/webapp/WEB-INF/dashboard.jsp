@@ -11,18 +11,8 @@
 <title>Dashboard</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <link rel="stylesheet" type="text/css" href="/css/dash.css">
-<script type="text/javascript" src="/js/app.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$(".lgHide").mouseenter(function() {
-				$(".ddlinks").css("display", "block");
-			})
-			$(".lgHide").mouseleave(function() {
-					$(".ddlinks").css("display", "none");
-			})
-		})
-	</script>
+	<script type="text/javascript" src="/js/app.js"></script>
 </head>
 
 <body>
@@ -59,31 +49,24 @@
 					</div>
 				</div>
 				<div class="nav3 smHide">
-					<a class="links" href="/logout">Lonkout</a>
+					<a class="links faq" href="/about">FAQ</a>
+					<a class="links logout" href="/logout">Lonkout</a>
 				</div>
 				
-<div class="dropdown lgHide">
-                        <div class="hamburger">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                        <div class="ddlinks">
-                            <img src="/img/icons_png/background_icon.png" alt="background" />
-                            <img src="/img/icons_png/fun_icon.png" alt="fun" />
-                            <img src="/img/icons_png/notes_icon.png" alt="notes" />
-                            <img src="/img/icons_png/profile_icon.png" alt="profile" />
-                            <div class="center">
-                                <img src="/img/icons_png/task_icon.png" alt="task" />
-                                <img src="/img/icons_png/team_icon.png" alt="team" />
-                                <img src="/img/icons_png/timer_icon.png" alt="timer" />
-                            </div>
-                            <div class="buttons">
-                                <button>Action</button>
-                                <button class="logout">Logout</button>
-                            </div>
-                        </div>
-                    </div>
+				<div class="dropdown lgHide">
+					<div class="hamburger">
+					    <div></div>
+					    <div></div>
+					    <div></div>
+					</div>
+                     <div class="ddlinks">
+						<a class="ddlink" href="/dashboard/${ sessionScope.user_id }">Dashboard</a>
+						<a class="ddlink" href="/jobs">Jobs</a>
+						<a class="ddlink" href="/connections/${sessionScope.user_id}">Connections</a>
+						<a class="ddlink" href="/skill">Skills</a>
+						<a class="ddlink" href="/logout">Lonkout</a>
+                     </div>
+                 </div>
 
 			</div>
 
@@ -300,9 +283,9 @@
 									</c:if>
 									
 									<c:if test="${posts.size() >= allPosts.size() && allPosts.size() > 3}">
-									<a href="/dashboard/${user.id}">
-										Not more posts...click to fold
-									</a>
+									<p>No more posts...
+										<a href="/dashboard/${user.id}">Click to fold</a>
+									</p>
 									</c:if>
 									
 								</div>
@@ -322,10 +305,10 @@
 								<h3>Newest Games</h3>
 								<c:forEach items="${ games }" var="game">
 								<c:if test="${ game != games.get(games.size()-1) }">
-									<p class="gameListing">${ game.name }</p>
+									<a href="/game/${ game.id }" class="gameListing">${ game.name }</a>
 								</c:if>
 								</c:forEach>
-								<p class="gameListing lastGame">${ games.get(games.size()-1).name }</p>
+								<a href="/game/${ games.get(games.size()-1).id }" class="gameListing lastGame">${ games.get(games.size()-1).name }</a>
 							</div>
 						</div>
 					</div>

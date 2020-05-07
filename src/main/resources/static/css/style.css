@@ -96,6 +96,9 @@ button {
 	text-decoration: none;
 	color: white;
 }
+.nav3 .faq {
+	margin: 0 10px 0 0;
+}
 
 /* NAV (LOGGED IN) */
 
@@ -236,6 +239,7 @@ button {
 		display: grid;
 		row-gap: 20px;
 		max-width: 100%;
+		align-self: flex-start;
 	}
 
 /* JOBS */
@@ -290,7 +294,7 @@ button {
 	.dash .col2 {
 		margin-top: 20px;
 	}
-	.links {
+	.logout {
 		padding: 0 22px 0 0;
 	}
 }
@@ -320,10 +324,20 @@ button {
 		background-color: white;
 	}
 	.ddlinks {
-/* 		display: none; */
+		display: none;
 		position: absolute;
-		margin: 0 0 0 -232px;
+		margin: 0 0 0 -105px;
+		padding: 5px;
 		direction: rtl;
-		background-color:green;
+		background-color:rgba(0, 0, 0, 0.502);
+		text-align: center;
+	}
+	.ddlink {
+		display: block;
+		margin: 2px 0 0 0;
+		padding: 4px 8px;
+		color: green;
+		background-color: rgb(255, 255, 255);
+		font-weight: bold;
 	}
 }

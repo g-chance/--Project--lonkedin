@@ -11,6 +11,7 @@
 	<title>Insert title here</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/skill.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/app.js"></script>
 </head>
 
@@ -22,38 +23,53 @@
 		<div class="navwrapper navLI">
 		
 			<div class="nav">
-				
+
 				<div class="nav1">
 
-					<p class="llogo">Lonked<span>in</span></p>
-					<form action="/search" method="POST">
-						<input class="search" name="search" type="text" placeholder="Search Users">
-						<input class="searchSubmit" type="submit" value="Search" />
+					<p class="llogo">
+						Lonked<span>in</span>
+					</p>
+					<form class="searchForm" action="/search" method="POST">
+						<input class="search" name="search" type="text"
+							placeholder="Search Users"> 
+						<input class="searchSubmit"
+							type="submit" value="Search" />
 					</form>
 				</div>
-				<div class="nav2">
+				<div class="nav2 smHide">
 					<div class="icons">
 						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
-							<img class="fafa" src="/images/home.png" alt="home" >
-						</a>
-						<a href="/jobs">
-							<img class="icon-box fafa" src="/images/friendsI_Icon.jpg" alt="logo"  />
-						</a>
-						<a class="icon-box" href="/connections/${sessionScope.user_id}">
-							<img class="fafa" src="/images/friends2.png" alt="friends"  />
-						</a>
-						<a class="icon-box" href="/skill">
-							<img class="fafa" src="/images/chost.png" alt="friends"  />
+							<img class="fafa" src="/images/home.png" alt="home">
+						</a> <a href="/jobs"> <img class="icon-box fafa"
+							src="/images/friendsI_Icon.jpg" alt="logo" />
+						</a> <a class="icon-box" href="/connections/${sessionScope.user_id}">
+							<img class="fafa" src="/images/friends2.png" alt="friends" />
+						</a> <a class="icon-box" href="/skill"> <img class="fafa"
+							src="/images/chost.png" alt="friends" />
 						</a>
 					</div>
 				</div>
-				<div class="nav3">
-					<a class = "links" href="/dashboard/${ sessionScope.user_id }">Dashboard</a>
-					<a class = "links" href="/logout">Lonkout</a>
+				<div class="nav3 smHide">
+					<a class="links" href="/logout">Lonkout</a>
 				</div>
 				
+				<div class="dropdown lgHide">
+					<div class="hamburger">
+					    <div></div>
+					    <div></div>
+					    <div></div>
+					</div>
+                     <div class="ddlinks">
+						<a class="ddlink" href="/dashboard/${ sessionScope.user_id }">Dashboard</a>
+						<a class="ddlink" href="/jobs">Jobs</a>
+						<a class="ddlink" href="/connections/${sessionScope.user_id}">Connections</a>
+						<a class="ddlink" href="/skill">Skills</a>
+						<a class="ddlink" href="/logout">Lonkout</a>
+                     </div>
+                 </div>
+
 			</div>
-			
+
 		</div>
 
 		<div class="navSpacer navLISpacer"></div>

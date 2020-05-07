@@ -27,6 +27,7 @@ h3 {
 }
 .profileInfo {
 	display: grid;
+	align-self:flex-start;
 }
 .profileInfo * {
 	max-width: 100%;
