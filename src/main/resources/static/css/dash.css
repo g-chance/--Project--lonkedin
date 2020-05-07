@@ -25,6 +25,13 @@ h3 {
 	display: grid;
 	grid-template-columns: auto 1fr;
 }
+.profileInfo {
+	display: grid;
+}
+.profileInfo * {
+	max-width: 100%;
+	overflow-x: auto;
+}
 .dashConnections {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
@@ -81,7 +88,12 @@ h3 {
 	border-radius: 0%;
 }
 .feedSubHeader {
+	display:grid;
 	margin: 0 0 10px 0;
+}
+.feedSubHeader * {
+	max-width: 100%;
+	overflow-x: auto;
 }
 .friendRequests {
 	display: grid;
@@ -133,7 +145,7 @@ h3 {
 	margin: 5px 5px 0 5px
 }
 .post {
-	padding: 10px 0;
+	padding: 10px 10px 10px 0;
 	margin: 0 0 10px 0;
 	border: 1px solid black;
 }
@@ -164,7 +176,7 @@ h3 {
 }
 .loadMore {
 	width: fit-content;
-	margin: 15px auto 5px auto;
+	margin: 5px auto 5px auto;
 }
 .loadMore button {
 	padding: 5px;

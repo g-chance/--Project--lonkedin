@@ -12,6 +12,17 @@
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <link rel="stylesheet" type="text/css" href="/css/dash.css">
 <script type="text/javascript" src="/js/app.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$(".lgHide").mouseenter(function() {
+				$(".ddlinks").css("display", "block");
+			})
+			$(".lgHide").mouseleave(function() {
+					$(".ddlinks").css("display", "none");
+			})
+		})
+	</script>
 </head>
 
 <body>
@@ -19,7 +30,7 @@
 	<div class="wrapper dashboard">
 
 		<div class="navwrapper navLI">
-
+		
 			<div class="nav">
 
 				<div class="nav1">
@@ -27,13 +38,14 @@
 					<p class="llogo">
 						Lonked<span>in</span>
 					</p>
-					<form action="/search" method="POST">
+					<form class="searchForm" action="/search" method="POST">
 						<input class="search" name="search" type="text"
-							placeholder="Search Users"> <input class="searchSubmit"
+							placeholder="Search Users"> 
+						<input class="searchSubmit"
 							type="submit" value="Search" />
 					</form>
 				</div>
-				<div class="nav2">
+				<div class="nav2 smHide">
 					<div class="icons">
 						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
 							<img class="fafa" src="/images/home.png" alt="home">
@@ -46,9 +58,32 @@
 						</a>
 					</div>
 				</div>
-				<div class="nav3">
+				<div class="nav3 smHide">
 					<a class="links" href="/logout">Lonkout</a>
 				</div>
+				
+<div class="dropdown lgHide">
+                        <div class="hamburger">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <div class="ddlinks">
+                            <img src="/img/icons_png/background_icon.png" alt="background" />
+                            <img src="/img/icons_png/fun_icon.png" alt="fun" />
+                            <img src="/img/icons_png/notes_icon.png" alt="notes" />
+                            <img src="/img/icons_png/profile_icon.png" alt="profile" />
+                            <div class="center">
+                                <img src="/img/icons_png/task_icon.png" alt="task" />
+                                <img src="/img/icons_png/team_icon.png" alt="team" />
+                                <img src="/img/icons_png/timer_icon.png" alt="timer" />
+                            </div>
+                            <div class="buttons">
+                                <button>Action</button>
+                                <button class="logout">Logout</button>
+                            </div>
+                        </div>
+                    </div>
 
 			</div>
 
@@ -71,7 +106,7 @@
 				<div class="row profileRow">
 					<img id="profileImage" src="${ user.picture }" alt="logo"
 						class="logo" />
-					<div>
+					<div class="profileInfo">
 						<h1>${ user.name } (${user.universe})</h1>
 						<c:choose>
 							<c:when test="${ user.job != null }">
@@ -119,12 +154,14 @@
 					<h3>Connections</h3>
 					<div class="dashConnections">
 						<c:forEach items="${ friends }" var="friend">
+						<c:if test="${ friend.name != null }">
 							<div class="dashConnectionsRow">
 								<img src="${ friend.picture }" /> 
  								<a href="/dashboard/${ friend.id }">
 								${ friend.name } (${ friend.universe })
 							</a>
 							</div>
+						</c:if>
 						</c:forEach>
 					</div>
 					<h3>Enemies</h3>

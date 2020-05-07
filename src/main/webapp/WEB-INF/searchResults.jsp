@@ -57,7 +57,8 @@
 		
 		<div class="main">
 		<c:forEach items="${ searchResults }" var="result">
-		<c:if test="${ !friends.contains(result) && result != user }">
+		<c:if test="${ result.name != null }">
+		<c:if test="${ result != user }">
 			<div class="row">
 					<img src="${ result.picture }" alt="" />
 				<div>
@@ -65,14 +66,21 @@
 					<p>${ result.job != null ? result.job.title.concat(" -- ").concat(result.game.name) : "Seeking Work"}</p>
 				</div>
 				<c:choose>
-				<c:when test="${ !result.friendRequests.contains(user) }">
+				<c:when test="${ user.friendRequests.contains(result) }">
+					<a>Pending Connection</a>
+				</c:when>
+				<c:when test="${ !result.friendRequests.contains(user) && !friends.contains(result) }">
 					<a href="/requestConnection/${ result.id }/${ str }">Request Connection</a>
+				</c:when>
+				<c:when test="${ friends.contains(result) }">
+					<a>Already Connected</a>
 				</c:when>
 				<c:otherwise>
 					<a>Pending Connection</a>
 				</c:otherwise>
 				</c:choose>
 			</div>
+		</c:if>
 		</c:if>
 		</c:forEach>
 		</div>

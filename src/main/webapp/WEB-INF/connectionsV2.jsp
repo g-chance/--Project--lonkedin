@@ -58,6 +58,13 @@
 		<h1>${ sessionScope.user_id != user.id ? user.name.concat("'s") : "Your " } Connections:</h1>
 		<div class="main">
 		<c:forEach items="${ user.friends }" var="result">
+		<c:if test="${ result.name == null }">
+			<div class="row">
+				<p></p>
+				<p>This user hasn't finished their profile</p>
+			</div>
+		</c:if>
+		<c:if test="${ result.name != null }">
 			<div class="row">
 				<img src="${ result.picture }" alt="" />
 				<div>
@@ -82,6 +89,7 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
+		</c:if>
 		</c:forEach>
 		</div>
 	
