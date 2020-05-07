@@ -194,7 +194,17 @@
 						<div>
 							<c:set var="ct">${ us.count }</c:set>
 							<p>${ us.skill.name } <span ${ us.count > -1 || us.count == null ? "class='green'" : "class='red'" }>${ us.count > -1 || us.count == null ? "+".concat(ct) : ct }</span></p>
-							<p class="skillLevel">${ us.skill.level } Novice</p>
+							<p class="skillLevel">
+							<c:if test="${ us.skill.level == 0}">
+							Novice
+							</c:if>
+							<c:if test="${ us.skill.level == 1}">
+							Intermediate
+							</c:if>
+							<c:if test="${ us.skill.level == 2}">
+							Advanced
+							</c:if>
+							</p>
 							<c:if test="${ user != loggedIn }">
 							<c:choose>
 								<c:when test="${ user.friends.contains(loggedIn) && user.game.characters.contains(loggedIn) && user.job.morality == loggedIn.job.morality}">

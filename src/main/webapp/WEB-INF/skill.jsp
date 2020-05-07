@@ -68,17 +68,36 @@
 			<p>
 				<form:errors path="skill.*" />
 			</p>
-			
-			<form:form class="form" action="/skill/add" method="post" modelAttribute="skill">
-				<form:input class="input" list="characters" path="name" placeholder="Skill Name"></form:input>
-				<datalist id="characters">
+			<form class="form" action="/skill/add" method="post">
+						<select name = "userSkill" class="input">
 						<c:forEach var="skill" items="${allSkills}">
 						<c:if test="${user.skills.contains(skill) ==false}">
-							<option value="${skill.id}" label="${skill.name}">
+							<option value="${skill.id}" label="${skill.name} 
+							(<c:if test="${skill.level == 0}">
+							Novice
+							</c:if>
+							<c:if test="${skill.level == 1}">
+							Intermediate
+							</c:if>
+							<c:if test="${skill.level == 2}">
+							Advanced
+							</c:if>)">
 						</c:if>
 					</c:forEach>
-				</datalist>
-				<input type="submit" value="Create a Skill!" />
+					</select>
+							<p><input type="submit" value="Add from Skill Pool" class="submit" /></p>
+			
+				</form>
+			<form:form class="form" action="/skill/new" method="post" modelAttribute="skill">
+				<form:input class="input" path="name" placeholder="Can't find the skill? Create One here!"></form:input>
+				<p>
+				<form:select path = "level" class="input">
+							<option value="0" label="Novice">
+								<option value="1" label="Intermediate">
+									<option value="2" label="Advanced">
+					</form:select>
+					</p>
+				<p><input type="submit" value="Create and Add a New Skill" class="submit"/></p>
 			</form:form>
 		</div>
 
