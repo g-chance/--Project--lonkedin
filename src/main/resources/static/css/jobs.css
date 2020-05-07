@@ -1,8 +1,13 @@
 @charset "ISO-8859-1";
 
+body {
+	word-wrap: break-word;
+}
+
 table{
 	width: 100%;
 	margin: 10px 0 0 0;
+	table-layout: fixed;
 }
 table th, table td {
 	border:2px solid black;
@@ -11,12 +16,16 @@ table th, table td {
 }
 table th {
 	font-size: 18px;
+	background-color: #00b2389e;
+}
+table .mdCol {
+	width: 15%;
 }
 table .lgCol {
-	width: 24%;
+	width: 25%;
 }
 table .smCol {
-	width: 8%
+	width: 80px;
 }
 .jobForms{
 	padding:2px;
@@ -32,9 +41,6 @@ h2{
 	margin: 50px 0 20px 0;
 }
 
-table th{
-	background-color: #00b2389e;
-}
 .jobForms .companyForm input, .jobForms .jobForm input, .jobForms .companyForm select, .jobForms .jobForm select {
 	width: 370px;
 	margin: 10px 0 0 0;

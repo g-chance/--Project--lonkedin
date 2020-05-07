@@ -59,12 +59,28 @@
 		<div class="main">
 		<c:forEach items="${ user.friends }" var="result">
 			<div class="row">
-					<img src="${ result.picture }" alt="" />
+				<img src="${ result.picture }" alt="" />
 				<div>
 					<a href="/dashboard/${ result.id }">${ result.name } (${ result.universe })</a>
 					<p>${ result.job != null ? result.job.title.concat(" -- ").concat(result.game.name) : "Seeking Work"}</p>
 				</div>
-					<a href="/friend/${ result.id }/remove">Remove Connection</a>
+				<c:choose>
+					<c:when test="${ sessionScope.user_id == user.id && result != lonk }">
+				<a href="/friend/${ result.id }/remove">Remove Connection</a>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${ !loggedIn.friends.contains(result) && loggedIn != result }">
+							<c:choose>
+							<c:when test="${ !result.friendRequests.contains(loggedIn) }">
+				<a href="/requestConnection2/${ result.id }/${ user.id }">Request Connection</a>		
+							</c:when>
+							<c:otherwise>
+				<a>Pending Connection</a>
+							</c:otherwise>
+							</c:choose>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</c:forEach>
 		</div>

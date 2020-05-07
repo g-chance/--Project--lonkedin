@@ -64,7 +64,14 @@
 					<p>${ result.name } (${ result.universe })</p>
 					<p>${ result.job != null ? result.job.title.concat(" -- ").concat(result.game.name) : "Seeking Work"}</p>
 				</div>
-					<a href="/requestConnection/${ result.id }">Request Connection</a>
+				<c:choose>
+				<c:when test="${ !result.friendRequests.contains(user) }">
+					<a href="/requestConnection/${ result.id }/${ str }">Request Connection</a>
+				</c:when>
+				<c:otherwise>
+					<a>Pending Connection</a>
+				</c:otherwise>
+				</c:choose>
 			</div>
 		</c:if>
 		</c:forEach>

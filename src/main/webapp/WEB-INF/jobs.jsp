@@ -119,7 +119,7 @@
 			<!-- For loops for displaying current available jobs -->
 			<h1 class="jobListings">Job Listings</h1>
 			<div class="currentJob">
-				<h3 style="color:grey">Current Job: ${userJob == null? "Unemployed" :userJob.title.concat(", ").concat(userJob.game.name)}</h3>
+				<h3 style="color:grey">Your Current Job: ${userJob == null? "Unemployed" :userJob.title.concat(" in ").concat(userJob.game.name)}</h3>
 				<form:form action="/jobs/quit/${userJob.id}">
 					<button ${userJob.id == null ? "hidden" : null} type="submit">Quit</button>
 				</form:form>
@@ -127,8 +127,8 @@
 			<table>
 				<thead>
 					<tr>
-						<th class="lgCol">Job </th>
-						<th class="lgCol">Game </th>
+						<th class="mdCol">Job </th>
+						<th class="mdCol">Game </th>
 						<th class="lgCol">Description</th>
 						<th class="smCol">Rupees </th>
 						<th class="smCol">Morality</th>
@@ -140,8 +140,8 @@
 					<c:forEach var="job" items="${jobs}">
 					<c:if test="${job.characters.size() == 0 }">
 					<tr>
-						<td class="lgCol">${job.title}</td>
-						<td class="lgCol"><a href="/game/${job.game.id}">${job.game.name}</a></td>
+						<td class="mdCol">${job.title}</td>
+						<td class="mdCol">${job.game.name}</td>
 						<td class="lgCol">${job.description}</td>
 						<td class="smCol">${job.salary}</td>
 						<td class="smCol"><c:if test="${job.morality==true }">

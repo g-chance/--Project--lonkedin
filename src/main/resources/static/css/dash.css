@@ -1,4 +1,7 @@
 
+body {
+	word-wrap: break-word;
+}
 .dash {
 	column-gap: 20px;
 }
@@ -22,24 +25,31 @@ h3 {
 	display: grid;
 	grid-template-columns: auto 1fr;
 }
-.connections {
+.dashConnections {
 	display: grid;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(4, 1fr);
 	justify-items: center;
+	column-width: fixed;
 }
-/* .connectionsRow {
-	width: 100%;
-} */
-.connections img {
-/* 	width: 75px;
-	height: 75px; */
+.dashConnectionsRow {
+	display: grid;
+	margin: 0 0 10px 0;
+}
+.dashConnections img {
+	justify-self:center;
+	max-width: 90px;
 	width: 100%;
 	padding: 2px;
 	border: 1px solid black;
 }
-.connections p {
+.dashConnections a {
+	max-width: 100%;
 	/* font-size: 1vw; */
+	/* width: 75px; */
 	text-align: center;
+	justify-self: center;
+	overflow-x: auto;
+	font-size: 15px;
 }
 .feed {
 	display: grid;
@@ -81,6 +91,23 @@ h3 {
 	padding: 2px 5px;
 	margin: 0 5px 5px 5px;
 }
+.jobListing, .gameListing {
+	padding: 5px 0 10px 5px;
+	border-bottom: 1px dotted black;
+}
+.gameListing {
+	
+	margin: 0 5px 5px 5px;
+}
+.lastGame {
+	border-bottom: none;
+	margin-bottom: 0px;
+	padding-bottom: 0px
+}
+.jobListing a {
+	color: green;
+	font-weight: 500;
+}
 .connectionsCount {
 	margin: 10px 0 0 0;
 }
@@ -109,10 +136,49 @@ h3 {
 }
 .skillLink {
 	width: fit-content;
-	margin: auto;
+	margin: 15px auto 15px auto;
 }
 .skillLink button {
 	padding: 5px;
 	font-size: 15px;
 	border-radius: 0%;
+}
+.skillsGrid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	row-gap: 15px;
+	padding: 15px 10px 5px 10px;
+	border-top: 1px solid black;
+	font-size: 18px;
+}
+.skillLevel {
+	font-size: 15px;
+	color: gray;
+}
+.loadMore {
+	width: fit-content;
+	margin: 15px auto 5px auto;
+}
+.loadMore button {
+	padding: 5px;
+	font-size: 15px;
+	border-radius: 0%;
+}
+.endorse {
+	padding: 2px 4px;
+	border: none;
+	background-color: #00b238;
+	color: white;
+}
+.discredit {
+	padding: 2px 4px;
+	border: none;
+	background-color: red;
+	color:white;
+}
+.green {
+	color: green;
+}
+.red {
+	color: red;
 }

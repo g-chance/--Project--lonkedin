@@ -197,12 +197,17 @@ button {
 	font-weight: bolder;
 	text-align: center;
 }
-.newChar #images {
+.newChar #images, .newChar .images {
 	width: 700px;
 	margin: 10px 0 40px 0;
 }
 .newChar #images * {
 	margin: 2px;
+	padding: 2px;
+	border: 1px solid black;
+}
+.lonkImage {
+	width: 90px;
 	padding: 2px;
 	border: 1px solid black;
 }
@@ -227,6 +232,7 @@ button {
 	.dash .col2 {
 		display: grid;
 		row-gap: 20px;
+		max-width: 100%;
 	}
 
 /* JOBS */
@@ -236,6 +242,17 @@ button {
 	grid-template-columns: 1fr;
 }
 .jobForms .companyForm, .jobForms .jobForm {
+	justify-self: center;
+	text-align: center;
+}
+
+/* SKILLS */
+
+.skillForms {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+.skillForm {
 	justify-self: center;
 	text-align: center;
 }
@@ -264,16 +281,16 @@ button {
 /* MEDIA QUERIES */
 
 @media only screen and (max-width:1200px) {
-	.wrapper {
+	.wrapper, .nav {
 		width: 100%
+	}
+	.dash .col2 {
+		margin-top: 20px;
 	}
 }
 
 @media only screen and (max-width:768px) {
-	.dash {
-		grid-template-columns: 1fr;
-	}
-	.jobForms {
+	.dash, .jobForms {
 		grid-template-columns: 1fr;
 	}
 }
