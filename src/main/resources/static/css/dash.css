@@ -154,9 +154,13 @@ h3 {
 	border-top: 1px solid black;
 	font-size: 18px;
 }
+.skillsGrid form {
+	display: inline-block;
+}
 .skillLevel {
 	font-size: 15px;
 	color: gray;
+	display: inline-block;
 }
 .loadMore {
 	width: fit-content;
