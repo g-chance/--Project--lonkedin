@@ -543,21 +543,21 @@ public class MainController {
 		return "skill.jsp";
 	}
 
-	@PostMapping("/skill/new")
-	public String submitSkill(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model,
-			HttpSession session) {
-		model.addAttribute("skill", new Skill());
-		Long id = (Long) session.getAttribute("user_id");
-		if (result.hasErrors()) {
-			return "skill.jsp";
-		}
-		// Add Validator to prevent duplicate skills later
-		else {
-
-			srepo.save(skill);
-		}
-		return "redirect:/dashboard/" + id;
-	}
+//	@PostMapping("/skill/new")
+//	public String submitSkill(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model,
+//			HttpSession session) {
+//		model.addAttribute("skill", new Skill());
+//		Long id = (Long) session.getAttribute("user_id");
+//		if (result.hasErrors()) {
+//			return "skill.jsp";
+//		}
+//		// Add Validator to prevent duplicate skills later
+//		else {
+//
+//			srepo.save(skill);
+//		}
+//		return "redirect:/dashboard/" + id;
+//	}
 
 	@PostMapping("/skill/add")
 	public String addSkill(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model,
@@ -569,12 +569,17 @@ public class MainController {
 			Long id = (Long) session.getAttribute("user_id");
 			User loggedIn = urepo.findById(id).orElse(null);
 			Skill thisSkill = srepo.findById(sId).orElse(null);
+			if (thisSkill == null) {
+				srepo.save(skill);
+				thisSkill = srepo.findById(sId).orElse(null);
+			}
 			List<UserSkill> usk = usrepo.findAllByUser(loggedIn);
 			UserSkill test = new UserSkill();
 			test.setUser(loggedIn);
 			test.setSkill(thisSkill);
 			usk.add(test);
 			usrepo.save(test);
+
 			return "redirect:/dashboard/" + id;
 		}
 	}
@@ -591,16 +596,55 @@ public class MainController {
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(id).orElse(null);
-
+		List<Job> mylist = jrepo.findAll();
+		mylist.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
 		model.addAttribute("job", new Job());
 		model.addAttribute("game", new Game());
-		model.addAttribute("jobs", jrepo.findAll());
+		model.addAttribute("jobs", mylist);
 		model.addAttribute("userJob", user.getJob());
 		model.addAttribute("usersgame", user.getGame());
 		model.addAttribute("user", user);
 		return "jobs.jsp";
 	}
 
+	
+	@GetMapping("/job/highpay")
+	public String highPay(Model model, HttpSession session) {
+		if (session.getAttribute("user_id") == null) {
+			return "redirect:/";
+		}
+		Long id = (Long) session.getAttribute("user_id");
+		User user = urepo.findById(id).orElse(null);
+		model.addAttribute("job", new Job());
+		model.addAttribute("game", new Game());
+		List<Job> mylist = jrepo.findAll();
+		mylist.sort((c1, c2) -> c2.getSalary() - c1.getSalary());
+		model.addAttribute("jobs", mylist);
+		model.addAttribute("userJob", user.getJob());
+		model.addAttribute("usersgame", user.getGame());
+		model.addAttribute("user", user);
+		return "jobs.jsp";
+	}
+	
+	@GetMapping("/job/lowpay")
+	public String lowPay(Model model, HttpSession session) {
+		if (session.getAttribute("user_id") == null) {
+			return "redirect:/";
+		}
+		Long id = (Long) session.getAttribute("user_id");
+		User user = urepo.findById(id).orElse(null);
+
+		model.addAttribute("job", new Job());
+		model.addAttribute("game", new Game());
+		List<Job> mylist = jrepo.findAll();
+		mylist.sort((c1, c2) -> c1.getSalary() - c2.getSalary());
+		model.addAttribute("jobs", mylist);
+		model.addAttribute("userJob", user.getJob());
+		model.addAttribute("usersgame", user.getGame());
+		model.addAttribute("user", user);
+		return "jobs.jsp";
+	}
+	
 	// we need a way to check if company already exists in the database if the user
 	// is trying to create one
 	@PostMapping("/jobs")
