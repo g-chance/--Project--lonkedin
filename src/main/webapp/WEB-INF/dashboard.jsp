@@ -130,13 +130,13 @@
 					<h3>Enemies</h3>
 					<div class="dashConnections">
 						<c:if test="${ enemies.size() == 0 }">
-							<p>${ sessionScope.user_id == user.id ? "You have" : user.name.concat(" has") }  no enemies</p>
+							<a>${ sessionScope.user_id == user.id ? "You have" : user.name.concat(" has") }  no enemies</a>
 						</c:if>
 						<c:forEach items="${ enemies }" var="enemy">
 							<div class="dashConnectionsRow">
 								<img src="${ enemy.picture }" /> 
 								<a href="/dashboard/${ enemy.id }">
-									<p>${ enemy.name } (${ enemy.universe })</p>
+									${ enemy.name } (${ enemy.universe })
 								</a>
 							</div>
 						</c:forEach>
@@ -153,20 +153,31 @@
 					</div>
 					</c:if>
 					<div class="skillsGrid">
-					<c:forEach items="${ skills }" var="skill">
+					<c:forEach items="${ skills }" var="us">
 						<div>
-							<p>${ skill.name }</p>
-							<p class="skillLevel">${ skill.level } Novice</p>
+							<c:set var="ct">${ us.count }</c:set>
+							<p>${ us.skill.name } <span ${ us.count > -1 || us.count == null ? "class='green'" : "class='red'" }>${ us.count > -1 || us.count == null ? "+".concat(ct) : ct }</span></p>
+							<p class="skillLevel">${ us.skill.level } Novice</p>
 							<c:if test="${ user != loggedIn }">
 							<c:choose>
 								<c:when test="${ user.friends.contains(loggedIn) && user.game.characters.contains(loggedIn) && user.job.morality == loggedIn.job.morality}">
-							<button class="endorse">Endorse</button>
+								<form action=""></form>
+							<form action="/endorse/${ user.id }/${ us.skill.id }" method="POST">
+								<input type="hidden" name="endorse" value="endorse"/>
+								<input type="submit" class="endorse" value="Endorse" />
+							</form>
 								</c:when>
 								<c:when test="${ user.game.characters.contains(loggedIn) && user.job.morality != loggedIn.job.morality}">
-							<button class="discredit">Discredit</button>
+							<form action="/endorse/${ user.id }/${ us.skill.id }" method="POST">
+								<input type="hidden" name="endorse" value="discredit"/>
+								<input type="submit" class="discredit" value="Attack" />
+							</form>
 								</c:when>
 								<c:when test="${ user.friends.contains(loggedIn) }">
-							<button class="endorse">Endorse</button>
+							<form action="/endorse/${ user.id }/${ us.skill.id }" method="POST">
+								<input type="hidden" name="endorse" value="endorse"/>
+								<input type="submit" class="endorse" value="Endorse" />
+							</form>
 								</c:when>
 								<c:otherwise>${ null }</c:otherwise>
 							</c:choose>
@@ -252,6 +263,9 @@
 							</div>
 							<div class="feedSubHeader">
 								<h3>Recent Job Listings</h3>
+								<c:if test="${ jobs.size() == 0 }">
+									<p class="jobListing">There are no current job listings</p>
+								</c:if>
 								<c:forEach items="${ jobs }" var="job">
 									<p class="jobListing"><a href="/game/${ job.game.id }">${ job.game.name }</a> is hiring! Checkout
 										their new posting for ${ job.title }!</p>

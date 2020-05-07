@@ -51,6 +51,9 @@ h3 {
 	overflow-x: auto;
 	font-size: 15px;
 }
+.dashConnections p {
+	text-align: center;
+}
 .feed {
 	display: grid;
 }
@@ -167,9 +170,21 @@ h3 {
 .endorse {
 	padding: 2px 4px;
 	border: none;
+	background-color: #00b2389e;
+	color: white;
 }
 .discredit {
 	padding: 2px 4px;
 	border: none;
 	background-color: red;
+	color:white;
+}
+.green, .red {
+	font-size: 15px;
+}
+.green {
+	color: green;
+}
+.red {
+	color: red;
 }
