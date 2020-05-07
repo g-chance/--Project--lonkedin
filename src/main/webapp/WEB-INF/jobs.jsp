@@ -124,6 +124,9 @@
 					<button ${userJob.id == null ? "hidden" : null} type="submit">Quit</button>
 				</form:form>
             </div>
+            <p><a href="/job/highpay"> <button class="action">Salary High - Low</button></a> 
+            <a href="/job/lowpay"><button class="action">Salary Low - High</button></a> 
+            <a href="/jobs"><button class="action">Default Listing</button></a></p>
 			<table>
 				<thead>
 					<tr>
