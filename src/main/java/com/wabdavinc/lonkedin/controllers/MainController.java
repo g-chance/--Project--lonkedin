@@ -549,6 +549,8 @@ public class MainController {
 		model.addAttribute("skill", new Skill());
 		Long id = (Long) session.getAttribute("user_id");
 		User loggedIn = urepo.findById(id).orElse(null);
+		model.addAttribute("allSkills", srepo.findAll());
+		model.addAttribute("user", urepo.findById(id).orElse(null));
 		if (result.hasErrors()) {
 			return "skill.jsp";
 		}
