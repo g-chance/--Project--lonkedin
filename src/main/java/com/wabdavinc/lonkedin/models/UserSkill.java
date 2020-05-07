@@ -37,7 +37,7 @@ public class UserSkill {
 	private Date updatedAt;
 	
 	public UserSkill() {
-		
+		this.count = 0;
 	}
 
 	public Long getId() {

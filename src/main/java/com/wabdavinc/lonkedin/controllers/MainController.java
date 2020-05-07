@@ -569,8 +569,15 @@ public class MainController {
 			Long id = (Long) session.getAttribute("user_id");
 			User loggedIn = urepo.findById(id).orElse(null);
 			Skill thisSkill = srepo.findById(sId).orElse(null);
-			loggedIn.getSkills().add(thisSkill);
-			urepo.save(loggedIn);
+//			loggedIn.getSkills().add(thisSkill);
+//			loggedIn.setSkills(loggedIn.getSkills());
+			List<UserSkill> usk = usrepo.findAllByUser(loggedIn);
+			UserSkill test = new UserSkill();
+			test.setUser(loggedIn);
+			test.setSkill(thisSkill);
+			usk.add(test);
+			usrepo.save(test);
+//			urepo.save(loggedIn);
 			return "redirect:/dashboard/" + id;
 		}
 	}
@@ -643,8 +650,7 @@ public class MainController {
 	}
 
 	@PostMapping("/game")
-	public String doGames(Model model, HttpSession session, @Valid @ModelAttribute("game") Game game,
-			BindingResult result) {
+	public String doGames(Model model, HttpSession session, @Valid @ModelAttribute("game") Game game, BindingResult result) {
 		gvalid.validate(game, result);
 		if (result.hasErrors()) {
 			System.out.println(game.getId());
@@ -676,6 +682,7 @@ public class MainController {
 
 			return "redirect:/jobs";
 		}
+	}
     
 	@PostMapping("/apply/{job_id}")
 	public String apply(@PathVariable("job_id") Long id, HttpSession session, Model model) {

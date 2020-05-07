@@ -130,13 +130,13 @@
 					<h3>Enemies</h3>
 					<div class="dashConnections">
 						<c:if test="${ enemies.size() == 0 }">
-							<p>${ sessionScope.user_id == user.id ? "You have" : user.name.concat(" has") }  no enemies</p>
+							<a>${ sessionScope.user_id == user.id ? "You have" : user.name.concat(" has") }  no enemies</a>
 						</c:if>
 						<c:forEach items="${ enemies }" var="enemy">
 							<div class="dashConnectionsRow">
 								<img src="${ enemy.picture }" /> 
 								<a href="/dashboard/${ enemy.id }">
-									<p>${ enemy.name } (${ enemy.universe })</p>
+									${ enemy.name } (${ enemy.universe })
 								</a>
 							</div>
 						</c:forEach>
@@ -156,7 +156,7 @@
 					<c:forEach items="${ skills }" var="us">
 						<div>
 							<c:set var="ct">${ us.count }</c:set>
-							<p>${ us.skill.name } <span ${ us.count > 0 ? "class='green'" : "class='red'" }>(${ us.count > 0 ? ct.concat(" Endorsements") : ct.concat(" Discredits") })</span></p>
+							<p>${ us.skill.name } <span ${ us.count > -1 || us.count == null ? "class='green'" : "class='red'" }>(${ us.count > -1 || us.count == null ? ct.concat(" Endorsements") : ct.concat(" Attacks") })</span></p>
 							<p class="skillLevel">${ us.skill.level } Novice</p>
 							<c:if test="${ user != loggedIn }">
 							<c:choose>
@@ -170,7 +170,7 @@
 								<c:when test="${ user.game.characters.contains(loggedIn) && user.job.morality != loggedIn.job.morality}">
 							<form action="/endorse/${ user.id }/${ us.skill.id }" method="POST">
 								<input type="hidden" name="endorse" value="discredit"/>
-								<input type="submit" class="discredit" value="Discredit" />
+								<input type="submit" class="discredit" value="Attack" />
 							</form>
 								</c:when>
 								<c:when test="${ user.friends.contains(loggedIn) }">

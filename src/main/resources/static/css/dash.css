@@ -51,6 +51,9 @@ h3 {
 	overflow-x: auto;
 	font-size: 15px;
 }
+.dashConnections p {
+	text-align: center;
+}
 .feed {
 	display: grid;
 }
