@@ -1,4 +1,7 @@
 
+body {
+	word-wrap: break-word;
+}
 .dash {
 	column-gap: 20px;
 }
@@ -26,6 +29,7 @@ h3 {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	justify-items: center;
+	column-width: fixed;
 }
 .dashConnectionsRow {
 	display: grid;
@@ -33,15 +37,18 @@ h3 {
 }
 .dashConnections img {
 	justify-self:center;
-	width: 75px;
+	max-width: 90px;
+	width: 100%;
 	padding: 2px;
 	border: 1px solid black;
 }
-.dashConnections p {
+.dashConnections a {
+	max-width: 100%;
 	/* font-size: 1vw; */
-	width: 75px;
+	/* width: 75px; */
 	text-align: center;
-	overflow-x: hidden;
+	justify-self: center;
+	overflow-x: auto;
 	font-size: 15px;
 }
 .feed {
@@ -83,6 +90,23 @@ h3 {
 .jobListing, .gameListing, .postContent, .postPic {
 	padding: 2px 5px;
 	margin: 0 5px 5px 5px;
+}
+.jobListing, .gameListing {
+	padding: 5px 0 10px 5px;
+	border-bottom: 1px dotted black;
+}
+.gameListing {
+	
+	margin: 0 5px 5px 5px;
+}
+.lastGame {
+	border-bottom: none;
+	margin-bottom: 0px;
+	padding-bottom: 0px
+}
+.jobListing a {
+	color: green;
+	font-weight: 500;
 }
 .connectionsCount {
 	margin: 10px 0 0 0;
@@ -139,4 +163,13 @@ h3 {
 	padding: 5px;
 	font-size: 15px;
 	border-radius: 0%;
+}
+.endorse {
+	padding: 2px 4px;
+	border: none;
+}
+.discredit {
+	padding: 2px 4px;
+	border: none;
+	background-color: red;
 }

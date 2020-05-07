@@ -120,10 +120,10 @@
 					<div class="dashConnections">
 						<c:forEach items="${ friends }" var="friend">
 							<div class="dashConnectionsRow">
-								<img src="${ friend.picture }" /> <a
-									href="/dashboard/${ friend.id }">
-									<p>${ friend.name } (${ friend.universe })</p>
-								</a>
+								<img src="${ friend.picture }" /> 
+ 								<a href="/dashboard/${ friend.id }">
+								${ friend.name } (${ friend.universe })
+							</a>
 							</div>
 						</c:forEach>
 					</div>
@@ -134,8 +134,8 @@
 						</c:if>
 						<c:forEach items="${ enemies }" var="enemy">
 							<div class="dashConnectionsRow">
-								<img src="${ enemy.picture }" /> <a
-									href="/dashboard/${ enemy.id }">
+								<img src="${ enemy.picture }" /> 
+								<a href="/dashboard/${ enemy.id }">
 									<p>${ enemy.name } (${ enemy.universe })</p>
 								</a>
 							</div>
@@ -157,6 +157,20 @@
 						<div>
 							<p>${ skill.name }</p>
 							<p class="skillLevel">${ skill.level } Novice</p>
+							<c:if test="${ user != loggedIn }">
+							<c:choose>
+								<c:when test="${ user.friends.contains(loggedIn) && user.game.characters.contains(loggedIn) && user.job.morality == loggedIn.job.morality}">
+							<button class="endorse">Endorse</button>
+								</c:when>
+								<c:when test="${ user.game.characters.contains(loggedIn) && user.job.morality != loggedIn.job.morality}">
+							<button class="discredit">Discredit</button>
+								</c:when>
+								<c:when test="${ user.friends.contains(loggedIn) }">
+							<button class="endorse">Endorse</button>
+								</c:when>
+								<c:otherwise>${ null }</c:otherwise>
+							</c:choose>
+							</c:if>
 						</div>
 					</c:forEach>
 					</div>
@@ -239,15 +253,18 @@
 							<div class="feedSubHeader">
 								<h3>Recent Job Listings</h3>
 								<c:forEach items="${ jobs }" var="job">
-									<p class="jobListing">${ job.game.name } is hiring! Checkout
+									<p class="jobListing"><a href="/game/${ job.game.id }">${ job.game.name }</a> is hiring! Checkout
 										their new posting for ${ job.title }!</p>
 								</c:forEach>
 							</div>
 							<div class="feedSubHeader">
 								<h3>Newest Games</h3>
 								<c:forEach items="${ games }" var="game">
+								<c:if test="${ game != games.get(games.size()-1) }">
 									<p class="gameListing">${ game.name }</p>
+								</c:if>
 								</c:forEach>
+								<p class="gameListing lastGame">${ games.get(games.size()-1).name }</p>
 							</div>
 						</div>
 					</div>

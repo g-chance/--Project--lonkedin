@@ -70,7 +70,14 @@
 					</c:when>
 					<c:otherwise>
 						<c:if test="${ !loggedIn.friends.contains(result) && loggedIn != result }">
-				<a href="">Request Connection</a>		
+							<c:choose>
+							<c:when test="${ !result.friendRequests.contains(loggedIn) }">
+				<a href="/requestConnection2/${ result.id }/${ user.id }">Request Connection</a>		
+							</c:when>
+							<c:otherwise>
+				<a>Pending Connection</a>
+							</c:otherwise>
+							</c:choose>
 						</c:if>
 					</c:otherwise>
 				</c:choose>

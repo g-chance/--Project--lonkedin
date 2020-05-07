@@ -10,6 +10,7 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/skill.css">
 	<script type="text/javascript" src="/js/app.js"></script>
 </head>
 
@@ -59,29 +60,27 @@
 
 		<!-- JOB FORMS -->
 
-		<div class="jobForms"></div>
+		<div class="skillForms"></div>
 
-		<!-- jobForms COLUMN 1 **ADDING COMPANIES** -->
-		<!-- //NEED TO FIND A WAY SO THAT ONLY THOSE WITHOUT CURRENT COMPANIES CAN MAKE COMPANIES -->
-		<!-- VERIFY IF SOMEONE HAS ALREADY CREATED THE SAME COMPANY -->
 
-		<div class="col1 companyForm">
+		<div class="col1 skillForm">
 			<h2>Create a New Skill</h2>
 			<p>
 				<form:errors path="skill.*" />
 			</p>
 			<form:form action="/skill/new" method="post" modelAttribute="skill">
 				<p>
-					<form:label path="name">Skill Name:</form:label>
-					<form:input path="name" />
+					<form:input path="name" placeholder="Skill Name"/>
 				</p>
 
 				<input type="submit" value="Create a Skill!" />
 			</form:form>
 		</div>
 
-		<div class="col2 jobForm">
+		<div class="col2 skillForm">
+		<h2>Add a Skill</h2>
 			<form action="/skill/add" method="POST">
+				<p>
 				<select name="userSkill">
 					<c:forEach var="skill" items="${allSkills}">
 						<c:if test="${user.skills.contains(skill) ==false}">
@@ -89,17 +88,15 @@
 						</c:if>
 					</c:forEach>
 				</select>
-				<button type="submit" name="action">Add</button>
+				</p>
+				<input type="submit" name="action" value="Add"></input>
 			</form>
 
 			<div>
-				<ul>
+			<h2>Your Skills</h2>
 					<c:forEach items="${user.skills}" var="uskill">
-						<li>${uskill.name}</li>
+						<p>${uskill.name}</p>
 					</c:forEach>
-
-				</ul>
-				
 			</div>
 		</div>
 
