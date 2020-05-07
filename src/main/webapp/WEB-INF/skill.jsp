@@ -68,17 +68,19 @@
 			<p>
 				<form:errors path="skill.*" />
 			</p>
-			
-			<form:form class="form" action="/skill/add" method="post" modelAttribute="skill">
-				<form:input class="input" list="characters" path="name" placeholder="Skill Name"></form:input>
-				<datalist id="characters">
+			<form class="form" action="/skill/add" method="post">
+						<select name = "userSkill">
 						<c:forEach var="skill" items="${allSkills}">
 						<c:if test="${user.skills.contains(skill) ==false}">
 							<option value="${skill.id}" label="${skill.name}">
 						</c:if>
 					</c:forEach>
-				</datalist>
-				<input type="submit" value="Create a Skill!" />
+					</select>
+					<button type="submit"> Add</button>
+				</form>
+			<form:form class="form" action="/skill/new" method="post" modelAttribute="skill">
+				<form:input class="input" path="name" placeholder="Skill Name"></form:input>
+				<p><input type="submit" value="Create and Add" /></p>
 			</form:form>
 		</div>
 
