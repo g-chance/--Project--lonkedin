@@ -170,7 +170,7 @@ h3 {
 .endorse {
 	padding: 2px 4px;
 	border: none;
-	background-color: #00b238;
+	background-color: #00b2389e;
 	color: white;
 }
 .discredit {
@@ -178,6 +178,9 @@ h3 {
 	border: none;
 	background-color: red;
 	color:white;
+}
+.green, .red {
+	font-size: 15px;
 }
 .green {
 	color: green;

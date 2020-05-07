@@ -156,7 +156,7 @@
 					<c:forEach items="${ skills }" var="us">
 						<div>
 							<c:set var="ct">${ us.count }</c:set>
-							<p>${ us.skill.name } <span ${ us.count > -1 || us.count == null ? "class='green'" : "class='red'" }>(${ us.count > -1 || us.count == null ? ct.concat(" Endorsements") : ct.concat(" Attacks") })</span></p>
+							<p>${ us.skill.name } <span ${ us.count > -1 || us.count == null ? "class='green'" : "class='red'" }>${ us.count > -1 || us.count == null ? "+".concat(ct) : ct }</span></p>
 							<p class="skillLevel">${ us.skill.level } Novice</p>
 							<c:if test="${ user != loggedIn }">
 							<c:choose>
@@ -263,6 +263,9 @@
 							</div>
 							<div class="feedSubHeader">
 								<h3>Recent Job Listings</h3>
+								<c:if test="${ jobs.size() == 0 }">
+									<p class="jobListing">There are no current job listings</p>
+								</c:if>
 								<c:forEach items="${ jobs }" var="job">
 									<p class="jobListing"><a href="/game/${ job.game.id }">${ job.game.name }</a> is hiring! Checkout
 										their new posting for ${ job.title }!</p>
