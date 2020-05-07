@@ -153,20 +153,31 @@
 					</div>
 					</c:if>
 					<div class="skillsGrid">
-					<c:forEach items="${ skills }" var="skill">
+					<c:forEach items="${ skills }" var="us">
 						<div>
-							<p>${ skill.name }</p>
-							<p class="skillLevel">${ skill.level } Novice</p>
+							<c:set var="ct">${ us.count }</c:set>
+							<p>${ us.skill.name } <span ${ us.count > 0 ? "class='green'" : "class='red'" }>(${ us.count > 0 ? ct.concat(" Endorsements") : ct.concat(" Discredits") })</span></p>
+							<p class="skillLevel">${ us.skill.level } Novice</p>
 							<c:if test="${ user != loggedIn }">
 							<c:choose>
 								<c:when test="${ user.friends.contains(loggedIn) && user.game.characters.contains(loggedIn) && user.job.morality == loggedIn.job.morality}">
-							<button class="endorse">Endorse</button>
+								<form action=""></form>
+							<form action="/endorse/${ user.id }/${ us.skill.id }" method="POST">
+								<input type="hidden" name="endorse" value="endorse"/>
+								<input type="submit" class="endorse" value="Endorse" />
+							</form>
 								</c:when>
 								<c:when test="${ user.game.characters.contains(loggedIn) && user.job.morality != loggedIn.job.morality}">
-							<button class="discredit">Discredit</button>
+							<form action="/endorse/${ user.id }/${ us.skill.id }" method="POST">
+								<input type="hidden" name="endorse" value="discredit"/>
+								<input type="submit" class="discredit" value="Discredit" />
+							</form>
 								</c:when>
 								<c:when test="${ user.friends.contains(loggedIn) }">
-							<button class="endorse">Endorse</button>
+							<form action="/endorse/${ user.id }/${ us.skill.id }" method="POST">
+								<input type="hidden" name="endorse" value="endorse"/>
+								<input type="submit" class="endorse" value="Endorse" />
+							</form>
 								</c:when>
 								<c:otherwise>${ null }</c:otherwise>
 							</c:choose>

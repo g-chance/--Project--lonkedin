@@ -20,11 +20,13 @@ import com.wabdavinc.lonkedin.models.Job;
 import com.wabdavinc.lonkedin.models.Post;
 import com.wabdavinc.lonkedin.models.Skill;
 import com.wabdavinc.lonkedin.models.User;
+import com.wabdavinc.lonkedin.models.UserSkill;
 import com.wabdavinc.lonkedin.repositories.GameRepo;
 import com.wabdavinc.lonkedin.repositories.JobRepo;
 import com.wabdavinc.lonkedin.repositories.PostRepo;
 import com.wabdavinc.lonkedin.repositories.SkillRepo;
 import com.wabdavinc.lonkedin.repositories.UserRepo;
+import com.wabdavinc.lonkedin.repositories.UserSkillRepo;
 import com.wabdavinc.lonkedin.services.UserServ;
 import com.wabdavinc.lonkedin.validator.GameValidator;
 import com.wabdavinc.lonkedin.validator.UserValidator;
@@ -40,9 +42,10 @@ public class MainController {
 	private final JobRepo jrepo;
 	private final PostRepo prepo;
 	private final SkillRepo srepo;
+	private final UserSkillRepo usrepo;
 
 	public MainController(UserRepo urepo, UserServ userv, UserValidator uvalid, GameRepo grepo, GameValidator gvalid,
-			JobRepo jrepo, PostRepo prepo, SkillRepo srepo) {
+			JobRepo jrepo, PostRepo prepo, SkillRepo srepo, UserSkillRepo usrepo) {
 		this.urepo = urepo;
 		this.userv = userv;
 		this.uvalid = uvalid;
@@ -51,6 +54,7 @@ public class MainController {
 		this.jrepo = jrepo;
 		this.prepo = prepo;
 		this.srepo = srepo;
+		this.usrepo = usrepo;
 	}
 
 //	GREG
@@ -164,7 +168,7 @@ public class MainController {
 		session.setAttribute("currentDisplayIndex", defaultDisplayIndex);
 		model.addAttribute("allPosts",mylist);
 		model.addAttribute("posts", myPosts);
-		model.addAttribute("skills", user.getSkills());
+		model.addAttribute("skills", usrepo.findAllByUser(user));
 		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
 		model.addAttribute("friendRequests", user.getFriendRequests());
 //	Get a list of 10 games
@@ -185,15 +189,15 @@ public class MainController {
 			}
 		}
 		model.addAttribute("jobs", jobs);
-//	Get a list of 5 friends
+//	Get a list of 8 friends
 		ArrayList<User> friends = new ArrayList<User>();
 		if(user.getFriends().size() != 0) {
-			for(int i=0;i<user.getFriends().size() && i<4;i++) {
+			for(int i=0;i<user.getFriends().size() && i<8;i++) {
 				friends.add(user.getFriends().get(i));
 			}
 		}
 		model.addAttribute("friends", friends);
-//	Get a list of 5 enemies
+//	Get a list of 4 enemies
 		ArrayList<User> enemies = new ArrayList<User>();
 //		if(user.getEnemies().size() != 0) {
 //			for(int i=0;i<user.getFriends().size() && i<4;i++) {
@@ -250,10 +254,13 @@ public class MainController {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
+		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(userId).orElse(null);
+		User loggedIn = urepo.findById(id).orElse(null);
 
 //	Add model attributes
 		model.addAttribute("user", user);
+		model.addAttribute("loggedIn", loggedIn);
 		model.addAttribute("post", new Post());
 		int currentDisplayIndex = (int)session.getAttribute("currentDisplayIndex") + 3;
 		session.setAttribute("currentDisplayIndex",currentDisplayIndex);
@@ -286,15 +293,15 @@ public class MainController {
 			}
 		}
 		model.addAttribute("jobs", jobs);
-//	Get a list of 5 friends
+//	Get a list of 8 friends
 		ArrayList<User> friends = new ArrayList<User>();
 		if(user.getFriends().size() != 0) {
-			for(int i=0;i<user.getFriends().size() && i<4;i++) {
+			for(int i=0;i<user.getFriends().size() && i<8;i++) {
 				friends.add(user.getFriends().get(i));
 			}
 		}
 		model.addAttribute("friends", friends);
-//	Get a list of 5 enemies
+//	Get a list of 4 enemies
 		ArrayList<User> enemies = new ArrayList<User>();
 //		if(user.getEnemies().size() != 0) {
 //			for(int i=0;i<user.getFriends().size() && i<4;i++) {
@@ -373,6 +380,29 @@ public class MainController {
 		u.getFriendRequests().remove(friend);
 		urepo.save(u);
 		return "redirect:/dashboard/" + u.getId();
+	}
+	
+	@PostMapping("endorse/{user_id}/{skill_id}")
+	public String endorse(@PathVariable("user_id") Long userid, @PathVariable("skill_id") Long skillid, @RequestParam("endorse") String str) {
+		User u = urepo.findById(userid).orElse(null);
+		Skill s = srepo.findById(skillid).orElse(null);
+		UserSkill usk = usrepo.findByUserAndSkill(u, s);
+		if(usk.getCount() == null) {
+			if(str.equals("endorse")) {
+				usk.setCount(1);	
+			} else {
+				usk.setCount(-1);
+			}
+		} else {
+			if(str.equals("endorse")) {
+				usk.setCount(usk.getCount()+1);	
+			} else {
+				usk.setCount(usk.getCount()-1);
+			}
+		}
+		usrepo.save(usk);
+		System.out.println(usk.getCount());
+		return "redirect:/dashboard/"+userid;
 	}
 
 //	**************************************************************
