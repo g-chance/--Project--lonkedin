@@ -543,36 +543,36 @@ public class MainController {
 		return "skill.jsp";
 	}
 
-//	@PostMapping("/skill/new")
-//	public String submitSkill(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model,
-//			HttpSession session) {
-//		model.addAttribute("skill", new Skill());
-//		Long id = (Long) session.getAttribute("user_id");
-//		if (result.hasErrors()) {
-//			return "skill.jsp";
-//		}
-//		// Add Validator to prevent duplicate skills later
-//		else {
-//
-//			srepo.save(skill);
-//		}
-//		return "redirect:/dashboard/" + id;
-//	}
-
-	@PostMapping("/skill/add")
-	public String addSkill(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model,
-			HttpSession session, @RequestParam("userSkill") Long sId) {
+	@PostMapping("/skill/new")
+	public String submitSkill(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model,
+			HttpSession session) {
 		model.addAttribute("skill", new Skill());
+		Long id = (Long) session.getAttribute("user_id");
+		User loggedIn = urepo.findById(id).orElse(null);
 		if (result.hasErrors()) {
 			return "skill.jsp";
-		} else {
+		}
+		// Add Validator to prevent duplicate skills later
+		else {
+
+			Skill thisSkill = srepo.save(skill);
+			List<UserSkill> usk = usrepo.findAllByUser(loggedIn);
+			UserSkill test = new UserSkill();
+			test.setUser(loggedIn);
+			test.setSkill(thisSkill);
+			usk.add(test);
+			usrepo.save(test);
+		}
+		return "redirect:/skill";
+	}
+
+	@PostMapping("/skill/add")
+	public String addSkill(Model model,
+			HttpSession session, @RequestParam("userSkill") Long sId) {
+			model.addAttribute("skill", new Skill());
 			Long id = (Long) session.getAttribute("user_id");
 			User loggedIn = urepo.findById(id).orElse(null);
 			Skill thisSkill = srepo.findById(sId).orElse(null);
-			if (thisSkill == null) {
-				srepo.save(skill);
-				thisSkill = srepo.findById(sId).orElse(null);
-			}
 			List<UserSkill> usk = usrepo.findAllByUser(loggedIn);
 			UserSkill test = new UserSkill();
 			test.setUser(loggedIn);
@@ -580,9 +580,8 @@ public class MainController {
 			usk.add(test);
 			usrepo.save(test);
 
-			return "redirect:/dashboard/" + id;
+			return "redirect:/skill";
 		}
-	}
 
 //	**************************************************************
 
