@@ -138,7 +138,7 @@
 				<tbody>
 				
 					<c:forEach var="job" items="${jobs}">
-					<c:if test="${ job.characters.size() == 0 }">
+					<c:if test="${job.characters.size() == 0 }">
 					<tr>
 						<td class="mdCol">${job.title}</td>
 						<td class="mdCol">${job.game.name}</td>
