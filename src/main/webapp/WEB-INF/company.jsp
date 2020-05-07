@@ -76,7 +76,7 @@
 			<p class="back"><a href="/jobs">Back to Joblistings</a></p>
 			<div class="gameHeader">
 				<h1>${ game.name }</h1>
-				<p>CEO:${ceo !=null ? ceo.name : " Position Available!"}</p>
+				<p>CEO: ${ceo !=null ? ceo.name : " Position Available!"}</p>
 			</div>
 			
 			<div class="aboutGame">
