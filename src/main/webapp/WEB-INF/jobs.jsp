@@ -138,10 +138,10 @@
 				<tbody>
 				
 					<c:forEach var="job" items="${jobs}">
-					<c:if test="${ job.characters.size() == 0 }">
+					<c:if test="${job.characters.size() == 0 }">
 					<tr>
 						<td class="lgCol">${job.title}</td>
-						<td class="lgCol">${job.game.name}</td>
+						<td class="lgCol"><a href="/game/${job.game.id}">${job.game.name}</a></td>
 						<td class="lgCol">${job.description}</td>
 						<td class="smCol">${job.salary}</td>
 						<td class="smCol"><c:if test="${job.morality==true }">

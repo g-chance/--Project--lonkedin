@@ -516,6 +516,40 @@ public class MainController {
 			urepo.save(user);
 			return "redirect:/jobs";
 		}
+		
+		
+//		=======================Company==============================
+		
+		@GetMapping("/game/{game_id}")
+		public String company(@PathVariable("game_id") Long id, HttpSession session, Model model) {
+			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+			Game game= grepo.findById(id).orElse(null);
+			Job job = jrepo.findByGameAndTitle(game, "ceo");
+			List<Job> jobs = game.getJobs();
+			model.addAttribute("jobs", jobs);
+			model.addAttribute("user", user);
+			model.addAttribute("game", game);
+			model.addAttribute("ceo", urepo.findByGameAndJob(game, job));
+			return "company.jsp";
+		}
+		@PostMapping("/applyTwo/{game_id}")
+		public String applyTwo(@PathVariable("game_id") Long id, HttpSession session, Model model){
+			Job job= jrepo.findById(id).orElse(null);
+			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+			Game game = grepo.findById(job.getGame().getId()).orElse(null);
+			user.setJob(job);
+			user.setGame(game);
+			urepo.save(user);
+			return "redirect:/game/{game_id}";
+		}
+		
+//		==========================About=============================
+		@GetMapping("/about")
+		public String about(HttpSession session) {
+			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+			return "about.jsp";
+			
+		}
 	
 	
 //	**************************************************************
