@@ -64,33 +64,23 @@
 
 
 		<div class="col1 skillForm">
-			<h2>Create a New Skill</h2>
+			<h2>Add a New Skill</h2>
 			<p>
 				<form:errors path="skill.*" />
 			</p>
-			<form:form action="/skill/new" method="post" modelAttribute="skill">
-				<p>
-					<form:input path="name" placeholder="Skill Name"/>
-				</p>
-
-				<input type="submit" value="Create a Skill!" />
-			</form:form>
-		</div>
-
-		<div class="col2 skillForm">
-		<h2>Add a Skill</h2>
-			<form action="/skill/add" method="POST">
-				<p>
-				<select name="userSkill">
-					<c:forEach var="skill" items="${allSkills}">
+			
+			<form:form class="form" action="/skill/add" method="post" modelAttribute="skill">
+				<form:input class="input" list="characters" path="name" placeholder="Skill Name"></form:input>
+				<datalist id="characters">
+						<c:forEach var="skill" items="${allSkills}">
 						<c:if test="${user.skills.contains(skill) ==false}">
 							<option value="${skill.id}" label="${skill.name}">
 						</c:if>
 					</c:forEach>
-				</select>
-				</p>
-				<input type="submit" name="action" value="Add"></input>
-			</form>
+				</datalist>
+				<input type="submit" value="Create a Skill!" />
+			</form:form>
+		</div>
 
 			<div>
 			<h2>Your Skills</h2>
