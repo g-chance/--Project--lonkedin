@@ -62,9 +62,17 @@ public class MainController {
 
 	@GetMapping("/newcharacter")
 	public String newCharacter(Model model, HttpSession session) {
+		if(session.getAttribute("user_id") == null) {
+			return "redirect:/login";
+		}
 
 //	Add Lonk as a friend
 		User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+		
+		if(u.getName() != null) {
+			return "redirect:/dashboard/"+u.getId();
+		}
+		
 		User lonk = urepo.findByEmail("lonk@lonkedin.com");
 		System.out.println(u);
 		System.out.println(lonk);
@@ -120,7 +128,9 @@ public class MainController {
 	@GetMapping("/dashboard")
 	public String dashboardcatch(HttpSession session, Model model) {
 		if (session.getAttribute("user_id") == null) {
-			return "redirect:/registration";
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		return "redirect:/" + id;
@@ -129,7 +139,9 @@ public class MainController {
 	@GetMapping("/dashboard/{user_id}")
 	public String dashboard(@PathVariable("user_id") Long userId, HttpSession session, Model model) {
 		if (session.getAttribute("user_id") == null) {
-			return "redirect:/registration";
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
 		}
 
 		Long id = (Long) session.getAttribute("user_id");
@@ -235,7 +247,9 @@ public class MainController {
 	@GetMapping("/dashboard/{user_id}/loadmore")
 	public String loadmorePost(@PathVariable("user_id") Long userId, HttpSession session, Model model) {
 		if (session.getAttribute("user_id") == null) {
-			return "redirect:/";
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(userId).orElse(null);
@@ -322,6 +336,11 @@ public class MainController {
 	}
 	@GetMapping("/search/{str}")
 	public String search(@PathVariable("str") String str, Model model, HttpSession session) {
+		if (session.getAttribute("user_id") == null) {
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
+		}
 		User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 		model.addAttribute("user", u);
 		model.addAttribute("friends", u.getFriends());
@@ -397,7 +416,9 @@ public class MainController {
 	@GetMapping("/requestConnection/{userid}/{str}")
 	public String requestConnection(@PathVariable("userid") Long connectionId, @PathVariable("str") String str, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
-			return "redirect:/";
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
 		}
 		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 		User connection = urepo.findById(connectionId).orElse(null);
@@ -418,7 +439,9 @@ public class MainController {
 	@GetMapping("/requestConnection2/{connectionid}/{pageviewid}")
 	public String requestConnection2(@PathVariable("connectionid") Long connectionId, @PathVariable("pageviewid") Long pageViewId, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
-			return "redirect:/";
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
 		}
 		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 		User connection = urepo.findById(connectionId).orElse(null);
@@ -435,7 +458,9 @@ public class MainController {
 	@GetMapping("/connections/{user_id}")
 	public String connections(@PathVariable("user_id") Long uId, HttpSession session, Model model) {
 		if (session.getAttribute("user_id") == null) {
-			return "redirect:/";
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		User loggedIn = urepo.findById(id).orElse(null);
@@ -466,7 +491,9 @@ public class MainController {
 	@GetMapping("/friend/{user_id}/remove")
 	public String removeFriend(@PathVariable("user_id") Long fId, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
-			return "redirect:/";
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		User loggedIn = urepo.findById(id).orElse(null);
@@ -517,7 +544,9 @@ public class MainController {
 	@GetMapping("/skill")
 	public String newSkill(Model model, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
-			return "redirect:/";
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		model.addAttribute("skill", new Skill());
@@ -527,8 +556,7 @@ public class MainController {
 	}
 
 	@PostMapping("/skill/new")
-	public String submitSkill(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model,
-			HttpSession session) {
+	public String submitSkill(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model, HttpSession session) {
 		model.addAttribute("skill", new Skill());
 		Long id = (Long) session.getAttribute("user_id");
 		User loggedIn = urepo.findById(id).orElse(null);
@@ -538,8 +566,9 @@ public class MainController {
 			return "skill.jsp";
 		}
 		// Add Validator to prevent duplicate skills later
+		
 		else {
-
+			System.out.println(srepo.findByName(skill.getName()));
 			Skill thisSkill = srepo.save(skill);
 			List<UserSkill> usk = usrepo.findAllByUser(loggedIn);
 			UserSkill test = new UserSkill();
@@ -552,8 +581,7 @@ public class MainController {
 	}
 
 	@PostMapping("/skill/add")
-	public String addSkill(Model model,
-			HttpSession session, @RequestParam("userSkill") Long sId) {
+	public String addSkill(Model model, HttpSession session, @RequestParam("userSkill") Long sId) {
 			model.addAttribute("skill", new Skill());
 			Long id = (Long) session.getAttribute("user_id");
 			User loggedIn = urepo.findById(id).orElse(null);
@@ -576,7 +604,9 @@ public class MainController {
 	@GetMapping("/jobs")
 	public String newJobForm(Model model, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
-			return "redirect:/";
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(id).orElse(null);
@@ -595,7 +625,9 @@ public class MainController {
 	@GetMapping("/job/highpay")
 	public String highPay(Model model, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
-			return "redirect:/";
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(id).orElse(null);
@@ -613,7 +645,9 @@ public class MainController {
 	@GetMapping("/job/lowpay")
 	public String lowPay(Model model, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
-			return "redirect:/";
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(id).orElse(null);
@@ -726,8 +760,10 @@ public class MainController {
 		@GetMapping("/game/{game_id}")
 		public String company(@PathVariable("game_id") Long id, HttpSession session, Model model) {
 			if (session.getAttribute("user_id") == null) {
-				return "redirect:/registration";
-			}
+				return "redirect:/login";
+			} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
+		}
 			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 			Game game= grepo.findById(id).orElse(null);
 			Job job = jrepo.findByGameAndTitle(game, "ceo");
@@ -754,8 +790,10 @@ public class MainController {
 		public String about(HttpSession session) {
 
 			if (session.getAttribute("user_id") == null) {
-				return "redirect:/registration";
-			}
+				return "redirect:/login";
+			} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
+		}
 			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 
 			return "about.jsp";
@@ -798,7 +836,7 @@ public class MainController {
 			princess.setName("Princess Zorldo");
 			princess.setUniverse("Hyrool");
 			princess.setEmail("zorldo@lonkedin.com");
-			princess.setPicture("/images/zorldo.jpg");
+			princess.setPicture("/images/zorldo.png");
 			List<User> princessFriends = new ArrayList<User>();
 			princessFriends.add(lonk);
 			princess.setFriends(princessFriends);
@@ -811,7 +849,7 @@ public class MainController {
 			goonan.setName("Goonanderp");
 			goonan.setUniverse("Hyrool");
 			goonan.setEmail("goonan@lonkedin.com");
-			goonan.setPicture("/images/lonk.jpg");
+			goonan.setPicture("/images/goonan.png");
 			urepo.save(goonan);
 
 			Game zorldo = new Game();
@@ -883,7 +921,7 @@ public class MainController {
 			
 			Post welcome = new Post();
 			welcome.setContent(
-					"Welcome to LonkedIn, friend! Looking forward to getting to know you better! We're always looking for good people at The Legend of Zorldo, check out our Game page to see if there are any new job listings!");
+					"Welcome to LonkedIn, friend! Looking forward to getting to know you better! We're always looking for good people at The Legend of Zorldo, <a href='/game/1'> check out our Game page<a> to see if there are any new job listings!");
 			welcome.setCreator(lonk);
 			prepo.save(welcome);
 

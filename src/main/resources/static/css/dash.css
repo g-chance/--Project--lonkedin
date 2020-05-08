@@ -46,6 +46,7 @@ h3 {
 .dashConnections img {
 	justify-self:center;
 	max-width: 90px;
+	max-height: 90px;
 	width: 100%;
 	padding: 2px;
 	border: 1px solid black;
@@ -102,6 +103,17 @@ h3 {
 }
 .friendRequests form, .friendRequests p {
 	display: inline-block;
+	margin: 0 0 5px 0;
+}
+.friendRequests input {
+	padding: 2px 5px;
+	border-radius: 0%;
+	box-shadow: 1px 1px 1px red;
+	color: red;
+}
+.friendRequests .accept {
+	color: green;
+	box-shadow: 1px 1px 1px green;
 }
 .jobListing, .gameListing, .postContent, .postPic {
 	padding: 2px 5px;

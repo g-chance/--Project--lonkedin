@@ -116,9 +116,9 @@
 						<div class="friendRequests">
 							<c:forEach items="${ friendRequests }" var="request">
 								<div>
-									<p>${ request.name } (${ request.universe })</p>
+									<p><a href="/dashboard/${ request.id }">${ request.name }</a> (${ request.universe })</p>
 									<form action="/accept/${ request.id }" method="post">
-										<input type="submit" value="Accept" />
+										<input class="accept" type="submit" value="Accept" />
 									</form>
 									<form action="/reject/${ request.id }" method="post">
 										<input type="submit" value="Reject" />
