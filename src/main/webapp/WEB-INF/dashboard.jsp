@@ -64,6 +64,7 @@
 						<a class="ddlink" href="/jobs">Jobs</a>
 						<a class="ddlink" href="/connections/${sessionScope.user_id}">Connections</a>
 						<a class="ddlink" href="/skill">Skills</a>
+						<a class="ddlink" href="/about">FAQ</a>
 						<a class="ddlink" href="/logout">Lonkout</a>
                      </div>
                  </div>
@@ -133,6 +134,11 @@
 					</div>
 				</c:if>
 				</c:if>
+				
+				<div class="row">
+					<h3>About</h3>
+				</div>
+				
 				<div class="row">
 					<h3>Connections</h3>
 					<div class="dashConnections">
@@ -297,7 +303,7 @@
 									<p class="jobListing">There are no current job listings</p>
 								</c:if>
 								<c:forEach items="${ jobs }" var="job">
-									<p class="jobListing"><a href="/game/${ job.game.id }">${ job.game.name }</a> is hiring! Checkout
+									<p class="jobListing">${ job.game.name } is hiring! <a href="/game/${ job.game.id }">Checkout</a>
 										their new posting for ${ job.title }!</p>
 								</c:forEach>
 							</div>

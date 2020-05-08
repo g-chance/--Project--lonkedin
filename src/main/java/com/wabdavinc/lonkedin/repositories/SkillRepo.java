@@ -11,4 +11,5 @@ import com.wabdavinc.lonkedin.models.Skill;
 public interface SkillRepo extends CrudRepository<Skill, Long> {
 	
     List<Skill> findAll();
+    Skill findByName(String str);
 }

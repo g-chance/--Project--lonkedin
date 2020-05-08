@@ -10,9 +10,9 @@
 	<meta charset="UTF-8">
 	<title>New Character</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
-	<script type="text/javascript" src="/js/app.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
 	<script>
 
 		// character randomization variables
@@ -111,9 +111,9 @@
 			}).done(function (response) {
 				console.log(response);
 				for(let i=randomImg;i<randomImg+21;i++) {
-					images += '<img src= https://images.igdb.com/igdb/image/upload/t_thumb/'+response[i].image_id+'.jpg alt="character mug shot">'
+					images += '<img class="randomImage" src= https://images.igdb.com/igdb/image/upload/t_thumb/'+response[i].image_id+'.jpg alt="character mug shot">'
 				}
-				$("#images").html(images);
+				$("#flex").html(images);
 			});
 
 			$(document).ajaxComplete(function(e, xhr, settings){
@@ -131,16 +131,27 @@
 </head>
 
 <body>
-	<div class="wrapper">
+	<div class="wrapper newCharacter">
 		<div class="navwrapper">
 			<div class="nav">
 				<div class="nav1">
 					<p class="llogo">Lonked<span>in</span></p>
 				</div>
-				<div></div>
-				<div class="nav3">
-					<a class="links" href="/logout">Logout</a>
+				<div class="smHide"></div>
+				<div class="nav3 smHide">
+					<a class="links logout" href="/logout">Lonkout</a>
 				</div>
+				
+				<div class="dropdown lgHide">
+					<div class="hamburger">
+					    <div></div>
+					    <div></div>
+					    <div></div>
+					</div>
+                     <div class="ddlinks">
+						<a class="ddlink" href="/logout">Lonkout</a>
+                     </div>
+                 </div>
 			</div>
 		</div>	
 		
@@ -157,6 +168,7 @@
 				<form:input class="input" path="universe" placeholder="What Universe are you from?"/>
 				<form:label class="input picture" path="picture">Select your avatar:</form:label>
 				<div class="images">
+				<div class="flex">
 					<img class="lonkImage" src="/images/lonk.jpg" alt="" />
 					<img class="lonkImage" src="/images/lonk.jpg" alt="" />
 					<img class="lonkImage" src="/images/lonk.jpg" alt="" />
@@ -165,7 +177,10 @@
 					<img class="lonkImage" src="/images/lonk.jpg" alt="" />
 					<img class="lonkImage" src="/images/lonk.jpg" alt="" />
 				</div>
-				<div id="images"></div>
+				</div>
+				<div class="images">
+					<div id="flex"></div>
+				</div>
 				<form:input id="picinput" type="hidden" class="input" path="picture" value=""/>
 				<input class="input submit" type="submit" value="Submit"/>
 			</form:form>
