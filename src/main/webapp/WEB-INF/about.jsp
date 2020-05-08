@@ -9,9 +9,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Jobs</title>
-	<script type="text/javascript" src="/js/app.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/jobs.css" media="screen" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
 </head>
 
 <body>
@@ -61,6 +62,7 @@
 						<a class="ddlink" href="/jobs">Jobs</a>
 						<a class="ddlink" href="/connections/${sessionScope.user_id}">Connections</a>
 						<a class="ddlink" href="/skill">Skills</a>
+						<a class="ddlink" href="/about">FAQ</a>
 						<a class="ddlink" href="/logout">Lonkout</a>
                      </div>
                  </div>

@@ -47,7 +47,8 @@
 					</div>
 				</div>
 				<div class="nav3 smHide">
-					<a class="links" href="/logout">Lonkout</a>
+					<a class="links faq" href="/about">FAQ</a>
+					<a class="links logout" href="/logout">Lonkout</a>
 				</div>
 				
 				<div class="dropdown lgHide">
@@ -61,6 +62,7 @@
 						<a class="ddlink" href="/jobs">Jobs</a>
 						<a class="ddlink" href="/connections/${sessionScope.user_id}">Connections</a>
 						<a class="ddlink" href="/skill">Skills</a>
+						<a class="ddlink" href="/about">FAQ</a>
 						<a class="ddlink" href="/logout">Lonkout</a>
                      </div>
                  </div>
@@ -85,7 +87,7 @@
 				<div class="row">
 					<img src="${ result.picture }" alt="" />
 					<div class="resultInfo">
-						<a href="/dashboard/${ result.id }">${ result.name } (${ result.universe })</a>
+						<p><a href="/dashboard/${ result.id }">${ result.name } </a>(${ result.universe })</p>
 						<p>${ result.job != null ? result.job.title.concat(" -- ").concat(result.game.name) : "Seeking Work"}</p>
 					</div>
 					<c:choose>

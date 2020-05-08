@@ -48,7 +48,8 @@
 					</div>
 				</div>
 				<div class="nav3 smHide">
-					<a class="links" href="/logout">Lonkout</a>
+					<a class="links faq" href="/about">FAQ</a>
+					<a class="links logout" href="/logout">Lonkout</a>
 				</div>
 				
 				<div class="dropdown lgHide">
@@ -62,6 +63,7 @@
 						<a class="ddlink" href="/jobs">Jobs</a>
 						<a class="ddlink" href="/connections/${sessionScope.user_id}">Connections</a>
 						<a class="ddlink" href="/skill">Skills</a>
+						<a class="ddlink" href="/about">FAQ</a>
 						<a class="ddlink" href="/logout">Lonkout</a>
                      </div>
                  </div>
