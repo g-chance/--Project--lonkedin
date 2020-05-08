@@ -37,13 +37,13 @@
 				<div class="nav2 smHide">
 					<div class="icons">
 						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
-							<img class="fafa" src="/images/home.png" alt="home">
+							<img class="fafa" src="/images/home.png" alt="home"  title="Home">
 						</a> <a href="/jobs"> <img class="icon-box fafa"
-							src="/images/friendsI_Icon.jpg" alt="logo" />
+							src="/images/friendsI_Icon.jpg" alt="logo" title="Jobs"/>
 						</a> <a class="icon-box" href="/connections/${sessionScope.user_id}">
-							<img class="fafa" src="/images/friends2.png" alt="friends" />
+							<img class="fafa" src="/images/friends2.png" alt="friends" title="Friends"/>
 						</a> <a class="icon-box" href="/skill"> <img class="fafa"
-							src="/images/chost.png" alt="friends" />
+							src="/images/chost.png" alt="skills" title="Skills" />
 						</a>
 					</div>
 				</div>
