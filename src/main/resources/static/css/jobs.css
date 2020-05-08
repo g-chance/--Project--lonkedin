@@ -3,6 +3,9 @@
 body {
 	word-wrap: break-word;
 }
+.jobContainer {
+	padding: 0 20px;
+}
 
 table{
 	width: 100%;

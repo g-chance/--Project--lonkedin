@@ -161,7 +161,7 @@ button {
 .regLog .welcome {
 	margin: 100px 0 0 0;
 }
-.regLog .error {
+.error {
 	text-align: center;
 	color: red;
 }
@@ -350,7 +350,7 @@ button {
 		display: block;
 		margin: 2px 0 0 0;
 		padding: 4px 8px;
-		color: green;
+		color: #284a28;
 		background-color: rgb(255, 255, 255);
 		font-weight: bold;
 	}

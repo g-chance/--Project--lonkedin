@@ -75,6 +75,7 @@
 		<div class="navSpacer navLISpacer"></div>
 		<!-- JOB FORMS -->
 		<!-- JOB LISTINGS -->
+		<div class="jobContainer">
 			<p class="back"><a href="/jobs">All Jobs</a></p>
 			<div class="gameHeader">
 				<h1>${ game.name }</h1>
@@ -89,46 +90,47 @@
 				<p>Jobs Available:</p>
 			</div>
 		
-		<div class="jobListings">
-			<!-- For loops for displaying current available jobs -->
-			
-			<h1>Available Jobs at ${game.name}</h1>
-			<div class="currentJob">
-				<form:form action="/jobs/quit/${userJob.id}">
-					<button ${userJob.id == null ? "hidden" : null} type="submit">Quit</button>
-				</form:form>
-            </div>
-			<table>
-				<thead>
-					<tr>
-						<th class="mdCol">Title</th>
-						<th class="lgCol">Description</th>
-						<th class="smCol">Rupees</th>
-						<th class="smCol">Morality</th>
-						<th class="smCol">Apply</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="job" items = "${game.getJobs()}">
-						<c:if test="${job.characters.size() == 0 }">
-					<tr>
-						<td class="mdCol">${job.title}</td> 
-						<td class="lgCol">${job.description}</td>
-						<td class="smCol">${job.salary}</td>
-						<td class="smCol"><c:if test="${job.morality==true }">
-							<p>Good</p>
-							</c:if>
-							<c:if test="${job.morality==false }">
-							<p>Bad</p>
-							</c:if>
-						</td>
-						<td class="smCol">
-							<form:form action="/applyTwo/${job.game.id}"><button ${user.job.id != null ? "disabled style='background-color:lightgray'" : null} type="submit">Apply!</button></form:form>
-					</tr>
-				</c:if>	
-				</c:forEach>
-				</tbody>
-			</table>
+			<div class="jobListings">
+				<!-- For loops for displaying current available jobs -->
+				
+				<h1>Available Jobs at ${game.name}</h1>
+				<div class="currentJob">
+					<form:form action="/jobs/quit/${userJob.id}">
+						<button ${userJob.id == null ? "hidden" : null} type="submit">Quit</button>
+					</form:form>
+	            </div>
+				<table>
+					<thead>
+						<tr>
+							<th class="mdCol">Title</th>
+							<th class="lgCol">Description</th>
+							<th class="smCol">Rupees</th>
+							<th class="smCol">Morality</th>
+							<th class="smCol">Apply</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="job" items = "${game.getJobs()}">
+							<c:if test="${job.characters.size() == 0 }">
+						<tr>
+							<td class="mdCol">${job.title}</td> 
+							<td class="lgCol">${job.description}</td>
+							<td class="smCol">${job.salary}</td>
+							<td class="smCol"><c:if test="${job.morality==true }">
+								<p>Good</p>
+								</c:if>
+								<c:if test="${job.morality==false }">
+								<p>Bad</p>
+								</c:if>
+							</td>
+							<td class="smCol">
+								<form:form action="/applyTwo/${job.game.id}"><button ${user.job.id != null ? "disabled style='background-color:lightgray'" : null} type="submit">Apply!</button></form:form>
+						</tr>
+					</c:if>	
+					</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </body>

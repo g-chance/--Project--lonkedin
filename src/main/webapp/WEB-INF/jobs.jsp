@@ -74,118 +74,121 @@
 
 		<div class="navSpacer"></div>
 
+		<div class="jobContainer">
 		<!-- JOB FORMS -->
-		<div class="jobForms">
-
-			<!-- jobForms COLUMN 1 **ADDING COMPANIES** -->
-			<!-- //NEED TO FIND A WAY SO THAT ONLY THOSE WITHOUT CURRENT COMPANIES CAN MAKE COMPANIES -->
-			<!-- VERIFY IF SOMEONE HAS ALREADY CREATED THE SAME COMPANY -->
-			
-			<c:if test="${usersgame.id == null}">
-			<div class="companyForm">
-			
-				<h1 class="header">Add a Game</h1>
-				<p> <form:errors path="game.*" /> </p>
-				<form:form action="/game" method="post" modelAttribute="game">
-					<p>
-						<form:input path="name" placeholder="Company Name"/>
-					</p>
-					<p>
-						<form:input path="description" placeholder="Company Description"/>
-					</p>
-					<input type="submit" value="Create Game!" />
-				</form:form>
+			<div class="jobForms">
+	
+				<!-- jobForms COLUMN 1 **ADDING COMPANIES** -->
+				<!-- //NEED TO FIND A WAY SO THAT ONLY THOSE WITHOUT CURRENT COMPANIES CAN MAKE COMPANIES -->
+				<!-- VERIFY IF SOMEONE HAS ALREADY CREATED THE SAME COMPANY -->
+				
+				<c:if test="${usersgame.id == null}">
+				<div class="companyForm">
+				
+					<h1 class="header">Add a Game</h1>
+					<p> <form:errors class="error" path="game.*" /> </p>
+					<form:form action="/game" method="post" modelAttribute="game">
+						<p>
+							<form:input path="name" placeholder="Company Name"/>
+						</p>
+						<p>
+							<form:input path="description" placeholder="Company Description"/>
+						</p>
+						<input class="submit" type="submit" value="Create Game!" />
+					</form:form>
+				</div>
+				</c:if>
+	
+				<!-- jobForms COLUMN 2 **ADDING JOBS** -->
+				<!-- NEED TO FIND A WAY SO THAT ONLY COMPANY CEOS/SUPERVISORS CAN MAKE JOBS FOR THE SPECIFIC COMPANY -->
+	
+				<c:if test="${usersgame.id != null}">
+				<div class="jobForm">
+					<h1 class="header">Add a Job</h1>
+					<p> <form:errors class="error" path="job.*" /> </p>
+					<form:form action="/jobs" method="post" modelAttribute="job">
+						<p>
+							<form:input value="${usersgame.name}" path="game" disabled="true" />
+						</p>
+					    <p>
+					        <form:input path="title" placeholder="Title"/>
+	                    </p>
+	                    <p>
+					        <form:input path="description" placeholder="Description"/>
+	                    </p>
+	                    <p>
+					        <form:input class="number" type="number" path="salary" placeholder="Rupees"/>
+	                        <form:select path="morality">
+	                        <span>
+	                        	<form:option value="" disabled="true" selected="true">Morality</form:option>
+	                       	</span>
+	                            <form:option value="true" label="Good Guy"/>
+	                            <form:option value="false" label="Bad Guy"/>
+	                        </form:select>
+					    </p>
+					    <input class="submit" type="submit" value="Create Job!"/>
+					</form:form> 
+	
+				</div>
+				</c:if>
 			</div>
-			</c:if>
 
-			<!-- jobForms COLUMN 2 **ADDING JOBS** -->
-			<!-- NEED TO FIND A WAY SO THAT ONLY COMPANY CEOS/SUPERVISORS CAN MAKE JOBS FOR THE SPECIFIC COMPANY -->
-
-			<c:if test="${usersgame.id != null}">
-			<div class="jobForm">
-				<h1 class="header">Add a Job</h1>
-				<p> <form:errors path="job.*" /> </p>
-				<form:form action="/jobs" method="post" modelAttribute="job">
-					<p>
-						<form:input value="${usersgame.name}" path="game" disabled="true" />
-					</p>
-				    <p>
-				        <form:input path="title" placeholder="Title"/>
-                    </p>
-                    <p>
-				        <form:input path="description" placeholder="Description"/>
-                    </p>
-                    <p>
-				        <form:input class="number" type="number" path="salary" placeholder="Rupees"/>
-                        <form:select path="morality">
-                        <span>
-                        	<form:option value="" disabled="true" selected="true">Morality</form:option>
-                       	</span>
-                            <form:option value="true" label="Good Guy"/>
-                            <form:option value="false" label="Bad Guy"/>
-                        </form:select>
-				    </p>
-				    <input class="submit" type="submit" value="Create Job!"/>
-				</form:form> 
-
-			</div>
-			</c:if>
-		</div>
 
 		<!-- JOB LISTINGS -->
-		<div class="jobListings">
-			<!-- For loops for displaying current available jobs -->
-			<h1 class="jobListings">Job Listings</h1>
-			<div class="currentJob">
-				<h3 style="color:grey">Your Current Job: ${userJob == null? "Unemployed" :userJob.title.concat(" in ").concat(userJob.game.name)}</h3>
-				<form:form action="/jobs/quit/${userJob.id}">
-					<button ${userJob.id == null ? "hidden" : null} type="submit">Quit</button>
-				</form:form>
-            </div>
-            <div class="sortRow">
-	            <a href="/job/highpay"> <button class="action">Salary High - Low</button></a> 
-	            <a href="/job/lowpay"><button class="action">Salary Low - High</button></a> 
-	            <a href="/jobs"><button class="action">Default Sort</button></a>
-            </div>
-			<table>
-				<thead>
-					<tr>
-						<th class="mdCol">Job </th>
-						<th class="mdCol">Game </th>
-						<th class="lgCol">Description</th>
-						<th class="smCol">Rupees </th>
-						<th class="smCol">Morality</th>
-						<th class="smCol">Apply </th>
-					</tr>
-				</thead>
-				<tbody>
+			<div class="jobListings">
+				<!-- For loops for displaying current available jobs -->
+				<h1 class="jobListings">Job Listings</h1>
+				<div class="currentJob">
+					<h3 style="color:grey">Your Current Job: ${userJob == null? "Unemployed" :userJob.title.concat(" in ").concat(userJob.game.name)}</h3>
+					<form:form action="/jobs/quit/${userJob.id}">
+						<button ${userJob.id == null ? "hidden" : null} type="submit">Quit</button>
+					</form:form>
+	            </div>
+	            <div class="sortRow">
+		            <a href="/job/highpay"> <button class="action">Salary High - Low</button></a> 
+		            <a href="/job/lowpay"><button class="action">Salary Low - High</button></a> 
+		            <a href="/jobs"><button class="action">Default Sort</button></a>
+	            </div>
+				<table>
+					<thead>
+						<tr>
+							<th class="mdCol">Job </th>
+							<th class="mdCol">Game </th>
+							<th class="lgCol">Description</th>
+							<th class="smCol">Rupees </th>
+							<th class="smCol">Morality</th>
+							<th class="smCol">Apply </th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<c:forEach var="job" items="${jobs}">
+						<c:if test="${job.characters.size() == 0 }">
+						<tr>
+							<td class="mdCol">${job.title}</td>
+							<td class="mdCol"><a href="/game/${ job.game.id }">${job.game.name}</a></td>
+							<td class="lgCol">${job.description}</td>
+							<td class="smCol">${job.salary}</td>
+							<td class="smCol"><c:if test="${job.morality==true }">
+							<p>Good</p>
+							</c:if>
+							<c:if test="${job.morality==false }">
+							<p>Bad</p>
+							</c:if>
+							
+							</td>
+							<td class="smCol">
+							<form:form action="/apply/${job.id}"><button ${userJob.id != null ? "disabled style='background-color:lightgray'" : null} type="submit">Apply!</button></form:form>
+							</td>
+							
+								<!-- apply button  -->
+						</tr>
+						</c:if>
+					</c:forEach>
 				
-					<c:forEach var="job" items="${jobs}">
-					<c:if test="${job.characters.size() == 0 }">
-					<tr>
-						<td class="mdCol">${job.title}</td>
-						<td class="mdCol"><a href="/game/${ job.game.id }">${job.game.name}</a></td>
-						<td class="lgCol">${job.description}</td>
-						<td class="smCol">${job.salary}</td>
-						<td class="smCol"><c:if test="${job.morality==true }">
-						<p>Good</p>
-						</c:if>
-						<c:if test="${job.morality==false }">
-						<p>Bad</p>
-						</c:if>
-						
-						</td>
-						<td class="smCol">
-						<form:form action="/apply/${job.id}"><button ${userJob.id != null ? "disabled style='background-color:lightgray'" : null} type="submit">Apply!</button></form:form>
-						</td>
-						
-							<!-- apply button  -->
-					</tr>
-					</c:if>
-				</c:forEach>
-			
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </body>
