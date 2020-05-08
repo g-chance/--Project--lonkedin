@@ -239,6 +239,7 @@
 					<h3>Feed</h3>
 					<div class="feed">
 						<p class="error">
+							${ postError }
 							<form:errors path="post.*" />
 						</p>
 						<form:form class="form" action="/newpost/${ user.id }"
@@ -258,7 +259,7 @@
 											<img class="postPic" src="${ post.creator.picture }" alt="" />
 											<div>
 												<p class="postName">${ post.creator.name } (${ post.creator.universe })</p>
-												<p class="postJob">${ post.creator.job.title } -- ${ post.creator.game.name }</p>
+												<p class="postJob">${ post.creator.job != null ? post.creator.job.title.concat("--").concat(post.creator.game.name) : "Seeking Work" } </p>
 												<p class="postCreated">${ post.createdAt }</p>
 											</div>
 										</div>

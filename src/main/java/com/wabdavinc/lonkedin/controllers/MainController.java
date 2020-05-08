@@ -143,7 +143,12 @@ public class MainController {
 		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
 			return "redirect:/newcharacter";
 		}
-
+		
+		if(session.getAttribute("postError") != null) {
+			model.addAttribute("postError", "Post must include content");
+			session.removeAttribute("postError");
+		}
+		
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(userId).orElse(null);
 		User loggedIn = urepo.findById(id).orElse(null);
@@ -235,8 +240,9 @@ public class MainController {
 		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 		User otherUser = urepo.findById(otherUserId).orElse(null);
 		if (result.hasErrors()) {
+			session.setAttribute("postError", "error");
 			model.addAttribute("user", user);
-			return "dashboard.jsp";
+			return "redirect:/dashboard/" + otherUser.getId();
 		}
 		post.setCreator(user);
 		post.setCharacter(otherUser);
@@ -549,61 +555,97 @@ public class MainController {
 			return "redirect:/newcharacter";
 		}
 		Long id = (Long) session.getAttribute("user_id");
+		User user = urepo.findById(id).orElse(null);
 		model.addAttribute("skill", new Skill());
-		model.addAttribute("allSkills", srepo.findAll());
-		model.addAttribute("user", urepo.findById(id).orElse(null));
+		model.addAttribute("user", user);
+		model.addAttribute("allSkills", usrepo.findAllByUser(user));
 		return "skill.jsp";
 	}
 
-	@PostMapping("/skill/new")
-	public String submitSkill(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model, HttpSession session) {
-		model.addAttribute("skill", new Skill());
+//	@PostMapping("/skill/new")
+//	public String submitSkill(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model, HttpSession session) {
+//		model.addAttribute("skill", new Skill());
+//		Long id = (Long) session.getAttribute("user_id");
+//		User loggedIn = urepo.findById(id).orElse(null);
+//		model.addAttribute("allSkills", srepo.findAll());
+//		model.addAttribute("user", urepo.findById(id).orElse(null));
+//		if (result.hasErrors()) {
+//			return "skill.jsp";
+//		}
+//		// Add Validator to prevent duplicate skills later
+//		
+//		else {
+//			System.out.println(srepo.findByName(skill.getName()));
+//			Skill thisSkill = srepo.save(skill);
+//			List<UserSkill> usk = usrepo.findAllByUser(loggedIn);
+//			UserSkill test = new UserSkill();
+//			test.setUser(loggedIn);
+//			test.setSkill(thisSkill);
+//			usk.add(test);
+//			usrepo.save(test);
+//		}
+//		return "redirect:/skill";
+//	}
+	
+	@PostMapping("/skill/new2")
+	public String newSkill2(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model, HttpSession session) {
 		Long id = (Long) session.getAttribute("user_id");
 		User loggedIn = urepo.findById(id).orElse(null);
-		model.addAttribute("allSkills", srepo.findAll());
-		model.addAttribute("user", urepo.findById(id).orElse(null));
-		if (result.hasErrors()) {
+		model.addAttribute("user", loggedIn);
+		model.addAttribute("allSkills", usrepo.findAllByUser(loggedIn));
+		
+		if(result.hasErrors()) {
+ 			System.out.println("Getting here?");
 			return "skill.jsp";
 		}
-		// Add Validator to prevent duplicate skills later
-		
-		else {
-			System.out.println(srepo.findByName(skill.getName()));
-			Skill thisSkill = srepo.save(skill);
-			List<UserSkill> usk = usrepo.findAllByUser(loggedIn);
-			UserSkill test = new UserSkill();
-			test.setUser(loggedIn);
-			test.setSkill(thisSkill);
-			usk.add(test);
-			usrepo.save(test);
+		if(srepo.findByName(skill.getName()) == null) {
+			srepo.save(skill);
 		}
+		Skill thisSkill = srepo.findByName(skill.getName());
+		
+		if(loggedIn.getSkills().contains(thisSkill)) {
+			model.addAttribute("skill", new Skill());
+			model.addAttribute("error", "You already have this Skill");
+			return "skill.jsp";
+		}
+		
+		UserSkill usk = new UserSkill();
+		usk.setUser(loggedIn);
+		usk.setSkill(thisSkill);
+		usrepo.save(usk);
+		
+		System.out.println(loggedIn.getSkills().size());
+		
 		return "redirect:/skill";
 	}
 
-	@PostMapping("/skill/add")
-	public String addSkill(Model model, HttpSession session, @RequestParam("userSkill") Long sId) {
-			model.addAttribute("skill", new Skill());
-			Long id = (Long) session.getAttribute("user_id");
-			User loggedIn = urepo.findById(id).orElse(null);
-			Skill thisSkill = srepo.findById(sId).orElse(null);
-			List<UserSkill> usk = usrepo.findAllByUser(loggedIn);
-			UserSkill test = new UserSkill();
-			test.setUser(loggedIn);
-			test.setSkill(thisSkill);
-			usk.add(test);
-			usrepo.save(test);
-
-			return "redirect:/skill";
-		}
+//	@PostMapping("/skill/add")
+//	public String addSkill(Model model, HttpSession session, @RequestParam("userSkill") Long sId) {
+//			model.addAttribute("skill", new Skill());
+//			Long id = (Long) session.getAttribute("user_id");
+//			User loggedIn = urepo.findById(id).orElse(null);
+//			Skill thisSkill = srepo.findById(sId).orElse(null);
+//			List<UserSkill> usk = usrepo.findAllByUser(loggedIn);
+//			UserSkill test = new UserSkill();
+//			test.setUser(loggedIn);
+//			test.setSkill(thisSkill);
+//			usk.add(test);
+//			usrepo.save(test);
+//
+//			return "redirect:/skill";
+//		}
 	
-	@GetMapping("/skill/{userSkill_id}/delete")
-	public String deleteSkill(Model model, HttpSession session, @PathVariable("userSkill_id") Long usId) {
+	@GetMapping("/skill/{skill_id}/delete")
+	public String deleteSkill(Model model, HttpSession session, @PathVariable("skill_id") Long sId) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/login";
 		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
 			return "redirect:/newcharacter";
 		}
-		UserSkill thisUserSkill = usrepo.findById(usId).orElse(null);
+		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+		Skill s = srepo.findById(sId).orElse(null);
+		UserSkill thisUserSkill = usrepo.findByUserAndSkill(u, s);
+//		UserSkill thisUserSkill = usrepo.findById(usId).orElse(null);
 		usrepo.delete(thisUserSkill);
 		return "redirect:/skill";
 	}

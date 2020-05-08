@@ -83,10 +83,7 @@
 
 		<div class="col1 skillForm">
 			<h2>Add a New Skill</h2>
-			<p>
-				<form:errors path="skill.*" />
-			</p>
-			<form class="form" action="/skill/add" method="post">
+<%-- 			<form class="form" action="/skill/add" method="post">
 						<select name = "userSkill" class="input">
 						<c:forEach var="skill" items="${allSkills}">
 						<c:if test="${user.skills.contains(skill) ==false}">
@@ -96,17 +93,30 @@
 					</select>
 							<p><input type="submit" value="Add from Skill Pool" class="submit" /></p>
 			
-				</form>
-			<form:form class="form" action="/skill/new" method="post" modelAttribute="skill">
+				</form> --%>
+				
+<%-- 			<form:form class="form" action="/skill/new" method="post" modelAttribute="skill">
 				<form:input class="input" path="name" placeholder="Can't find the skill? Create One here!"></form:input>
 				<p><input type="submit" value="Create and Add a New Skill" class="submit"/></p>
+			</form:form> --%>
+			<p class="error">
+				${ error }
+				<form:errors path="skill.*" />
+			</p>
+			<form:form class="form" action="/skill/new2" method="post" modelAttribute="skill">
+				<form:input class="input" list="characters" path="name" placeholder="Add a Skill!"></form:input>
+<!-- 				<datalist id="characters">
+					AXIOS API RESULT DISPLAYED HERE
+				</datalist> -->
+				<p><input type="submit" value="Add Skill" class="submit"/></p>
 			</form:form>
+
 		</div>
 
 			<div>
 			<h2>Your Skills</h2>
-					<c:forEach items="${user.skills}" var="uskill">
-						<p>${uskill.name}  <a href="/skill/${uskill.id}/delete">Delete</a></p>
+					<c:forEach items="${user.skills}" var="skill">
+						<p>${skill.name} ${ skill.id }  <a href="/skill/${skill.id}/delete">Delete</a></p>
 					</c:forEach>
 			</div>
 		</div>
