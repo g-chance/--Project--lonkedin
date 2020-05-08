@@ -11,7 +11,8 @@
 <title>Dashboard</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css">
 <link rel="stylesheet" type="text/css" href="/css/dash.css">
-<script type="text/javascript" src="/js/app.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
 	<div class="wrapper dashboard">
 
 		<div class="navwrapper navLI">
-
+		
 			<div class="nav">
 
 				<div class="nav1">
@@ -27,13 +28,14 @@
 					<p class="llogo">
 						Lonked<span>in</span>
 					</p>
-					<form action="/search" method="POST">
+					<form class="searchForm" action="/search" method="POST">
 						<input class="search" name="search" type="text"
-							placeholder="Search Users"> <input class="searchSubmit"
+							placeholder="Search Users"> 
+						<input class="searchSubmit"
 							type="submit" value="Search" />
 					</form>
 				</div>
-				<div class="nav2">
+				<div class="nav2 smHide">
 					<div class="icons">
 						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
 							<img class="fafa" src="/images/home.png" alt="home">
@@ -46,9 +48,25 @@
 						</a>
 					</div>
 				</div>
-				<div class="nav3">
-					<a class="links" href="/logout">Lonkout</a>
+				<div class="nav3 smHide">
+					<a class="links faq" href="/about">FAQ</a>
+					<a class="links logout" href="/logout">Lonkout</a>
 				</div>
+				
+				<div class="dropdown lgHide">
+					<div class="hamburger">
+					    <div></div>
+					    <div></div>
+					    <div></div>
+					</div>
+                     <div class="ddlinks">
+						<a class="ddlink" href="/dashboard/${ sessionScope.user_id }">Dashboard</a>
+						<a class="ddlink" href="/jobs">Jobs</a>
+						<a class="ddlink" href="/connections/${sessionScope.user_id}">Connections</a>
+						<a class="ddlink" href="/skill">Skills</a>
+						<a class="ddlink" href="/logout">Lonkout</a>
+                     </div>
+                 </div>
 
 			</div>
 
@@ -71,7 +89,7 @@
 				<div class="row profileRow">
 					<img id="profileImage" src="${ user.picture }" alt="logo"
 						class="logo" />
-					<div>
+					<div class="profileInfo">
 						<h1>${ user.name } (${user.universe})</h1>
 						<c:choose>
 							<c:when test="${ user.job != null }">
@@ -119,12 +137,14 @@
 					<h3>Connections</h3>
 					<div class="dashConnections">
 						<c:forEach items="${ friends }" var="friend">
+						<c:if test="${ friend.name != null }">
 							<div class="dashConnectionsRow">
 								<img src="${ friend.picture }" /> 
  								<a href="/dashboard/${ friend.id }">
 								${ friend.name } (${ friend.universe })
 							</a>
 							</div>
+						</c:if>
 						</c:forEach>
 					</div>
 					<h3>Enemies</h3>
@@ -263,9 +283,9 @@
 									</c:if>
 									
 									<c:if test="${posts.size() >= allPosts.size() && allPosts.size() > 3}">
-									<a href="/dashboard/${user.id}">
-										Not more posts...click to fold
-									</a>
+									<p>No more posts...
+										<a href="/dashboard/${user.id}">Click to fold</a>
+									</p>
 									</c:if>
 									
 								</div>
@@ -285,10 +305,10 @@
 								<h3>Newest Games</h3>
 								<c:forEach items="${ games }" var="game">
 								<c:if test="${ game != games.get(games.size()-1) }">
-									<p class="gameListing">${ game.name }</p>
+									<a href="/game/${ game.id }" class="gameListing">${ game.name }</a>
 								</c:if>
 								</c:forEach>
-								<p class="gameListing lastGame">${ games.get(games.size()-1).name }</p>
+								<a href="/game/${ games.get(games.size()-1).id }" class="gameListing lastGame">${ games.get(games.size()-1).name }</a>
 							</div>
 						</div>
 					</div>

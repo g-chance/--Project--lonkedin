@@ -37,6 +37,9 @@ button {
 	background-color: #00b138;
 	color: white;
 }
+.lgHide {
+	display: none;
+}
 .submit {
 	background-color: #00b138;
 	color: white;
@@ -60,7 +63,7 @@ button {
 }
 .nav {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1.5fr 1fr 1.5fr;
 	width: 1200px;
 	padding: 10px;
 	margin: auto;
@@ -93,6 +96,9 @@ button {
 	text-decoration: none;
 	color: white;
 }
+.nav3 .faq {
+	margin: 0 10px 0 0;
+}
 
 /* NAV (LOGGED IN) */
 
@@ -119,14 +125,14 @@ button {
 	display: inline-block;
 }
 .navLI .search {
-	width: 200px;
+	width: 55%;
 	padding: 5px;
 	margin: 0 0 0 10px;
 	border-radius: 0%;
 	
 }
 .navLI .searchSubmit {
-	padding: 5px;
+	padding: 4px 2px;
 	border-radius: 0%;
 	margin: 0 10px 0 0;
 }
@@ -233,6 +239,7 @@ button {
 		display: grid;
 		row-gap: 20px;
 		max-width: 100%;
+		align-self: flex-start;
 	}
 
 /* JOBS */
@@ -287,10 +294,50 @@ button {
 	.dash .col2 {
 		margin-top: 20px;
 	}
+	.logout {
+		padding: 0 22px 0 0;
+	}
 }
 
 @media only screen and (max-width:768px) {
 	.dash, .jobForms {
 		grid-template-columns: 1fr;
+	}
+	.nav {
+		grid-template-columns: 1fr auto;
+	}
+	.lgHide {
+		display: block;
+		justify-self: right;
+		align-self: center;
+		padding: 0 22px 0 0;
+	}
+	.smHide {
+		display: none;
+	}
+	.nav .hamburger {
+		width: 20px;
+	}
+	  .nav .hamburger * {
+		height: 4px;
+		margin: 3px 0;
+		background-color: white;
+	}
+	.ddlinks {
+		display: none;
+		position: absolute;
+		margin: 0 0 0 -105px;
+		padding: 5px;
+		direction: rtl;
+		background-color:rgba(0, 0, 0, 0.502);
+		text-align: center;
+	}
+	.ddlink {
+		display: block;
+		margin: 2px 0 0 0;
+		padding: 4px 8px;
+		color: green;
+		background-color: rgb(255, 255, 255);
+		font-weight: bold;
 	}
 }

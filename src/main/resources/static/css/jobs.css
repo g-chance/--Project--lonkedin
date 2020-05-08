@@ -6,7 +6,6 @@ body {
 
 table{
 	width: 100%;
-	margin: 10px 0 0 0;
 	table-layout: fixed;
 }
 table th, table td {
@@ -60,7 +59,10 @@ h2{
 }
 .jobListings h1 {
 	margin: 50px 0 0 0;
-	padding: 0 10px;
+	padding: 5px 0px;
+	background-color: #284a28;
+	color:white;
+	text-align: center;
 }
 button {
 	padding: 4px 5px;
@@ -78,4 +80,17 @@ button {
 	column-gap: 10px;
 	padding: 0 10px;
 	margin: 10px 0 0 0;
+}
+.sortRow {
+	margin: 10px 5px 5px 0;
+	direction: rtl;	
+}
+.gameHeader, .aboutGame {
+	margin: 0 0 20px 0;
+}
+.gameHeader p, .aboutGame p {
+	padding: 0 0 0 5px;
+}
+.back {
+	direction: rtl;
 }

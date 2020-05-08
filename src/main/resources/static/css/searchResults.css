@@ -1,6 +1,6 @@
 
 h1 {
-	margin: 0 0 10px 0;
+	margin: 0 0 10px 15px;
 }
 .main {
     display: grid;
@@ -21,6 +21,23 @@ h1 {
 	border: 1px solid black;
 	border-radius: 50%;
 }
-.row a {
+.row .status {
 	justify-self: right;
+}
+.resultInfo {
+	display:grid;
+}
+.resultInfo * {
+	max-width: 100%;
+	overflow-x: auto;
+	word-wrap: break-word;
+}
+.connectionsGrid {
+	padding: 0 20px;
+}
+
+@media only screen and (max-width: 768px) {
+	.connectionsGrid {
+		grid-template-columns: 1fr;
+	}
 }
