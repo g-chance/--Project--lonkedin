@@ -36,18 +36,19 @@
 				<div class="nav2 smHide">
 					<div class="icons">
 						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
-							<img class="fafa" src="/images/home.png" alt="home">
+							<img class="fafa" src="/images/home.png" alt="home"  title="Home">
 						</a> <a href="/jobs"> <img class="icon-box fafa"
-							src="/images/friendsI_Icon.jpg" alt="logo" />
+							src="/images/friendsI_Icon.jpg" alt="logo" title="Jobs"/>
 						</a> <a class="icon-box" href="/connections/${sessionScope.user_id}">
-							<img class="fafa" src="/images/friends2.png" alt="friends" />
+							<img class="fafa" src="/images/friends2.png" alt="friends" title="Friends"/>
 						</a> <a class="icon-box" href="/skill"> <img class="fafa"
-							src="/images/chost.png" alt="friends" />
+							src="/images/chost.png" alt="skills" title="Skills" />
 						</a>
 					</div>
 				</div>
 				<div class="nav3 smHide">
-					<a class="links" href="/logout">Lonkout</a>
+					<a class="links faq" href="/about">FAQ</a>
+					<a class="links logout" href="/logout">Lonkout</a>
 				</div>
 				
 				<div class="dropdown lgHide">
@@ -61,6 +62,7 @@
 						<a class="ddlink" href="/jobs">Jobs</a>
 						<a class="ddlink" href="/connections/${sessionScope.user_id}">Connections</a>
 						<a class="ddlink" href="/skill">Skills</a>
+						<a class="ddlink" href="/about">FAQ</a>
 						<a class="ddlink" href="/logout">Lonkout</a>
                      </div>
                  </div>
@@ -78,7 +80,7 @@
 				<div class="row">
 					<img src="${ result.picture }" alt="" />
 					<div class="resultInfo">
-						<p>${ result.name } (${ result.universe })</p>
+						<p><a href="/dashboard/${ result.id }">${ result.name } </a>(${ result.universe })</p>
 						<p>${ result.job != null ? result.job.title.concat(" -- ").concat(result.game.name) : "Seeking Work"}</p>
 					</div>
 					<c:choose>

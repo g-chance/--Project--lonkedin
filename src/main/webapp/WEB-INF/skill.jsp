@@ -37,20 +37,21 @@
 					</form>
 				</div>
 				<div class="nav2 smHide">
-					<div class="icons">
+							<div class="icons">
 						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
-							<img class="fafa" src="/images/home.png" alt="home">
+							<img class="fafa" src="/images/home.png" alt="home"  title="Home">
 						</a> <a href="/jobs"> <img class="icon-box fafa"
-							src="/images/friendsI_Icon.jpg" alt="logo" />
+							src="/images/friendsI_Icon.jpg" alt="logo" title="Jobs"/>
 						</a> <a class="icon-box" href="/connections/${sessionScope.user_id}">
-							<img class="fafa" src="/images/friends2.png" alt="friends" />
+							<img class="fafa" src="/images/friends2.png" alt="friends" title="Friends"/>
 						</a> <a class="icon-box" href="/skill"> <img class="fafa"
-							src="/images/chost.png" alt="friends" />
+							src="/images/chost.png" alt="skills" title="Skills" />
 						</a>
 					</div>
 				</div>
 				<div class="nav3 smHide">
-					<a class="links" href="/logout">Lonkout</a>
+					<a class="links faq" href="/about">FAQ</a>
+					<a class="links logout" href="/logout">Lonkout</a>
 				</div>
 				
 				<div class="dropdown lgHide">
@@ -64,6 +65,7 @@
 						<a class="ddlink" href="/jobs">Jobs</a>
 						<a class="ddlink" href="/connections/${sessionScope.user_id}">Connections</a>
 						<a class="ddlink" href="/skill">Skills</a>
+						<a class="ddlink" href="/about">FAQ</a>
 						<a class="ddlink" href="/logout">Lonkout</a>
                      </div>
                  </div>
@@ -88,16 +90,7 @@
 						<select name = "userSkill" class="input">
 						<c:forEach var="skill" items="${allSkills}">
 						<c:if test="${user.skills.contains(skill) ==false}">
-							<option value="${skill.id}" label="${skill.name} 
-							(<c:if test="${skill.level == 0}">
-							Novice
-							</c:if>
-							<c:if test="${skill.level == 1}">
-							Intermediate
-							</c:if>
-							<c:if test="${skill.level == 2}">
-							Advanced
-							</c:if>)">
+							<option value="${skill.id}" label="${skill.name}"> 
 						</c:if>
 					</c:forEach>
 					</select>
@@ -106,13 +99,6 @@
 				</form>
 			<form:form class="form" action="/skill/new" method="post" modelAttribute="skill">
 				<form:input class="input" path="name" placeholder="Can't find the skill? Create One here!"></form:input>
-				<p>
-				<form:select path = "level" class="input">
-							<option value="0" label="Novice">
-								<option value="1" label="Intermediate">
-									<option value="2" label="Advanced">
-					</form:select>
-					</p>
 				<p><input type="submit" value="Create and Add a New Skill" class="submit"/></p>
 			</form:form>
 		</div>

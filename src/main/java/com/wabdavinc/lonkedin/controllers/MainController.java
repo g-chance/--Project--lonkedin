@@ -63,40 +63,6 @@ public class MainController {
 	@GetMapping("/newcharacter")
 	public String newCharacter(Model model, HttpSession session) {
 
-//	Create Lonk if he doesn't exist
-		if (urepo.findByEmail("lonk@lonkedin.com") == null) {
-			User lonk = new User();
-			lonk.setName("Lonk");
-			lonk.setUniverse("Hyrool");
-			lonk.setEmail("lonk@lonkedin.com");
-			lonk.setPicture("/images/lonk.jpg");
-			List<User> lonksFriends = new ArrayList<User>();
-			lonk.setFriends(lonksFriends);
-			urepo.save(lonk);
-
-			Game zorlda = new Game();
-			zorlda.setName("The Legend of Zorlda");
-			zorlda.setDescription("Save the princess");
-			grepo.save(zorlda);
-
-			Job ceo = new Job();
-			ceo.setTitle("CEO");
-			ceo.setDescription("Hero of the Game");
-			ceo.setSalary(9999999);
-			ceo.setMorality(true);
-			ceo.setGame(zorlda);
-			jrepo.save(ceo);
-
-			Post welcome = new Post();
-			welcome.setContent(
-					"Welcome to LonkedIn, friend! Looking forward to getting to know you better! We're always looking for good people at The Legend of Zorlda, check out our Game page for new job listings :)");
-			welcome.setCreator(lonk);
-			prepo.save(welcome);
-
-			lonk.setGame(zorlda);
-			lonk.setJob(ceo);
-			urepo.save(lonk);
-		}
 //	Add Lonk as a friend
 		User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 		User lonk = urepo.findByEmail("lonk@lonkedin.com");
@@ -121,11 +87,28 @@ public class MainController {
 		if (result.hasErrors()) {
 			return "newCharacter.jsp";
 		}
+		
 		User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 		u.setName(user.getName());
 		u.setUniverse(user.getUniverse());
 		u.setPicture(user.getPicture());
 		urepo.save(u);
+		
+//	Create Newbie Skil if it doesn't exist
+		if(srepo.findByName("Newbie") == null) {
+			Skill newb = new Skill();
+			newb.setName("Newbie");
+			newb.setLevel(0);
+			srepo.save(newb);
+		}
+		
+//	Add Newbie skill to user
+		UserSkill us = new UserSkill();
+		Skill skill = srepo.findByName("Newbie");
+		us.setUser(u);
+		us.setSkill(skill);
+		usrepo.save(us);
+		
 		return ("redirect:/dashboard/" + u.getId());
 	}
 
@@ -769,10 +752,12 @@ public class MainController {
 //		==========================About=============================
 		@GetMapping("/about")
 		public String about(HttpSession session) {
+
 			if (session.getAttribute("user_id") == null) {
 				return "redirect:/registration";
 			}
 			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+
 			return "about.jsp";
 			
 		}
@@ -796,6 +781,125 @@ public class MainController {
 			System.out.println(user.getId());
 			return "register.jsp";
 		}
+		
+//	Create Lonk, Zorldo, and Goonanderp if they don't exist
+		if (urepo.findByEmail("lonk@lonkedin.com") == null) {
+			
+			User lonk = new User();
+			lonk.setName("Lonk");
+			lonk.setUniverse("Hyrool");
+			lonk.setEmail("lonk@lonkedin.com");
+			lonk.setPicture("/images/lonk.jpg");
+			List<User> lonksFriends = new ArrayList<User>();
+			lonk.setFriends(lonksFriends);
+			urepo.save(lonk);
+			
+			User princess = new User();
+			princess.setName("Princess Zorldo");
+			princess.setUniverse("Hyrool");
+			princess.setEmail("zorldo@lonkedin.com");
+			princess.setPicture("/images/zorldo.jpg");
+			List<User> princessFriends = new ArrayList<User>();
+			princessFriends.add(lonk);
+			princess.setFriends(princessFriends);
+			urepo.save(princess);
+			
+			lonk.getFriends().add(princess);
+			urepo.save(lonk);
+			
+			User goonan = new User();
+			goonan.setName("Goonanderp");
+			goonan.setUniverse("Hyrool");
+			goonan.setEmail("goonan@lonkedin.com");
+			goonan.setPicture("/images/lonk.jpg");
+			urepo.save(goonan);
+
+			Game zorldo = new Game();
+			zorldo.setName("The Legend of Zorldo");
+			zorldo.setDescription("Save the princess");
+			grepo.save(zorldo);
+
+			Job lonkjob = new Job();
+			lonkjob.setTitle("CEO");
+			lonkjob.setDescription("Hero of the Game");
+			lonkjob.setSalary(9999999);
+			lonkjob.setMorality(true);
+			lonkjob.setGame(zorldo);
+			jrepo.save(lonkjob);
+			
+			Job zorldojob = new Job();
+			zorldojob.setTitle("Princess");
+			zorldojob.setDescription("Save me please!");
+			zorldojob.setSalary(9999999);
+			zorldojob.setMorality(true);
+			zorldojob.setGame(zorldo);
+			jrepo.save(zorldojob);
+			
+			Job goonanjob = new Job();
+			goonanjob.setTitle("Last Boss");
+			goonanjob.setDescription("Must kill Lonk");
+			goonanjob.setSalary(9999999);
+			goonanjob.setMorality(false);
+			goonanjob.setGame(zorldo);
+			jrepo.save(goonanjob);
+			
+			Skill swordfighter = new Skill();
+			swordfighter.setName("Sword Fighter");
+			swordfighter.setLevel(2);
+			srepo.save(swordfighter);
+			
+			Skill stealth = new Skill();
+			stealth.setName("Stealth");
+			stealth.setLevel(2);
+			srepo.save(stealth);
+			
+			Skill legs = new Skill();
+			legs.setName("Strong Legs");
+			legs.setLevel(2);
+			srepo.save(legs);
+			
+//			Skill newb = new Skill();
+//			newb.setName("Newbie");
+//			newb.setLevel(0);
+//			srepo.save(newb);
+			
+			UserSkill lonkSkill = new UserSkill();
+			lonkSkill.setUser(lonk);
+			lonkSkill.setSkill(swordfighter);
+			lonkSkill.setCount(1000);
+			usrepo.save(lonkSkill);
+			
+			UserSkill zorldoSkill = new UserSkill();
+			zorldoSkill.setUser(princess);
+			zorldoSkill.setSkill(stealth);
+			zorldoSkill.setCount(1000);
+			usrepo.save(zorldoSkill);
+			
+			UserSkill goonanSkill = new UserSkill();
+			goonanSkill.setUser(goonan);
+			goonanSkill.setSkill(legs);
+			goonanSkill.setCount(-1000);
+			usrepo.save(goonanSkill);
+			
+			Post welcome = new Post();
+			welcome.setContent(
+					"Welcome to LonkedIn, friend! Looking forward to getting to know you better! We're always looking for good people at The Legend of Zorldo, check out our Game page to see if there are any new job listings!");
+			welcome.setCreator(lonk);
+			prepo.save(welcome);
+
+			lonk.setGame(zorldo);
+			lonk.setJob(lonkjob);
+			princess.setGame(zorldo);
+			princess.setJob(zorldojob);
+			goonan.setGame(zorldo);
+			goonan.setJob(goonanjob);
+			
+			urepo.save(lonk);
+			urepo.save(princess);
+			urepo.save(goonan);
+		}
+		
+//	Create new user
 		userv.registerUser(user);
 		session.setAttribute("user_id", user.getId());
 		return "redirect:/newcharacter";

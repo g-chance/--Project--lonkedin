@@ -9,9 +9,12 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Jobs</title>
-	<script type="text/javascript" src="/js/app.js"></script>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/about.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/css/jobs.css" media="screen" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/app.js"></script>
+
 </head>
 
 <body>
@@ -36,13 +39,13 @@
 				<div class="nav2 smHide">
 					<div class="icons">
 						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
-							<img class="fafa" src="/images/home.png" alt="home">
+							<img class="fafa" src="/images/home.png" alt="home"  title="Home">
 						</a> <a href="/jobs"> <img class="icon-box fafa"
-							src="/images/friendsI_Icon.jpg" alt="logo" />
+							src="/images/friendsI_Icon.jpg" alt="logo" title="Jobs"/>
 						</a> <a class="icon-box" href="/connections/${sessionScope.user_id}">
-							<img class="fafa" src="/images/friends2.png" alt="friends" />
+							<img class="fafa" src="/images/friends2.png" alt="friends" title="Friends"/>
 						</a> <a class="icon-box" href="/skill"> <img class="fafa"
-							src="/images/chost.png" alt="friends" />
+							src="/images/chost.png" alt="skills" title="Skills" />
 						</a>
 					</div>
 				</div>
@@ -61,6 +64,7 @@
 						<a class="ddlink" href="/jobs">Jobs</a>
 						<a class="ddlink" href="/connections/${sessionScope.user_id}">Connections</a>
 						<a class="ddlink" href="/skill">Skills</a>
+						<a class="ddlink" href="/about">FAQ</a>
 						<a class="ddlink" href="/logout">Lonkout</a>
                      </div>
                  </div>
