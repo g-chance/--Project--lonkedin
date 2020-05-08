@@ -1,0 +1,31 @@
+@charset "ISO-8859-1";
+
+body {
+	word-wrap: break-word;
+}
+
+h2{
+	margin: 10px 0px;
+}
+.header {
+	margin: 50px 0 20px 0;
+}
+
+
+.jobListings h1 {
+	margin: 50px 0 0 0;
+	padding: 5px 0px;
+	background-color: #284a28;
+	color:white;
+	text-align: center;
+}
+
+.back {
+	direction: rtl;
+}
+.QA{
+	margin:10px 0px;
+}
+.bold{
+	font-weight:bold;
+}

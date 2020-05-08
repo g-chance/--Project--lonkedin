@@ -725,6 +725,9 @@ public class MainController {
 		
 		@GetMapping("/game/{game_id}")
 		public String company(@PathVariable("game_id") Long id, HttpSession session, Model model) {
+			if (session.getAttribute("user_id") == null) {
+				return "redirect:/registration";
+			}
 			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 			Game game= grepo.findById(id).orElse(null);
 			Job job = jrepo.findByGameAndTitle(game, "ceo");
@@ -749,6 +752,12 @@ public class MainController {
 //		==========================About=============================
 		@GetMapping("/about")
 		public String about(HttpSession session) {
+
+			if (session.getAttribute("user_id") == null) {
+				return "redirect:/registration";
+			}
+			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+
 			return "about.jsp";
 			
 		}
