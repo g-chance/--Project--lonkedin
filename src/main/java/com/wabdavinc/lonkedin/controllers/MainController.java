@@ -595,6 +595,18 @@ public class MainController {
 
 			return "redirect:/skill";
 		}
+	
+	@GetMapping("/skill/{userSkill_id}/delete")
+	public String deleteSkill(Model model, HttpSession session, @PathVariable("userSkill_id") Long usId) {
+		if (session.getAttribute("user_id") == null) {
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
+		}
+		UserSkill thisUserSkill = usrepo.findById(usId).orElse(null);
+		usrepo.delete(thisUserSkill);
+		return "redirect:/skill";
+	}
 
 //	**************************************************************
 

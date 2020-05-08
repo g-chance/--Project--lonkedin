@@ -106,7 +106,7 @@
 			<div>
 			<h2>Your Skills</h2>
 					<c:forEach items="${user.skills}" var="uskill">
-						<p>${uskill.name}</p>
+						<p>${uskill.name}  <a href="/skill/${uskill.id}/delete">Delete</a></p>
 					</c:forEach>
 			</div>
 		</div>
