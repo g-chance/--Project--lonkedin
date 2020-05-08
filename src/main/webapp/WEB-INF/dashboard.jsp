@@ -184,13 +184,13 @@
 							<c:set var="ct">${ us.count }</c:set>
 							<p>${ us.skill.name } <span ${ us.count > -1 || us.count == null ? "class='green'" : "class='red'" }>${ us.count > -1 || us.count == null ? "+".concat(ct) : ct }</span></p>
 							<p class="skillLevel">
-							<c:if test="${ us.skill.level == 0}">
+							<c:if test="${ us.count < 10}">
 							Novice
 							</c:if>
-							<c:if test="${ us.skill.level == 1}">
+							<c:if test="${ us.count >= 10 && us.count < 20}">
 							Intermediate
 							</c:if>
-							<c:if test="${ us.skill.level == 2}">
+							<c:if test="${ us.count >= 20}">
 							Advanced
 							</c:if>
 							</p>
