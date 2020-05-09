@@ -41,14 +41,6 @@ public class Post {
 		
 	}
 
-	public User getCreator() {
-		return creator;
-	}
-
-	public void setCreator(User creator) {
-		this.creator = creator;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -63,6 +55,14 @@ public class Post {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public User getCreator() {
+		return creator;
+	}
+
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 
 	public User getCharacter() {
@@ -92,6 +92,7 @@ public class Post {
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
+		this.updatedAt = new Date();
 	}
 	@PreUpdate
 	protected void onUpdate() {

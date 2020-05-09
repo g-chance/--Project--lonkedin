@@ -62,7 +62,7 @@ public class MainController {
 	}
 
 
-//	============================================================== Create Character
+//	============================================================== #Create Character
 
 	@GetMapping("/newcharacter")
 	public String newCharacter(Model model, HttpSession session) {
@@ -118,7 +118,7 @@ public class MainController {
 //	**************************************************************
 
 
-//	============================================================== Dashboard
+//	============================================================== #Dashboard
 
 //	Dashboard Catch
 	@GetMapping("/dashboard")
@@ -153,14 +153,13 @@ public class MainController {
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(userId).orElse(null);
 		User loggedIn = urepo.findById(id).orElse(null);
-
 //	Add model attributes
 		model.addAttribute("user", user);
 		model.addAttribute("loggedIn", loggedIn);
-		model.addAttribute("post", new Post());
 		model.addAttribute("skills", usrepo.findAllByUser(user));
 		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
 		model.addAttribute("friendRequests", user.getFriendRequests());
+		model.addAttribute("post", new Post());
 //	Sort and filter posts to be descending per created date and to 5 by default
 		List<Post> mylist = user.getPosts();
 		mylist.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
@@ -226,14 +225,13 @@ public class MainController {
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(userId).orElse(null);
 		User loggedIn = urepo.findById(id).orElse(null);
-
 //	Add model attributes
 		model.addAttribute("user", user);
 		model.addAttribute("loggedIn", loggedIn);
-		model.addAttribute("post", new Post());
 		model.addAttribute("skills", usrepo.findAllByUser(user));
 		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
 		model.addAttribute("friendRequests", user.getFriendRequests());
+		model.addAttribute("post", new Post());
 //	Get More Posts
 		int currentDisplayIndex = (int)session.getAttribute("currentDisplayIndex") + 3;
 		session.setAttribute("currentDisplayIndex",currentDisplayIndex);
@@ -366,11 +364,12 @@ public class MainController {
 //	**************************************************************
 
 
-//	============================================================== searchResults
+//	============================================================== #searchResults
 
 	@PostMapping("/search")
 	public String doSearch(@RequestParam("search") String str, Model model, HttpSession session) {
 		session.setAttribute("searchResults", urepo.findByNameContaining(str));
+//	Create a gibberish String if the user doesn't enter anything (an empty String will cause an error)
 		if(str.equals("")) {
 			str = "zxcvbnm";
 		}
@@ -388,7 +387,7 @@ public class MainController {
 		model.addAttribute("user", u);
 		model.addAttribute("friends", u.getFriends());
 		model.addAttribute("str", str);
-		
+//	If the user entered nothing they will get a list of all users, else they'll see their result
 		if(str.equals("zxcvbnm")) {
 			model.addAttribute("searchResults", urepo.findAll());
 		} else {
@@ -407,16 +406,8 @@ public class MainController {
 		}
 		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 		User connection = urepo.findById(connectionId).orElse(null);
-//		System.out.println(connection.getName());
-//		System.out.println(user.getName());
-//		System.out.println(connection.getFriendRequests());
-//		System.out.println(connection.getFriendRequests().size());
-		if (connection.getFriendRequests().contains(user)) {
-			return "redirect:/dashboard/" + user.getId();
-		}
 		connection.getFriendRequests().add(user);
 		urepo.save(connection);
-//		System.out.println(connection.getFriendRequests().size());
 		return "redirect:/search/"+str;
 	}
 	
@@ -468,8 +459,8 @@ public class MainController {
 
 //	**************************************************************
 
-//	
-//	============================================================== Connections
+
+//	============================================================== #Connections
 
 	@GetMapping("/connections/{user_id}")
 	public String connections(@PathVariable("user_id") Long uId, HttpSession session, Model model) {
@@ -485,7 +476,6 @@ public class MainController {
 		model.addAttribute("user",u);
 		model.addAttribute("loggedIn", loggedIn);
 		model.addAttribute("lonk", urepo.findByEmail("lonk@lonkedin.com"));
-		
 		List<User> enemies = new ArrayList<User>();
 		if(u.getGame() != null) {
 			for(User character : u.getGame().getCharacters()) {
@@ -495,25 +485,8 @@ public class MainController {
 			}
 		}
 		model.addAttribute("enemies", enemies);
-		
 		return "connectionsV2.jsp";
 	}
-//
-//	@GetMapping("/friend/{user_id}")
-//	public String addFriend(@PathVariable("user_id")Long fId, HttpSession session) {
-//		Long id = (Long) session.getAttribute("user_id");
-//		User loggedIn = urepo.findById(id).orElse(null);
-////		Two lines above give us the user id and the User object
-//		User friend = urepo.findById(fId).orElse(null);
-//		if(loggedIn.getFriends().contains(friend)== false && loggedIn.getEnemies().contains(friend)== false ) {
-//			loggedIn.getFriends().add(friend);
-//			urepo.save(loggedIn);
-//			friend.getFriends().add(loggedIn);
-//			urepo.save(friend);
-//		}
-//		//TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
-//		return "redirect:/connections/" + id;
-//	}
 
 	@GetMapping("/friend/{user_id}/remove")
 	public String removeFriend(@PathVariable("user_id") Long fId, HttpSession session) {
@@ -524,7 +497,6 @@ public class MainController {
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		User loggedIn = urepo.findById(id).orElse(null);
-//		Two lines above give us the user id and the User object
 		User friend = urepo.findById(fId).orElse(null);
 		if (loggedIn.getFriends().contains(friend)) {
 			loggedIn.getFriends().remove(friend);
@@ -532,42 +504,14 @@ public class MainController {
 			friend.getFriends().remove(loggedIn);
 			urepo.save(friend);
 		}
-		// TODO: ERROR HANDILING TO SAY IF THEY ARE AN ENEMY
 		return "redirect:/connections/" + id;
 	}
 
-//	@GetMapping("/enemy/{user_id}")
-//	public String addEnemy(@PathVariable("user_id")Long fId, HttpSession session) {
-//		Long id = (Long) session.getAttribute("user_id");
-//		User loggedIn = urepo.findById(id).orElse(null);
-////		Two lines above give us the user id and the User object
-//		User enemy = urepo.findById(fId).orElse(null);
-//		if(loggedIn.getFriends().contains(enemy)== false && loggedIn.getEnemies().contains(enemy)== false ) {
-//			loggedIn.getEnemies().add(enemy);
-//			urepo.save(loggedIn);
-//			enemy.getEnemies().add(loggedIn);
-//			urepo.save(enemy);
-//		}
-//		//TODO: ERROR HANDILING TO SAY IF THEY ARE A FRIEND
-//		return "redirect:/connections/" + id;
-//	}
-//	
-//	@GetMapping("/enemy/{user_id}/remove")
-//	public String removeEnemy(@PathVariable("user_id")Long fId, HttpSession session) {
-//		Long id = (Long) session.getAttribute("user_id");
-//		User loggedIn = urepo.findById(id).orElse(null);
-////		Two lines above give us the user id and the User object
-//		User enemy = urepo.findById(fId).orElse(null);
-//		if(loggedIn.getEnemies().contains(enemy)) {
-//			loggedIn.getEnemies().remove(enemy);
-//			urepo.save(loggedIn);
-//			enemy.getEnemies().remove(loggedIn);
-//			urepo.save(enemy);
-//		}
-//		//TODO: ERROR HANDILING TO SAY IF THEY ARE A FRIEND
-//		return "redirect:/connections/" + id;
-//	}
+//	**************************************************************
 
+
+//	============================================================== #Skills
+	
 	@GetMapping("/skill")
 	public String newSkill(Model model, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
@@ -577,36 +521,11 @@ public class MainController {
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(id).orElse(null);
-		model.addAttribute("skill", new Skill());
 		model.addAttribute("user", user);
+		model.addAttribute("skill", new Skill());
 		model.addAttribute("allSkills", usrepo.findAllByUser(user));
 		return "skill.jsp";
 	}
-
-//	@PostMapping("/skill/new")
-//	public String submitSkill(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model, HttpSession session) {
-//		model.addAttribute("skill", new Skill());
-//		Long id = (Long) session.getAttribute("user_id");
-//		User loggedIn = urepo.findById(id).orElse(null);
-//		model.addAttribute("allSkills", srepo.findAll());
-//		model.addAttribute("user", urepo.findById(id).orElse(null));
-//		if (result.hasErrors()) {
-//			return "skill.jsp";
-//		}
-//		// Add Validator to prevent duplicate skills later
-//		
-//		else {
-//			System.out.println(srepo.findByName(skill.getName()));
-//			Skill thisSkill = srepo.save(skill);
-//			List<UserSkill> usk = usrepo.findAllByUser(loggedIn);
-//			UserSkill test = new UserSkill();
-//			test.setUser(loggedIn);
-//			test.setSkill(thisSkill);
-//			usk.add(test);
-//			usrepo.save(test);
-//		}
-//		return "redirect:/skill";
-//	}
 	
 	@PostMapping("/skill/new2")
 	public String newSkill2(@Valid @ModelAttribute("skill") Skill skill, BindingResult result, Model model, HttpSession session) {
@@ -614,47 +533,28 @@ public class MainController {
 		User loggedIn = urepo.findById(id).orElse(null);
 		model.addAttribute("user", loggedIn);
 		model.addAttribute("allSkills", usrepo.findAllByUser(loggedIn));
-		
 		if(result.hasErrors()) {
- 			System.out.println("Getting here?");
 			return "skill.jsp";
 		}
+//	Create Skill if it doesn't exist
 		if(srepo.findByName(skill.getName()) == null) {
 			srepo.save(skill);
 		}
 		Skill thisSkill = srepo.findByName(skill.getName());
-		
+//	Re-render with error if user already has the skill
 		if(loggedIn.getSkills().contains(thisSkill)) {
 			model.addAttribute("skill", new Skill());
 			model.addAttribute("error", "You already have this Skill");
 			return "skill.jsp";
 		}
-		
+//	Add skill to user
 		UserSkill usk = new UserSkill();
 		usk.setUser(loggedIn);
 		usk.setSkill(thisSkill);
 		usrepo.save(usk);
 		
-		System.out.println(loggedIn.getSkills().size());
-		
 		return "redirect:/skill";
 	}
-
-//	@PostMapping("/skill/add")
-//	public String addSkill(Model model, HttpSession session, @RequestParam("userSkill") Long sId) {
-//			model.addAttribute("skill", new Skill());
-//			Long id = (Long) session.getAttribute("user_id");
-//			User loggedIn = urepo.findById(id).orElse(null);
-//			Skill thisSkill = srepo.findById(sId).orElse(null);
-//			List<UserSkill> usk = usrepo.findAllByUser(loggedIn);
-//			UserSkill test = new UserSkill();
-//			test.setUser(loggedIn);
-//			test.setSkill(thisSkill);
-//			usk.add(test);
-//			usrepo.save(test);
-//
-//			return "redirect:/skill";
-//		}
 	
 	@GetMapping("/skill/{skill_id}/delete")
 	public String deleteSkill(Model model, HttpSession session, @PathVariable("skill_id") Long sId) {
@@ -666,15 +566,14 @@ public class MainController {
 		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
 		Skill s = srepo.findById(sId).orElse(null);
 		UserSkill thisUserSkill = usrepo.findByUserAndSkill(u, s);
-//		UserSkill thisUserSkill = usrepo.findById(usId).orElse(null);
 		usrepo.delete(thisUserSkill);
 		return "redirect:/skill";
 	}
 
 //	**************************************************************
 
-//	JON AND ASHLEY
-//	============================================================== JOBS
+
+//	============================================================== #JOBS
 
 	@GetMapping("/jobs")
 	public String newJobForm(Model model, HttpSession session) {
@@ -687,17 +586,15 @@ public class MainController {
 		User user = urepo.findById(id).orElse(null);
 		List<Job> mylist = jrepo.findAll();
 		mylist.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
+		model.addAttribute("user", user);
+		model.addAttribute("userJob", user.getJob());
+		model.addAttribute("jobs", jrepo.findAll(Sort.by("updatedAt").descending()));
+		model.addAttribute("usersgame", user.getGame());
 		model.addAttribute("job", new Job());
 		model.addAttribute("game", new Game());
-		model.addAttribute("jobs", jrepo.findAll(Sort.by("updatedAt").descending()));
-		model.addAttribute("userJob", user.getJob());
-		model.addAttribute("usersgame", user.getGame());
-		model.addAttribute("user", user);
-		
 		return "jobs.jsp";
 	}
 
-	
 	@GetMapping("/job/highpay")
 	public String highPay(Model model, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
@@ -707,14 +604,14 @@ public class MainController {
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(id).orElse(null);
-		model.addAttribute("job", new Job());
-		model.addAttribute("game", new Game());
+		model.addAttribute("user", user);
+		model.addAttribute("userJob", user.getJob());
 		List<Job> mylist = jrepo.findAll();
 		mylist.sort((c1, c2) -> c2.getSalary() - c1.getSalary());
 		model.addAttribute("jobs", mylist);
-		model.addAttribute("userJob", user.getJob());
 		model.addAttribute("usersgame", user.getGame());
-		model.addAttribute("user", user);
+		model.addAttribute("job", new Job());
+		model.addAttribute("game", new Game());
 		return "jobs.jsp";
 	}
 	
@@ -727,54 +624,87 @@ public class MainController {
 		}
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(id).orElse(null);
-
-		model.addAttribute("job", new Job());
-		model.addAttribute("game", new Game());
+		model.addAttribute("user", user);
+		model.addAttribute("userJob", user.getJob());
 		List<Job> mylist = jrepo.findAll();
 		mylist.sort((c1, c2) -> c1.getSalary() - c2.getSalary());
 		model.addAttribute("jobs", mylist);
-		model.addAttribute("userJob", user.getJob());
 		model.addAttribute("usersgame", user.getGame());
-		model.addAttribute("user", user);
+		model.addAttribute("job", new Job());
+		model.addAttribute("game", new Game());
 		return "jobs.jsp";
 	}
 	
-	// we need a way to check if company already exists in the database if the user
-	// is trying to create one
-	@PostMapping("/jobs")
-	public String doJobs(Model model, HttpSession session, @Valid @ModelAttribute("job") Job job,
-			BindingResult result) {
+//	Add a new Game
+	@PostMapping("/game")
+	public String doGames(Model model, HttpSession session, @Valid @ModelAttribute("game") Game game, BindingResult result) {
+		gvalid.validate(game, result);
 		if (result.hasErrors()) {
-			System.out.println("butts");
-			Long id = (Long) session.getAttribute("user_id");
-			User user = urepo.findById(id).orElse(null);
-
-			model.addAttribute("game", new Game());
 			model.addAttribute("jobs", jrepo.findAll());
-			model.addAttribute("userJob", user.getJob());
-			model.addAttribute("usersgame", user.getGame());
-			model.addAttribute("user", user);
+			model.addAttribute("job", new Job());
 			return "jobs.jsp";
 
-		} else {
-			Long userid = (Long) session.getAttribute("user_id");
-			User u = urepo.findById(userid).orElse(null);
-			Game g = grepo.findById(u.getGame().getId()).orElse(null);
-			System.out.println(g);
-			Job j = jrepo.save(job);
-			j.setGame(g);
+		} 
+		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+//	create game
+		grepo.save(game);
+//	create ceo job
+		Job job = new Job();
+		job.setTitle("CEO");
+		job.setDescription("Head honcho");
+		job.setSalary(10);
+		job.setMorality(true);
+		job.setGame(game);
+		List<User> userList = new ArrayList<User>();
+		userList.add(user);
+		job.setCharacters(userList);
+		jrepo.save(job);
+//	add game and ceo job to user
+		user.setGame(game);
+		user.setJob(job);
+		urepo.save(user);
 
-			jrepo.save(j);
-
-			return "redirect:/jobs";
-		}
+		return "redirect:/jobs";
+	}
+	
+//	Add a new Job
+	@PostMapping("/jobs")
+	public String doJobs(Model model, HttpSession session, @Valid @ModelAttribute("job") Job job, BindingResult result) {
+		if (result.hasErrors()) {
+			Long id = (Long) session.getAttribute("user_id");
+			User user = urepo.findById(id).orElse(null);
+			model.addAttribute("user", user);
+			model.addAttribute("userJob", user.getJob());
+			model.addAttribute("usersgame", user.getGame());
+			model.addAttribute("jobs", jrepo.findAll());
+			model.addAttribute("game", new Game());
+			return "jobs.jsp";
+		} 
+		Long userid = (Long) session.getAttribute("user_id");
+		User u = urepo.findById(userid).orElse(null);
+		Game g = grepo.findById(u.getGame().getId()).orElse(null);
+		Job j = jrepo.save(job);
+		j.setGame(g);
+		jrepo.save(j);
+		return "redirect:/jobs";
 	}
 
+	@PostMapping("/apply/{job_id}")
+	public String apply(@PathVariable("job_id") Long id, HttpSession session, Model model) {
+		Job job = jrepo.findById(id).orElse(null);
+		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+		Game game = grepo.findById(job.getGame().getId()).orElse(null);
+		user.setJob(job);
+		user.setGame(game);
+		urepo.save(user);
+		return "redirect:/jobs";
+	}
+	
+//	Quit Job from Job Page
 	@PostMapping("/jobs/quit/{job_id}")
 	public String quitJob(Model model, HttpSession session, @PathVariable("job_id") Long jId) {
 		Long userid = (Long) session.getAttribute("user_id");
 		User u = urepo.findById(userid).orElse(null);
-//		Game g = grepo.findById(u.getGame().getId()).orElse(null);
 		Job j = jrepo.findById(jId).orElse(null);
 		u.setJob(null);
 		u.setGame(null);
@@ -784,6 +714,58 @@ public class MainController {
 		jrepo.save(j);
 		return "redirect:/jobs";
 	}
+
+//	**************************************************************
+
+
+//	============================================================== #GAME
+	
+	@GetMapping("/game/{game_id}")
+	public String company(@PathVariable("game_id") Long id, HttpSession session, Model model) {
+		if (session.getAttribute("user_id") == null) {
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
+		}
+		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+		Game game= grepo.findById(id).orElse(null);
+		Job job = jrepo.findByGameAndTitle(game, "ceo");
+		model.addAttribute("user", user);
+		model.addAttribute("lonk", urepo.findByEmail("lonk@lonkedin.com"));
+		model.addAttribute("game", game);
+		model.addAttribute("ceo", urepo.findByGameAndJob(game, job));
+		model.addAttribute("employees", urepo.findAllByGame(game));
+//	Get List if Jobs at Game sorted by Updated Date
+		List<Job> jobs = game.getJobs();
+		jobs.sort((c1, c2) -> (int) c2.getUpdatedAt().getTime() - (int) c1.getUpdatedAt().getTime());
+		model.addAttribute("jobs", jobs);
+//	Get Number of Connections User has at Game
+		int connections = 0;
+		for(Job j : game.getJobs()) {
+			if(j.getCharacters().size() > 0) {
+				if(user.getFriends().contains(j.getCharacters().get(0))) {
+					connections++;	
+				}	
+			}
+		}
+		model.addAttribute("connections", connections);
+		
+		return "company.jsp";
+	}
+	
+//	Apply for Job from Game page
+	@PostMapping("/applyTwo/{job_id}")
+	public String applyTwo(@PathVariable("job_id") Long id, HttpSession session, Model model){
+		Job job= jrepo.findById(id).orElse(null);
+		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+		Game game = grepo.findById(job.getGame().getId()).orElse(null);
+		user.setJob(job);
+		user.setGame(game);
+		urepo.save(user);
+		return "redirect:/game/"+game.getId();
+	}
+	
+//	Quit Job from Game page
 	@PostMapping("/jobs/quit2/{job_id}")
 	public String quitJob2(Model model, HttpSession session, @PathVariable("job_id") Long jId) {
 		Long userid = (Long) session.getAttribute("user_id");
@@ -798,119 +780,34 @@ public class MainController {
 		jrepo.save(j);
 		return "redirect:/game/"+g.getId();
 	}
-
-	@PostMapping("/game")
-	public String doGames(Model model, HttpSession session, @Valid @ModelAttribute("game") Game game, BindingResult result) {
-		gvalid.validate(game, result);
-		if (result.hasErrors()) {
-			System.out.println(game.getId());
-			model.addAttribute("job", new Job());
-			model.addAttribute("jobs", jrepo.findAll());
-			return "jobs.jsp";
-
-		} else {
-			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
-			// create game
-			grepo.save(game);
-
-			// create job
-			Job job = new Job();
-			job.setTitle("CEO");
-			job.setDescription("Head honcho");
-			job.setSalary(10);
-			job.setMorality(true);
-			job.setGame(game);
-			List<User> userList = new ArrayList<User>();
-			userList.add(user);
-			job.setCharacters(userList);
-			jrepo.save(job);
-
-			// add game and job to user
-			user.setGame(game);
-			user.setJob(job);
-			urepo.save(user);
-
-			return "redirect:/jobs";
-		}
-	}
-    
-	@PostMapping("/apply/{job_id}")
-	public String apply(@PathVariable("job_id") Long id, HttpSession session, Model model) {
-		Job job = jrepo.findById(id).orElse(null);
-		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
-		Game game = grepo.findById(job.getGame().getId()).orElse(null);
-		user.setJob(job);
-		user.setGame(game);
-		urepo.save(user);
-		return "redirect:/jobs";
-	}
-    
 		
-//		=======================Company==============================
+//		**************************************************************
 		
-		@GetMapping("/game/{game_id}")
-		public String company(@PathVariable("game_id") Long id, HttpSession session, Model model) {
-			if (session.getAttribute("user_id") == null) {
-				return "redirect:/login";
-			} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
-			return "redirect:/newcharacter";
-		}
-			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
-			Game game= grepo.findById(id).orElse(null);
-			Job job = jrepo.findByGameAndTitle(game, "ceo");
-			List<Job> jobs = game.getJobs();
-			jobs.sort((c1, c2) -> (int) c2.getUpdatedAt().getTime() - (int) c1.getUpdatedAt().getTime());
-//			model.addAttribute("jobs", jrepo.findAll(Sort.by("updatedAt").descending()));
-			model.addAttribute("jobs", jobs);
-			model.addAttribute("user", user);
-			model.addAttribute("lonk", urepo.findByEmail("lonk@lonkedin.com"));
-			model.addAttribute("game", game);
-			model.addAttribute("ceo", urepo.findByGameAndJob(game, job));
-			model.addAttribute("employees", urepo.findAllByGame(game));
-			
-			int connections = 0;
-			for(Job j : game.getJobs()) {
-				if(j.getCharacters().size() > 0) {
-					if(user.getFriends().contains(j.getCharacters().get(0))) {
-						connections++;	
-					}	
-				}
-			}
-			model.addAttribute("connections", connections);
-			
-			return "company.jsp";
-		}
-		@PostMapping("/applyTwo/{job_id}")
-		public String applyTwo(@PathVariable("job_id") Long id, HttpSession session, Model model){
-			Job job= jrepo.findById(id).orElse(null);
-			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
-			Game game = grepo.findById(job.getGame().getId()).orElse(null);
-			user.setJob(job);
-			user.setGame(game);
-			urepo.save(user);
-			return "redirect:/game/"+game.getId();
-		}
 		
-//		==========================About=============================
+//	============================================================== #ABOUT
+		
 		@GetMapping("/about")
 		public String about(HttpSession session) {
-
 			if (session.getAttribute("user_id") == null) {
 				return "redirect:/login";
 			} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
-			return "redirect:/newcharacter";
-		}
-
-			return "about.jsp";
-			
+				return "redirect:/newcharacter";
+			}
+			return "about.jsp";	
 		}
 
     
 //	**************************************************************
 
 //	NO TOUCHY
-//	============================================================== Login and Registration
+//	============================================================== #Login and Registration
 
+//	Index catch
+	@GetMapping("/")
+	public String index() {
+		return "redirect:/login";
+	}
+		
 	@GetMapping("/registration")
 	public String registerUser(Model model) {
 		model.addAttribute("user", new User());
@@ -921,10 +818,8 @@ public class MainController {
 	public String doRegisterUser(@Valid @ModelAttribute("user") User user, BindingResult result, HttpSession session) {
 		uvalid.validate(user, result);
 		if (result.hasErrors()) {
-			System.out.println(user.getId());
 			return "register.jsp";
 		}
-		
 //	Create Lonk, Zorldo, and Goonanderp if they don't exist
 		if (urepo.findByEmail("lonk@lonkedin.com") == null) {
 			
@@ -1004,11 +899,6 @@ public class MainController {
 			legs.setLevel(2);
 			srepo.save(legs);
 			
-//			Skill newb = new Skill();
-//			newb.setName("Newbie");
-//			newb.setLevel(0);
-//			srepo.save(newb);
-			
 			UserSkill lonkSkill = new UserSkill();
 			lonkSkill.setUser(lonk);
 			lonkSkill.setSkill(swordfighter);
@@ -1028,8 +918,7 @@ public class MainController {
 			usrepo.save(goonanSkill);
 			
 			Post welcome = new Post();
-			welcome.setContent(
-					"Welcome to LonkedIn, friend! Looking forward to getting to know you better! We're always looking for good people at The Legend of Zorldo, <a href='/game/1'> check out our Game page<a> to see if there are any new job listings!");
+			welcome.setContent("Welcome to LonkedIn, friend! Looking forward to getting to know you better! We're always looking for good people at The Legend of Zorldo, <a href='/game/1'> check out our Game page<a> to see if there are any new job listings!");
 			welcome.setCreator(lonk);
 			prepo.save(welcome);
 
@@ -1044,16 +933,11 @@ public class MainController {
 			urepo.save(princess);
 			urepo.save(goonan);
 		}
-		
 //	Create new user
 		userv.registerUser(user);
 		session.setAttribute("user_id", user.getId());
+		
 		return "redirect:/newcharacter";
-	}
-
-	@GetMapping("/")
-	public String index() {
-		return "redirect:/login";
 	}
 
 	@GetMapping("/login")
@@ -1062,8 +946,7 @@ public class MainController {
 	}
 
 	@PostMapping("/login")
-	public String doLogin(@RequestParam("email") String email, @RequestParam("password") String password, Model model,
-			HttpSession session) {
+	public String doLogin(@RequestParam("email") String email, @RequestParam("password") String password, Model model, HttpSession session) {
 		if (!userv.authenticateUser(email, password)) {
 			model.addAttribute("error", "Incorrect email / password combination");
 			return "login.jsp";
@@ -1083,5 +966,8 @@ public class MainController {
 		return "redirect:/login";
 	}
 
-//	************************************************************** END	
+//	**************************************************************
+	
 }
+
+//	************************************************************** END

@@ -105,6 +105,7 @@ public class Game {
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
+		this.updatedAt = new Date();
 	}
 	@PreUpdate
 	protected void onUpdate() {

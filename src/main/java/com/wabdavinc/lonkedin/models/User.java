@@ -100,30 +100,6 @@ public class User {
 		this.description = "";
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public List<Post> getCreatedPosts() {
-		return createdPosts;
-	}
-
-	public void setCreatedPosts(List<Post> createdPosts) {
-		this.createdPosts = createdPosts;
-	}
-
-	public List<User> getEnemyRequests() {
-		return enemyRequests;
-	}
-
-	public void setEnemyRequests(List<User> enemyRequests) {
-		this.enemyRequests = enemyRequests;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -164,6 +140,14 @@ public class User {
 		this.picture = picture;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -186,6 +170,14 @@ public class User {
 
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+
+	public List<Post> getCreatedPosts() {
+		return createdPosts;
+	}
+
+	public void setCreatedPosts(List<Post> createdPosts) {
+		this.createdPosts = createdPosts;
 	}
 
 	public Game getGame() {
@@ -234,6 +226,14 @@ public class User {
 
 	public void setEnemies(List<User> enemies) {
 		this.enemies = enemies;
+	}
+
+	public List<User> getEnemyRequests() {
+		return enemyRequests;
+	}
+
+	public void setEnemyRequests(List<User> enemyRequests) {
+		this.enemyRequests = enemyRequests;
 	}
 
 	public Date getCreatedAt() {

@@ -30,7 +30,7 @@
 		
 		<div class="regLog">
 			<h1 class="welcome">Welcome, Character!</h1>
-			<p class="blurb">As you're now aware, a rip in the space-time continuum has caused video game characters such as yourself to begin pouring into the Milky Way Universe from all manner of different Universes in the grand Multiverse. As such, we at LonkedIn decided to create this tool to help you connect with your alternate versions of yourselves and friends. We know you want to get back to work as a character, so sign up now, connect, and get back to work in your Game today!</p>
+			<p class="blurb">As you're now aware, a rip in the space-time continuum has caused video game characters such as yourself to begin pouring into Hyrool from all manner of different Universes in the grand Multiverse. As such, we at LonkedIn decided to create this tool to help you connect with your alternate versions of yourselves and friends. We know you want to get back to work as a character, so sign up now, connect, and get back to work in your Game today!</p>
 		
 			<p class="error"><form:errors path="user.*"/></p>
 			<form:form class="form" method="POST" action="/registration" modelAttribute="user">
