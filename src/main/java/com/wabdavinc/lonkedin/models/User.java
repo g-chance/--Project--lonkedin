@@ -36,8 +36,9 @@ public class User {
 	private String name;
 	@Size(min = 5, message = "Universe must be at least 5 characters")
 	private String universe;
-	@Size(min = 1, message = "Please choose a profile image")
+	@Size(min = 1, message = "Choose a profile image")
 	private String picture;
+	private String description;
 	@Size(min = 8, message = "Password must be at least 8 characters")
 	private String password;
 	@Transient
@@ -96,7 +97,15 @@ public class User {
 	private Date updatedAt;
 	
 	public User() {
-		
+		this.description = "";
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public List<Post> getCreatedPosts() {
@@ -246,6 +255,7 @@ public class User {
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
+		this.updatedAt = new Date();
 	}
 	@PreUpdate
 	protected void onUpdate() {

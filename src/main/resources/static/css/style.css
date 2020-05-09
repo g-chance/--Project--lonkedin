@@ -47,7 +47,7 @@ button {
 
 .wrapper {
 	width: 1200px;
-	margin: auto;
+	margin: 0 auto 50px auto;
 }
 
 /* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */

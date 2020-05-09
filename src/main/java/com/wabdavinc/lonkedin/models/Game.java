@@ -25,10 +25,10 @@ public class Game {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Size(min = 3, message = "Game must be at least 3 characters")
+	@Size(min = 3, message = "Name must be at least 3 characters")
 	private String name;
 	@Nullable
-	@Size(min = 10, message = "Description must be at least 10 characters")
+	@Size(min = 10, message = "Mission Statement must be at least 10 characters")
 	private String description;
 	
 	@OneToMany(mappedBy = "game", fetch = FetchType.LAZY)

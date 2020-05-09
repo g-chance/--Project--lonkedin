@@ -84,14 +84,14 @@
 						<p>${ result.job != null ? result.job.title.concat(" -- ").concat(result.game.name) : "Seeking Work"}</p>
 					</div>
 					<c:choose>
+					<c:when test="${ friends.contains(result) }">
+						<a class="status">Already Connected</a>
+					</c:when>
 					<c:when test="${ user.friendRequests.contains(result) }">
 						<a class="status">Pending Connection</a>
 					</c:when>
 					<c:when test="${ !result.friendRequests.contains(user) && !friends.contains(result) }">
 						<a class="status" href="/requestConnection/${ result.id }/${ str }">Request Connection</a>
-					</c:when>
-					<c:when test="${ friends.contains(result) }">
-						<a class="status">Already Connected</a>
 					</c:when>
 					<c:otherwise>
 						<a class="status">Pending Connection</a>

@@ -89,10 +89,10 @@
 					<p> <form:errors class="error" path="game.*" /> </p>
 					<form:form action="/game" method="post" modelAttribute="game">
 						<p>
-							<form:input path="name" placeholder="Company Name"/>
+							<form:input path="name" placeholder="Name"/>
 						</p>
 						<p>
-							<form:input path="description" placeholder="Company Description"/>
+							<form:input path="description" placeholder="Mission Statement"/>
 						</p>
 						<input class="submit" type="submit" value="Create Game!" />
 					</form:form>
@@ -137,19 +137,50 @@
 		<!-- JOB LISTINGS -->
 			<div class="jobListings">
 				<!-- For loops for displaying current available jobs -->
-				<h1 class="jobListings">Job Listings</h1>
 				<div class="currentJob">
-					<h3 style="color:grey">Your Current Job: ${userJob == null? "Unemployed" :userJob.title.concat(" in ").concat(userJob.game.name)}</h3>
-					<form:form action="/jobs/quit/${userJob.id}">
-						<button ${userJob.id == null ? "hidden" : null} type="submit">Quit</button>
-					</form:form>
+					<div>
+						<h3 style="color:grey">Your Current Job: ${userJob == null? "Unemployed" :userJob.title.concat(" in ").concat(userJob.game.name)}</h3>
+							<c:if test="${userJob != null}">
+						<form:form action="/jobs/quit/${userJob.id}">
+							<button type="submit">Quit</button>
+						</form:form>
+							</c:if>
+					</div>
 	            </div>
+				<h1 class="jobListings">Job Listings</h1>
 	            <div class="sortRow">
 		            <a href="/job/highpay"> <button class="action">Salary High - Low</button></a> 
 		            <a href="/job/lowpay"><button class="action">Salary Low - High</button></a> 
 		            <a href="/jobs"><button class="action">Default Sort</button></a>
 	            </div>
-				<table>
+	            
+	            <div class="jobListGrid">
+	            	<p class="th">Job</p>
+	            	<p class="th">Game</p>
+	            	<p class="th">Description</p>
+	            	<p class="th">Rupees</p>
+	            	<p class="th">Morality</p>
+	            	<p class="th">Apply</p>
+						<c:forEach var="job" items="${jobs}">
+						<c:if test="${job.characters.size() == 0 }">
+					<p class="mdCol">${job.title}</p>
+					<p class="mdCol"><a href="/game/${ job.game.id }">${job.game.name}</a></p>
+					<p class="lgCol">${job.description}</p>
+					<p class="smCol">${job.salary}</p>
+						<c:if test="${job.morality==true }">
+					<p class="smCol">Good</p>
+						</c:if>
+						<c:if test="${job.morality==false }">
+					<p class="smCol">Bad</p>
+						</c:if>
+					
+					<!-- apply button  -->
+					<form:form class="smCol" action="/apply/${job.id}"><button ${userJob.id != null ? "disabled style='background-color:lightgray'" : null} type="submit">Apply!</button></form:form>
+						</c:if>
+						</c:forEach>
+	            </div>
+	            
+<%-- 				<table>
 					<thead>
 						<tr>
 							<th class="mdCol">Job </th>
@@ -187,7 +218,7 @@
 					</c:forEach>
 				
 					</tbody>
-				</table>
+				</table> --%>
 			</div>
 		</div>
 	</div>

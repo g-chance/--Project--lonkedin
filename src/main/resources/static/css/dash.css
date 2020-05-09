@@ -79,6 +79,14 @@ h3 {
 	margin: 0 0 20px 0;
 	width: 80%;
 }
+.formDesc {
+	grid-template-columns: 1fr;
+	margin: 0 0 10px 0;
+	width: 100%;
+}
+.formDesc textarea {
+	min-height: 100px;
+}
 .content {
 	padding: 5px;
 	border-radius: 0%;
@@ -88,6 +96,16 @@ h3 {
 	padding: 5px;
 	font-size: 15px;
 	border-radius: 0%;
+}
+.subDesc {
+	justify-self: center;
+	margin: 10px 0 0 0;
+}
+.editDesc {
+	margin: 10px auto 0 auto;
+}
+.description {
+	padding: 5px 10px;
 }
 .feedSubHeader {
 	display:grid;
@@ -132,7 +150,7 @@ h3 {
 	margin-bottom: 0px;
 	padding-bottom: 0px
 }
-.jobListing a {
+.jobListing .jobListLink {
 	color: green;
 	font-weight: 500;
 }

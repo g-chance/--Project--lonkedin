@@ -61,11 +61,14 @@ h2{
 	color: white;
 }
 .jobListings h1 {
-	margin: 50px 0 0 0;
+	margin: 10px 0 20px 0;
 	padding: 5px 0px;
 	background-color: #284a28;
 	color:white;
 	text-align: center;
+}
+.employees h1 {
+	margin: 50px 0 20px 0;
 }
 button {
 	padding: 4px 5px;
@@ -73,16 +76,23 @@ button {
 	color: white;
 
 }
+
+.currentJob {
+	display: grid;
+/* 	grid-template-columns: auto 1fr; */
+	column-gap: 10px;
+	padding: 0 10px;
+	margin: 55px 0 0 0;
+}
 .currentJob button {
 	color: white;
 	background-color: red;
 }
-.currentJob {
-	display: grid;
-	grid-template-columns: auto 1fr;
-	column-gap: 10px;
-	padding: 0 10px;
-	margin: 10px 0 0 0;
+.currentJob * {
+	display: inline-block;
+	max-width: 100%;
+	overflow-x: auto;
+	word-wrap: break-word;	
 }
 .sortRow {
 	margin: 10px 5px 5px 0;
@@ -96,4 +106,35 @@ button {
 }
 .back {
 	direction: rtl;
+}
+.jobListGrid {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	row-gap: 2px;
+	column-gap: 2px;
+	text-align: center;
+}
+.jobListGrid .th {
+	font-weight: bold;
+}
+.jobListGrid p, .jobListGrid form {
+	padding: 2px;
+	border: 2px solid black;
+	max-width: 100%;
+	overflow-x: auto;
+	word-wrap: break-word;
+	background-color: rgba(255, 255, 255, 0.502);
+}
+
+@media only screen and (max-width: 786px) {
+	.jobListGrid {
+		grid-template-columns: repeat(3, 1fr);
+		row-gap: 2px;
+	}
+	.th {
+		display: none;
+	}
+	.smCol {
+		margin: 0 0 20px 0;
+	}
 }

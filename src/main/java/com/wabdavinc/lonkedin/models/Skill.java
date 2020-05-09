@@ -26,7 +26,7 @@ public class Skill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Size(min = 3, message = "Skill name must be at least 3 characters")
+	@Size(min = 3, message = "Name must be at least 3 characters")
 	private String name;
 	private Integer level;
 	

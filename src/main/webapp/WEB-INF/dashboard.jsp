@@ -7,10 +7,10 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<title>Dashboard</title>
-<link rel="stylesheet" type="text/css" href="/css/style.css">
-<link rel="stylesheet" type="text/css" href="/css/dash.css">
+	<meta charset="UTF-8">
+	<title>Dashboard</title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/dash.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/app.js"></script>
 </head>
@@ -94,7 +94,7 @@
 						<h1>${ user.name } (${user.universe})</h1>
 						<c:choose>
 							<c:when test="${ user.job != null }">
-								<p style="font-weight: bold; color: green">${user.game.name}</p>
+								<p><a style="font-weight: bold; color: green" href="/game/${ user.game.id }">${user.game.name}</a></p>
 								<p style="font-weight: bold; color: green">
 									${user.job.title} (${ user.job.morality == true ? "Good Guy" : "Bad Guy" })</p>
 							</c:when>
@@ -102,11 +102,14 @@
 								<p style="font-weight: bold; color: green">Seeking Work</p>
 							</c:otherwise>
 						</c:choose>
+						<p>${ user.email }</p>
 						<p class="connectionsCount">
-							<a href="/connections/${ user.id }">${ connectionsCount }
-								Connections</a>
+							<a href="/connections/${ user.id }">${ connectionsCount } Connections</a>
+								<c:if test="${ user != loggedIn && !user.friends.contains(loggedIn) && !user.friendRequests.contains(loggedIn) }">
+							<span>(<a href="/requestConnection3/${ user.id }">Request Connection</a>)</span>
+								</c:if>
 						</p>
-						<p>${ enemiesCount } Enemies</p>
+						<p><a class="enemyCount" href="/connections/${ user.id }">${ enemiesCount } Enemies</a></p>
 					</div>
 				</div>
 				<c:if test="${ sessionScope.user_id == user.id }">
@@ -137,7 +140,26 @@
 				
 				<div class="row">
 					<h3>About</h3>
+<div class="feed">
+						<c:if test="${ user == loggedIn && user.description == '' || user == loggedIn && editDesc == true }">
+						<p class="error">
+							<form:errors path="user.*" />
+						</p>
+						<form:form class="form formDesc" action="/adddescription/${ user.id }"
+							method="post" modelAttribute="user">
+							<form:textarea class="content" path="description"
+								placeholder="Show yourself off!" />
+							<input class="submit subDesc" type="submit" value="Update" />
+						</form:form>
+						</c:if>
+						<c:if test="${ user.description != '' && editDesc == null }">
+						<p class="description">${ user.description }</p>
+						</c:if>
+						<c:if test="${ user == loggedIn && user.description != '' && editDesc == null }">
+							<a class="editDesc" href="/editDesc/${ user.id }"><button class="submit">Edit</button></a>
+						</c:if>
 				</div>
+</div>
 				
 				<div class="row">
 					<h3>Connections</h3>
@@ -174,7 +196,7 @@
 					<c:if test="${ user.id == sessionScope.user_id }">
 					<div class="skillLink">
 						<a href="/skill">
-							<button>Add Skill</button>
+							<button>Manage Skills</button>
 						</a>
 					</div>
 					</c:if>
@@ -258,7 +280,7 @@
 										<div class="postGrid">
 											<img class="postPic" src="${ post.creator.picture }" alt="" />
 											<div>
-												<p class="postName">${ post.creator.name } (${ post.creator.universe })</p>
+												<p class="postName"><a style="text-decoration:none; color:black" href="/dashboard/${ post.creator.id }">${ post.creator.name }</a> (${ post.creator.universe })</p>
 												<p class="postJob">${ post.creator.job != null ? post.creator.job.title.concat("--").concat(post.creator.game.name) : "Seeking Work" } </p>
 												<p class="postCreated">${ post.createdAt }</p>
 											</div>
@@ -272,7 +294,7 @@
 										<img class="postPic" src="${ lonkpost.creator.picture }"
 											alt="" />
 										<div>
-											<p class="postName">${ lonkpost.creator.name } (${ lonkpost.creator.universe })</p>
+											<p class="postName"><a style="text-decoration:none; color:black" href="/dashboard/${ lonkpost.creator.id }">${ lonkpost.creator.name }</a> (${ lonkpost.creator.universe })</p>
 											<p class="postJob">${ lonkpost.creator.job.title } -- ${ lonkpost.creator.game.name }</p>
 											<p class="postCreated">${ lonkpost.createdAt }</p>
 										</div>
@@ -303,8 +325,8 @@
 								<c:if test="${ jobs.size() == 0 }">
 									<p class="jobListing">There are no current job listings</p>
 								</c:if>
-								<c:forEach items="${ jobs }" var="job">
-									<p class="jobListing">${ job.game.name } is hiring! <a href="/game/${ job.game.id }">Checkout</a>
+								<c:forEach items="${ testing2.content }" var="job">
+									<p class="jobListing">${ job.game.name } is hiring! <a class="jobListLink" href="/game/${ job.game.id }">Checkout</a>
 										their new posting for ${ job.title }!</p>
 								</c:forEach>
 							</div>

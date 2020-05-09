@@ -111,6 +111,21 @@
 			</c:if>
 			</c:forEach>
 			</div>
+			
+				<c:if test="${ enemies.size() > 0 }">
+			<h1 class="enemyHeader">${ sessionScope.user_id != user.id ? user.name.concat("'s") : "Your " } Enemies:</h1>
+			<div class="connectionsGrid main">
+					<c:forEach items="${ enemies }" var="enemy">
+				<div class="row">
+					<img src="${ enemy.picture }" alt="" />
+					<div class="resultInfo">
+						<p><a href="/dashboard/${ enemy.id }">${ enemy.name } </a>(${ enemy.universe })</p>
+						<p>${ enemy.job != null ? enemy.job.title.concat(" -- ").concat(enemy.game.name) : "Seeking Work"}</p>
+					</div>
+				</div>
+					</c:forEach>
+			</div>
+				</c:if>
 		</div>
 	</div>
 </body>

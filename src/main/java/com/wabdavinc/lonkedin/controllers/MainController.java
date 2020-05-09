@@ -1,11 +1,15 @@
 package com.wabdavinc.lonkedin.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -140,13 +144,17 @@ public class MainController {
 	public String dashboard(@PathVariable("user_id") Long userId, HttpSession session, Model model) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/login";
-		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+		} else if (urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
 			return "redirect:/newcharacter";
 		}
 		
 		if(session.getAttribute("postError") != null) {
 			model.addAttribute("postError", "Post must include content");
 			session.removeAttribute("postError");
+		}
+		if(session.getAttribute("editDesc") != null) {
+			model.addAttribute("editDesc", true);
+			session.removeAttribute("editDesc");
 		}
 		
 		Long id = (Long) session.getAttribute("user_id");
@@ -172,23 +180,37 @@ public class MainController {
 		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
 		model.addAttribute("friendRequests", user.getFriendRequests());
 //	Get a list of 10 games
-		List<Game> games = new ArrayList<Game>();
-		if (grepo.findAll().size() != 0) {
-			for (int i = 0; i < grepo.findAll().size() && i < 10; i++) {
-				games.add(grepo.findAll().get(i));
+		
+//		List<Game> games = new ArrayList<Game>();
+//		if (grepo.findAll().size() != 0) {
+//			for (int i = 0; i < grepo.findAll().size() && i < 10; i++) {
+//				games.add(grepo.findAll().get(i));
+//			}
+//		}
+//		model.addAttribute("games", games);
+		
+		List<Game> myGames = grepo.findAll();
+		myGames.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
+		int gameCounter = 0;
+			for(int i=0;i<grepo.findAll().size() && i<10;i++) {
+				gameCounter++;
 			}
-		}
-		model.addAttribute("games", games);
+		model.addAttribute("games", myGames.subList(0, gameCounter));
 //	Get a list of 10 jobs
-		List<Job> jobs = new ArrayList<Job>();
-		if (jrepo.findAll().size() != 0) {
-			for (int i = 0; i < jrepo.findAll().size() && jobs.size() < 10; i++) {
-				if (jrepo.findAll().get(i).getCharacters().size() == 0) {
-					jobs.add(jrepo.findAll().get(i));
-				}
-			}
-		}
-		model.addAttribute("jobs", jobs);
+		
+//		List<Job> jobs = new ArrayList<Job>();
+//		if (jrepo.findAll().size() != 0) {
+//			for (int i = 0; i < jrepo.findAll().size() && jobs.size() < 10; i++) {
+//				if (jrepo.findAll().get(i).getCharacters().size() == 0) {
+//					jobs.add(jrepo.findAll().get(i));
+//				}
+//			}
+//		}
+//		model.addAttribute("jobs", jobs);
+		
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("updatedAt").descending());
+		model.addAttribute("testing2", jrepo.findAllByCharactersIsEmpty(pageable));
+		
 //	Get a list of 8 friends
 		ArrayList<User> friends = new ArrayList<User>();
 		if(user.getFriends().size() != 0) {
@@ -241,13 +263,29 @@ public class MainController {
 		User otherUser = urepo.findById(otherUserId).orElse(null);
 		if (result.hasErrors()) {
 			session.setAttribute("postError", "error");
-			model.addAttribute("user", user);
+//			model.addAttribute("user", user);
 			return "redirect:/dashboard/" + otherUser.getId();
 		}
 		post.setCreator(user);
 		post.setCharacter(otherUser);
 		prepo.save(post);
 		return "redirect:/dashboard/" + otherUser.getId();
+	}
+	@PostMapping("/adddescription/{userid}")
+	public String addDescription(@PathVariable("userid") Long id, @Valid @ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session ) {
+		if(result.hasErrors()) {
+			session.setAttribute("descError", "error");
+			return "redirect:/dashboard/"+id;
+		}
+		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+		u.setDescription(user.getDescription());
+		urepo.save(u);
+		return "redirect:/dashboard/"+id;
+	}
+	@GetMapping("editDesc/{userid}")
+	public String editDescription(@PathVariable("userid") Long id, HttpSession session) {
+		session.setAttribute("editDesc", "editDesc");
+		return "redirect:/dashboard/"+id;
 	}
 
 	@GetMapping("/dashboard/{user_id}/loadmore")
@@ -279,23 +317,36 @@ public class MainController {
 		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
 		model.addAttribute("friendRequests", user.getFriendRequests());
 //	Get a list of 10 games
-		List<Game> games = new ArrayList<Game>();
-		if (grepo.findAll().size() != 0) {
-			for (int i = 0; i < grepo.findAll().size() && i < 10; i++) {
-				games.add(grepo.findAll().get(i));
+//		List<Game> games = new ArrayList<Game>();
+//		if (grepo.findAll().size() != 0) {
+//			for (int i = 0; i < grepo.findAll().size() && i < 10; i++) {
+//				games.add(grepo.findAll().get(i));
+//			}
+//		}
+//		model.addAttribute("games", games);
+		
+		List<Game> myGames = grepo.findAll();
+		myGames.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
+		int gameCounter = 0;
+			for(int i=0;i<grepo.findAll().size() && i<10;i++) {
+				gameCounter++;
 			}
-		}
-		model.addAttribute("games", games);
+		model.addAttribute("games", myGames.subList(0, gameCounter));
+		
 //	Get a list of 10 jobs
-		List<Job> jobs = new ArrayList<Job>();
-		if (jrepo.findAll().size() != 0) {
-			for (int i = 0; i < jrepo.findAll().size() && jobs.size() < 10; i++) {
-				if (jrepo.findAll().get(i).getCharacters().size() == 0) {
-					jobs.add(jrepo.findAll().get(i));
-				}
-			}
-		}
-		model.addAttribute("jobs", jobs);
+//		List<Job> jobs = new ArrayList<Job>();
+//		if (jrepo.findAll().size() != 0) {
+//			for (int i = 0; i < jrepo.findAll().size() && jobs.size() < 10; i++) {
+//				if (jrepo.findAll().get(i).getCharacters().size() == 0) {
+//					jobs.add(jrepo.findAll().get(i));
+//				}
+//			}
+//		}
+//		model.addAttribute("jobs", jobs);
+		
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("updatedAt").descending());
+		model.addAttribute("testing2", jrepo.findAllByCharactersIsEmpty(pageable));
+		
 //	Get a list of 8 friends
 		ArrayList<User> friends = new ArrayList<User>();
 		if(user.getFriends().size() != 0) {
@@ -456,9 +507,40 @@ public class MainController {
 		return "redirect:/connections/"+pageViewId;
 	}
 
+//	Request Connection from Dashboard
+	@GetMapping("/requestConnection3/{connectionid}")
+	public String requestConnection2(@PathVariable("connectionid") Long connectionId, HttpSession session) {
+		if (session.getAttribute("user_id") == null) {
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
+		}
+		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+		User connection = urepo.findById(connectionId).orElse(null);
+		connection.getFriendRequests().add(user);
+		urepo.save(connection);
+		return "redirect:/dashboard/"+connectionId;
+	}
+	
+//	Request Connection from Game Page
+	@GetMapping("/requestConnection4/{connectionid}")
+	public String requestConnection4(@PathVariable("connectionid") Long connectionId, HttpSession session) {
+		if (session.getAttribute("user_id") == null) {
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
+		}
+		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+		User connection = urepo.findById(connectionId).orElse(null);
+		connection.getFriendRequests().add(user);
+		urepo.save(connection);
+		Game game = connection.getGame();
+		return "redirect:/game/"+game.getId();
+	}
+
 //	**************************************************************
 
-//	VERNON AND 
+//	
 //	============================================================== Connections
 
 	@GetMapping("/connections/{user_id}")
@@ -475,6 +557,17 @@ public class MainController {
 		model.addAttribute("user",u);
 		model.addAttribute("loggedIn", loggedIn);
 		model.addAttribute("lonk", urepo.findByEmail("lonk@lonkedin.com"));
+		
+		List<User> enemies = new ArrayList<User>();
+		if(u.getGame() != null) {
+			for(User character : u.getGame().getCharacters()) {
+				if(u.getJob().getMorality() != character.getJob().getMorality()) {
+					enemies.add(character);
+				}
+			}
+		}
+		model.addAttribute("enemies", enemies);
+		
 		return "connectionsV2.jsp";
 	}
 //
@@ -668,10 +761,11 @@ public class MainController {
 		mylist.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
 		model.addAttribute("job", new Job());
 		model.addAttribute("game", new Game());
-		model.addAttribute("jobs", mylist);
+		model.addAttribute("jobs", jrepo.findAll(Sort.by("updatedAt").descending()));
 		model.addAttribute("userJob", user.getJob());
 		model.addAttribute("usersgame", user.getGame());
 		model.addAttribute("user", user);
+		
 		return "jobs.jsp";
 	}
 
@@ -758,8 +852,23 @@ public class MainController {
 		u.setGame(null);
 		urepo.save(u);
 		j.getCharacters().remove(u);
+		j.setUpdatedAt(new Date());
 		jrepo.save(j);
 		return "redirect:/jobs";
+	}
+	@PostMapping("/jobs/quit2/{job_id}")
+	public String quitJob2(Model model, HttpSession session, @PathVariable("job_id") Long jId) {
+		Long userid = (Long) session.getAttribute("user_id");
+		User u = urepo.findById(userid).orElse(null);
+		Game g = grepo.findById(u.getGame().getId()).orElse(null);
+		Job j = jrepo.findById(jId).orElse(null);
+		u.setJob(null);
+		u.setGame(null);
+		urepo.save(u);
+		j.getCharacters().remove(u);
+		j.setUpdatedAt(new Date());
+		jrepo.save(j);
+		return "redirect:/game/"+g.getId();
 	}
 
 	@PostMapping("/game")
@@ -822,21 +931,36 @@ public class MainController {
 			Game game= grepo.findById(id).orElse(null);
 			Job job = jrepo.findByGameAndTitle(game, "ceo");
 			List<Job> jobs = game.getJobs();
+			jobs.sort((c1, c2) -> (int) c2.getUpdatedAt().getTime() - (int) c1.getUpdatedAt().getTime());
+//			model.addAttribute("jobs", jrepo.findAll(Sort.by("updatedAt").descending()));
 			model.addAttribute("jobs", jobs);
 			model.addAttribute("user", user);
+			model.addAttribute("lonk", urepo.findByEmail("lonk@lonkedin.com"));
 			model.addAttribute("game", game);
 			model.addAttribute("ceo", urepo.findByGameAndJob(game, job));
+			model.addAttribute("employees", urepo.findAllByGame(game));
+			
+			int connections = 0;
+			for(Job j : game.getJobs()) {
+				if(j.getCharacters().size() > 0) {
+					if(user.getFriends().contains(j.getCharacters().get(0))) {
+						connections++;	
+					}	
+				}
+			}
+			model.addAttribute("connections", connections);
+			
 			return "company.jsp";
 		}
-		@PostMapping("/applyTwo/{game_id}")
-		public String applyTwo(@PathVariable("game_id") Long id, HttpSession session, Model model){
+		@PostMapping("/applyTwo/{job_id}")
+		public String applyTwo(@PathVariable("job_id") Long id, HttpSession session, Model model){
 			Job job= jrepo.findById(id).orElse(null);
 			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 			Game game = grepo.findById(job.getGame().getId()).orElse(null);
 			user.setJob(job);
 			user.setGame(game);
 			urepo.save(user);
-			return "redirect:/game/{game_id}";
+			return "redirect:/game/"+game.getId();
 		}
 		
 //		==========================About=============================
@@ -848,7 +972,6 @@ public class MainController {
 			} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
 			return "redirect:/newcharacter";
 		}
-			User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 
 			return "about.jsp";
 			
@@ -882,6 +1005,7 @@ public class MainController {
 			lonk.setUniverse("Hyrool");
 			lonk.setEmail("lonk@lonkedin.com");
 			lonk.setPicture("/images/lonk.jpg");
+			lonk.setDescription("Hi, I'm Lonk. I was chosen by princess Zorldo to save Hyrool from the great evil Goonan. I've already saved the world dozens of times, but somehow it never seems to stick.");
 			List<User> lonksFriends = new ArrayList<User>();
 			lonk.setFriends(lonksFriends);
 			urepo.save(lonk);
@@ -891,6 +1015,7 @@ public class MainController {
 			princess.setUniverse("Hyrool");
 			princess.setEmail("zorldo@lonkedin.com");
 			princess.setPicture("/images/zorldo.png");
+			princess.setDescription("Hi, I'm Princess Zorldo. I specialize in looking good, and needing to be saved from Goonan. I'm also a secret ninja.");
 			List<User> princessFriends = new ArrayList<User>();
 			princessFriends.add(lonk);
 			princess.setFriends(princessFriends);
@@ -904,6 +1029,7 @@ public class MainController {
 			goonan.setUniverse("Hyrool");
 			goonan.setEmail("goonan@lonkedin.com");
 			goonan.setPicture("/images/goonan.png");
+			goonan.setDescription("Lonk and Zorldo are jerks. I know I'm trying to kill them but they could at least accept my connection request. I'm trying to build my reputation here GAWL!");
 			urepo.save(goonan);
 
 			Game zorldo = new Game();

@@ -29,11 +29,11 @@ public class Job {
 	private Long id;
 	@Size(min = 3, message = "Title must be at least 3 characters")
 	private String title;
-	@Size(min = 10, message = "Job description must be at least 10 characters")
+	@Size(min = 10, message = "Description must be at least 10 characters")
 	private String description;
 	@NotNull(message = "Select a Morality")
 	private Boolean morality;
-	@NotNull(message = "Please enter Rupees")
+	@NotNull(message = "Enter Rupees")
 	@Min(value = 0, message = "Rupees cannot be less than 0")
 	private Integer salary;
 	
@@ -128,6 +128,7 @@ public class Job {
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
+		this.updatedAt = new Date();
 	}
 	@PreUpdate
 	protected void onUpdate() {
