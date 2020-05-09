@@ -41,8 +41,8 @@ public class MainController {
 	private final UserRepo urepo;
 	private final UserServ userv;
 	private final UserValidator uvalid;
-	private final GameValidator gvalid;
 	private final GameRepo grepo;
+	private final GameValidator gvalid;
 	private final JobRepo jrepo;
 	private final PostRepo prepo;
 	private final SkillRepo srepo;
@@ -61,7 +61,7 @@ public class MainController {
 		this.usrepo = usrepo;
 	}
 
-//	GREG
+
 //	============================================================== Create Character
 
 	@GetMapping("/newcharacter")
@@ -69,26 +69,19 @@ public class MainController {
 		if(session.getAttribute("user_id") == null) {
 			return "redirect:/login";
 		}
-
 //	Add Lonk as a friend
 		User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
-		
+		User lonk = urepo.findByEmail("lonk@lonkedin.com");
 		if(u.getName() != null) {
 			return "redirect:/dashboard/"+u.getId();
-		}
-		
-		User lonk = urepo.findByEmail("lonk@lonkedin.com");
-		System.out.println(u);
-		System.out.println(lonk);
-		if (!u.getFriends().contains(lonk)) {
-			System.out.println(u.getFriends());
-			System.out.println(lonk.getFriends());
+		}		
+		if(!u.getFriends().contains(lonk)) {
 			u.getFriends().add(lonk);
 			lonk.getFriends().add(u);
 			urepo.save(u);
 			urepo.save(lonk);
 		}
-
+		
 		model.addAttribute("user", u);
 		return "newCharacter.jsp";
 	}
@@ -99,13 +92,12 @@ public class MainController {
 		if (result.hasErrors()) {
 			return "newCharacter.jsp";
 		}
-		
+//	Update user
 		User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
 		u.setName(user.getName());
 		u.setUniverse(user.getUniverse());
 		u.setPicture(user.getPicture());
 		urepo.save(u);
-		
 //	Create Newbie Skil if it doesn't exist
 		if(srepo.findByName("Newbie") == null) {
 			Skill newb = new Skill();
@@ -113,7 +105,6 @@ public class MainController {
 			newb.setLevel(0);
 			srepo.save(newb);
 		}
-		
 //	Add Newbie skill to user
 		UserSkill us = new UserSkill();
 		Skill skill = srepo.findByName("Newbie");
@@ -126,9 +117,10 @@ public class MainController {
 
 //	**************************************************************
 
-//	GREG
+
 //	============================================================== Dashboard
 
+//	Dashboard Catch
 	@GetMapping("/dashboard")
 	public String dashboardcatch(HttpSession session, Model model) {
 		if (session.getAttribute("user_id") == null) {
@@ -137,17 +129,18 @@ public class MainController {
 			return "redirect:/newcharacter";
 		}
 		Long id = (Long) session.getAttribute("user_id");
-		return "redirect:/" + id;
+		return "redirect:/dashboard" + id;
 	}
 
-	@GetMapping("/dashboard/{user_id}")
-	public String dashboard(@PathVariable("user_id") Long userId, HttpSession session, Model model) {
+//	Dashboard
+	@GetMapping("/dashboard/{userid}")
+	public String dashboard(@PathVariable("userid") Long userId, HttpSession session, Model model) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/login";
 		} else if (urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
 			return "redirect:/newcharacter";
 		}
-		
+//	Get errors from post routes for posts and description if present
 		if(session.getAttribute("postError") != null) {
 			model.addAttribute("postError", "Post must include content");
 			session.removeAttribute("postError");
@@ -165,6 +158,9 @@ public class MainController {
 		model.addAttribute("user", user);
 		model.addAttribute("loggedIn", loggedIn);
 		model.addAttribute("post", new Post());
+		model.addAttribute("skills", usrepo.findAllByUser(user));
+		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
+		model.addAttribute("friendRequests", user.getFriendRequests());
 //	Sort and filter posts to be descending per created date and to 5 by default
 		List<Post> mylist = user.getPosts();
 		mylist.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
@@ -176,19 +172,7 @@ public class MainController {
 		session.setAttribute("currentDisplayIndex", defaultDisplayIndex);
 		model.addAttribute("allPosts",mylist);
 		model.addAttribute("posts", myPosts);
-		model.addAttribute("skills", usrepo.findAllByUser(user));
-		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
-		model.addAttribute("friendRequests", user.getFriendRequests());
-//	Get a list of 10 games
-		
-//		List<Game> games = new ArrayList<Game>();
-//		if (grepo.findAll().size() != 0) {
-//			for (int i = 0; i < grepo.findAll().size() && i < 10; i++) {
-//				games.add(grepo.findAll().get(i));
-//			}
-//		}
-//		model.addAttribute("games", games);
-		
+//	Get a list of 10 games sorted by most recent
 		List<Game> myGames = grepo.findAll();
 		myGames.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
 		int gameCounter = 0;
@@ -196,21 +180,9 @@ public class MainController {
 				gameCounter++;
 			}
 		model.addAttribute("games", myGames.subList(0, gameCounter));
-//	Get a list of 10 jobs
-		
-//		List<Job> jobs = new ArrayList<Job>();
-//		if (jrepo.findAll().size() != 0) {
-//			for (int i = 0; i < jrepo.findAll().size() && jobs.size() < 10; i++) {
-//				if (jrepo.findAll().get(i).getCharacters().size() == 0) {
-//					jobs.add(jrepo.findAll().get(i));
-//				}
-//			}
-//		}
-//		model.addAttribute("jobs", jobs);
-		
+//	Get a list of 10 jobs sorted by most recent
 		Pageable pageable = PageRequest.of(0, 10, Sort.by("updatedAt").descending());
-		model.addAttribute("testing2", jrepo.findAllByCharactersIsEmpty(pageable));
-		
+		model.addAttribute("testing2", jrepo.findAllByCharactersIsEmpty(pageable));	
 //	Get a list of 8 friends
 		ArrayList<User> friends = new ArrayList<User>();
 		if(user.getFriends().size() != 0) {
@@ -221,16 +193,11 @@ public class MainController {
 		model.addAttribute("friends", friends);
 //	Get a list of 4 enemies
 		ArrayList<User> enemies = new ArrayList<User>();
-//		if(user.getEnemies().size() != 0) {
-//			for(int i=0;i<user.getFriends().size() && i<4;i++) {
-//				enemies.add(user.getEnemies().get(i));
-//			}	
-//		}
 		int enemyCount = 0;
 		if(user.getGame() != null) {
 			for(User character : user.getGame().getCharacters()) {
 				if(user.getJob().getMorality() != character.getJob().getMorality()) {
-					if(enemyCount < 4) {
+					if(enemies.size() < 5) {
 						enemies.add(character);
 						enemyCount += 1;
 					} else {
@@ -244,50 +211,11 @@ public class MainController {
 		model.addAttribute("connectionsCount", user.getFriends().size() + user.getEnemies().size());
 		model.addAttribute("friendsCount", user.getFriends().size());
 		model.addAttribute("enemiesCount", enemyCount);
-//	Get friend's latest posts
-		List<Post> friendPosts = new ArrayList<Post>();
-		for (User friend : user.getFriends()) {
-			if (friend.getPosts().size() > 0) {
-				friendPosts.add(friend.getPosts().get(friend.getPosts().size() - 1));
-			}
-		}
-		model.addAttribute("friendPosts", friendPosts);
 
 		return "dashboard.jsp";
 	}
 
-	@PostMapping("/newpost/{otherUser_id}")
-	public String newPost(@PathVariable("otherUser_id") Long otherUserId, @Valid @ModelAttribute("post") Post post,
-			BindingResult result, Model model, HttpSession session) {
-		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
-		User otherUser = urepo.findById(otherUserId).orElse(null);
-		if (result.hasErrors()) {
-			session.setAttribute("postError", "error");
-//			model.addAttribute("user", user);
-			return "redirect:/dashboard/" + otherUser.getId();
-		}
-		post.setCreator(user);
-		post.setCharacter(otherUser);
-		prepo.save(post);
-		return "redirect:/dashboard/" + otherUser.getId();
-	}
-	@PostMapping("/adddescription/{userid}")
-	public String addDescription(@PathVariable("userid") Long id, @Valid @ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session ) {
-		if(result.hasErrors()) {
-			session.setAttribute("descError", "error");
-			return "redirect:/dashboard/"+id;
-		}
-		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
-		u.setDescription(user.getDescription());
-		urepo.save(u);
-		return "redirect:/dashboard/"+id;
-	}
-	@GetMapping("editDesc/{userid}")
-	public String editDescription(@PathVariable("userid") Long id, HttpSession session) {
-		session.setAttribute("editDesc", "editDesc");
-		return "redirect:/dashboard/"+id;
-	}
-
+//	Dashboard Load More Posts
 	@GetMapping("/dashboard/{user_id}/loadmore")
 	public String loadmorePost(@PathVariable("user_id") Long userId, HttpSession session, Model model) {
 		if (session.getAttribute("user_id") == null) {
@@ -303,6 +231,10 @@ public class MainController {
 		model.addAttribute("user", user);
 		model.addAttribute("loggedIn", loggedIn);
 		model.addAttribute("post", new Post());
+		model.addAttribute("skills", usrepo.findAllByUser(user));
+		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
+		model.addAttribute("friendRequests", user.getFriendRequests());
+//	Get More Posts
 		int currentDisplayIndex = (int)session.getAttribute("currentDisplayIndex") + 3;
 		session.setAttribute("currentDisplayIndex",currentDisplayIndex);
 		if (currentDisplayIndex >= user.getPosts().size()) {
@@ -313,18 +245,7 @@ public class MainController {
 		List<Post> myPosts = mylist.subList(0, currentDisplayIndex);
 		model.addAttribute("allPosts",mylist);
 		model.addAttribute("posts", myPosts);
-		model.addAttribute("skills", usrepo.findAllByUser(user));
-		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
-		model.addAttribute("friendRequests", user.getFriendRequests());
 //	Get a list of 10 games
-//		List<Game> games = new ArrayList<Game>();
-//		if (grepo.findAll().size() != 0) {
-//			for (int i = 0; i < grepo.findAll().size() && i < 10; i++) {
-//				games.add(grepo.findAll().get(i));
-//			}
-//		}
-//		model.addAttribute("games", games);
-		
 		List<Game> myGames = grepo.findAll();
 		myGames.sort((c1, c2) -> (int) c2.getCreatedAt().getTime() - (int) c1.getCreatedAt().getTime());
 		int gameCounter = 0;
@@ -332,21 +253,9 @@ public class MainController {
 				gameCounter++;
 			}
 		model.addAttribute("games", myGames.subList(0, gameCounter));
-		
 //	Get a list of 10 jobs
-//		List<Job> jobs = new ArrayList<Job>();
-//		if (jrepo.findAll().size() != 0) {
-//			for (int i = 0; i < jrepo.findAll().size() && jobs.size() < 10; i++) {
-//				if (jrepo.findAll().get(i).getCharacters().size() == 0) {
-//					jobs.add(jrepo.findAll().get(i));
-//				}
-//			}
-//		}
-//		model.addAttribute("jobs", jobs);
-		
 		Pageable pageable = PageRequest.of(0, 10, Sort.by("updatedAt").descending());
 		model.addAttribute("testing2", jrepo.findAllByCharactersIsEmpty(pageable));
-		
 //	Get a list of 8 friends
 		ArrayList<User> friends = new ArrayList<User>();
 		if(user.getFriends().size() != 0) {
@@ -357,16 +266,11 @@ public class MainController {
 		model.addAttribute("friends", friends);
 //	Get a list of 4 enemies
 		ArrayList<User> enemies = new ArrayList<User>();
-//		if(user.getEnemies().size() != 0) {
-//			for(int i=0;i<user.getFriends().size() && i<4;i++) {
-//				enemies.add(user.getEnemies().get(i));
-//			}	
-//		}
 		int enemyCount = 0;
 		if(user.getGame() != null) {
 			for(User character : user.getGame().getCharacters()) {
 				if(user.getJob().getMorality() != character.getJob().getMorality()) {
-					if(enemyCount < 4) {
+					if(enemies.size() < 4) {
 						enemies.add(character);
 						enemyCount += 1;
 					} else {
@@ -380,46 +284,10 @@ public class MainController {
 		model.addAttribute("connectionsCount", user.getFriends().size() + user.getEnemies().size());
 		model.addAttribute("friendsCount", user.getFriends().size());
 		model.addAttribute("enemiesCount", enemyCount);
-//	Get friend's latest posts
-		List<Post> friendPosts = new ArrayList<Post>();
-		for (User friend : user.getFriends()) {
-			if (friend.getPosts().size() > 0) {
-				friendPosts.add(friend.getPosts().get(friend.getPosts().size() - 1));
-			}
-		}
-		model.addAttribute("friendPosts", friendPosts);
 
 		return "dashboard.jsp";
 	}
-	@GetMapping("/search/{str}")
-	public String search(@PathVariable("str") String str, Model model, HttpSession session) {
-		if (session.getAttribute("user_id") == null) {
-			return "redirect:/login";
-		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
-			return "redirect:/newcharacter";
-		}
-		User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
-		model.addAttribute("user", u);
-		model.addAttribute("friends", u.getFriends());
-		model.addAttribute("str", str);
-		
-		if(str.equals("zxcvbnm")) {
-			model.addAttribute("searchResults", urepo.findAll());
-		} else {
-			model.addAttribute("searchResults", urepo.findByNameContaining(str));
-		}
-		return "searchResults.jsp";
-	}
 	
-	@PostMapping("/search")
-	public String doSearch(@RequestParam("search") String str, Model model, HttpSession session) {
-		session.setAttribute("searchResults", urepo.findByNameContaining(str));
-		if(str.equals("")) {
-			str = "zxcvbnm";
-		}
-		return "redirect:/search/"+str;
-	}
-
 	@PostMapping("/accept/{user_id}")
 	public String accept(@PathVariable("user_id") Long id, HttpSession session) {
 		User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
@@ -441,6 +309,24 @@ public class MainController {
 		return "redirect:/dashboard/" + u.getId();
 	}
 	
+	@PostMapping("/adddescription/{userid}")
+	public String addDescription(@PathVariable("userid") Long id, @Valid @ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session ) {
+		if(result.hasErrors()) {
+			session.setAttribute("descError", "error");
+			return "redirect:/dashboard/"+id;
+		}
+		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
+		u.setDescription(user.getDescription());
+		urepo.save(u);
+		return "redirect:/dashboard/"+id;
+	}
+	
+	@GetMapping("editDesc/{userid}")
+	public String editDescription(@PathVariable("userid") Long id, HttpSession session) {
+		session.setAttribute("editDesc", "editDesc");
+		return "redirect:/dashboard/"+id;
+	}
+	
 	@PostMapping("endorse/{user_id}/{skill_id}")
 	public String endorse(@PathVariable("user_id") Long userid, @PathVariable("skill_id") Long skillid, @RequestParam("endorse") String str) {
 		User u = urepo.findById(userid).orElse(null);
@@ -460,15 +346,57 @@ public class MainController {
 			}
 		}
 		usrepo.save(usk);
-		System.out.println(usk.getCount());
 		return "redirect:/dashboard/"+userid;
+	}
+	
+	@PostMapping("/newpost/{otherUser_id}")
+	public String newPost(@PathVariable("otherUser_id") Long otherUserId, @Valid @ModelAttribute("post") Post post, BindingResult result, Model model, HttpSession session) {
+		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+		User otherUser = urepo.findById(otherUserId).orElse(null);
+		if (result.hasErrors()) {
+			session.setAttribute("postError", "error");
+			return "redirect:/dashboard/" + otherUser.getId();
+		}
+		post.setCreator(user);
+		post.setCharacter(otherUser);
+		prepo.save(post);
+		return "redirect:/dashboard/" + otherUser.getId();
 	}
 
 //	**************************************************************
 
-//	GREG
+
 //	============================================================== searchResults
 
+	@PostMapping("/search")
+	public String doSearch(@RequestParam("search") String str, Model model, HttpSession session) {
+		session.setAttribute("searchResults", urepo.findByNameContaining(str));
+		if(str.equals("")) {
+			str = "zxcvbnm";
+		}
+		return "redirect:/search/"+str;
+	}
+	
+	@GetMapping("/search/{str}")
+	public String search(@PathVariable("str") String str, Model model, HttpSession session) {
+		if (session.getAttribute("user_id") == null) {
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
+		}
+		User u = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+		model.addAttribute("user", u);
+		model.addAttribute("friends", u.getFriends());
+		model.addAttribute("str", str);
+		
+		if(str.equals("zxcvbnm")) {
+			model.addAttribute("searchResults", urepo.findAll());
+		} else {
+			model.addAttribute("searchResults", urepo.findByNameContaining(str));
+		}
+		return "searchResults.jsp";
+	}
+	
 //	Request Connection from Search Results Page
 	@GetMapping("/requestConnection/{userid}/{str}")
 	public String requestConnection(@PathVariable("userid") Long connectionId, @PathVariable("str") String str, HttpSession session) {

@@ -125,15 +125,18 @@ button {
 	word-wrap: break-word;
 	background-color: rgba(255, 255, 255, 0.502);
 }
+.gameConnections {
+	padding: 0;
+}
 
 @media only screen and (max-width: 786px) {
 	.jobListGrid {
 		grid-template-columns: repeat(3, 1fr);
 		row-gap: 2px;
 	}
-	.th {
+/* 	.th {
 		display: none;
-	}
+	} */
 	.smCol {
 		margin: 0 0 20px 0;
 	}

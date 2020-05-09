@@ -108,9 +108,9 @@
 	            	<p class="th">Job</p>
 	            	<p class="th">Game</p>
 	            	<p class="th">Description</p>
-	            	<p class="th">Rupees</p>
-	            	<p class="th">Morality</p>
-	            	<p class="th">Apply</p>
+	            	<p class="th smCol">Rupees</p>
+	            	<p class="th smCol">Morality</p>
+	            	<p class="th smCol">Apply</p>
 						<c:forEach var="job" items="${jobs}">
 						<c:if test="${job.characters.size() == 0 }">
 					<p class="mdCol">${job.title}</p>
@@ -131,7 +131,7 @@
 	            </div>
 <div class="employees">
 			<h1>Employees</h1>
-			<div class="connectionsGrid main">
+			<div class="connectionsGrid main gameConnections">
 			<c:forEach items="${ employees }" var="result">
 
 

@@ -151,16 +151,16 @@
 	            <div class="sortRow">
 		            <a href="/job/highpay"> <button class="action">Salary High - Low</button></a> 
 		            <a href="/job/lowpay"><button class="action">Salary Low - High</button></a> 
-		            <a href="/jobs"><button class="action">Default Sort</button></a>
+		            <a href="/jobs"><button class="action">Most Recent</button></a>
 	            </div>
 	            
 	            <div class="jobListGrid">
 	            	<p class="th">Job</p>
 	            	<p class="th">Game</p>
 	            	<p class="th">Description</p>
-	            	<p class="th">Rupees</p>
-	            	<p class="th">Morality</p>
-	            	<p class="th">Apply</p>
+	            	<p class="th smCol">Rupees</p>
+	            	<p class="th smCol">Morality</p>
+	            	<p class="th smCol">Apply</p>
 						<c:forEach var="job" items="${jobs}">
 						<c:if test="${job.characters.size() == 0 }">
 					<p class="mdCol">${job.title}</p>

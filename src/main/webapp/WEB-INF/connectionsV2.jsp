@@ -88,7 +88,7 @@
 					<img src="${ result.picture }" alt="" />
 					<div class="resultInfo">
 						<p><a href="/dashboard/${ result.id }">${ result.name } </a>(${ result.universe })</p>
-						<p>${ result.job != null ? result.job.title.concat(" -- ").concat(result.game.name) : "Seeking Work"}</p>
+						<p>${ result.job != null ? result.job.title.concat(" -- ").concat("<a href='/game/").concat(result.game.id).concat("'>").concat(result.game.name).concat("</a>") : "Seeking Work"}</p>
 					</div>
 					<c:choose>
 						<c:when test="${ sessionScope.user_id == user.id && result != lonk }">

@@ -29,16 +29,17 @@
 h2 {
 	text-align: center;
 	margin: 0 0 20px 0;
+	text-decoration: underline;
+}
+.yourSkills {
+	border: 1px solid black;
+	padding: 10px 5px;
+	margin: 50px auto 0 auto;
+	width: 50%;
 }
 .yourSkills p {
 	text-align: center;
 	padding: 2px;
-}
-.yourSkills {
-	border: 1px solid black;
-	padding: 5px;
-	margin: 50px auto 0 auto;
-	width: 50%;
 }
 
 @media only screen and (max-width:768px) {
