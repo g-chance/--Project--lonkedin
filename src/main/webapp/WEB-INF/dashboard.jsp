@@ -202,7 +202,16 @@
 										"class='red'" }>${ us.count > -1 || us.count == null ? "+".concat(ct) : ct
 										}</span></p>
 								<p class="skillLevel">
-									<c:if test="${ us.count < 10}">
+									<c:if test="${ us.count <= -1000}">
+										Atrocious
+									</c:if>
+									<c:if test="${ us.count <= -20 && us.count > -1000}">
+										Incompetent
+									</c:if>
+									<c:if test="${ us.count < 0 && us.count > -20}">
+										Questionable
+									</c:if>
+									<c:if test="${ us.count >= 0 && us.count < 10}">
 										Novice
 									</c:if>
 									<c:if test="${ us.count >= 10 && us.count < 20}">

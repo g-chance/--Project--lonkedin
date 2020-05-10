@@ -89,7 +89,7 @@
 						<h3 style="color:grey">Your Current Job: ${user.job == null? "Unemployed"
 							:user.job.title.concat(" in ").concat(user.job.game.name)}</h3>
 						<c:if test="${user.job != null}">
-							<form:form action="/jobs/quit2/${user.job.id}">
+							<form:form action="/jobs/quit2/${user.job.id}/${ game.id }">
 								<button type="submit">Quit</button>
 							</form:form>
 						</c:if>
@@ -117,9 +117,10 @@
 								<p class="smCol">Bad</p>
 							</c:if>
 						<!-- apply button  -->
-							<form:form class="smCol" action="/applyTwo/${job.id}"><button ${userJob.id !=null
-									? "disabled style='background-color:lightgray'" : null}
-									type="submit">Apply!</button></form:form>
+							<form:form class="smCol" action="/applyTwo/${job.id}">
+								<button ${user.job.id !=null ? "disabled style='background-color:lightgray'" : null}
+									type="submit">Apply!</button>
+							</form:form>
 						</c:if>
 					</c:forEach>
 				</div>

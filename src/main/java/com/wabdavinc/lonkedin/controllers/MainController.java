@@ -766,11 +766,11 @@ public class MainController {
 	}
 	
 //	Quit Job from Game page
-	@PostMapping("/jobs/quit2/{job_id}")
-	public String quitJob2(Model model, HttpSession session, @PathVariable("job_id") Long jId) {
+	@PostMapping("/jobs/quit2/{job_id}/{game_id}")
+	public String quitJob2(Model model, HttpSession session, @PathVariable("job_id") Long jId, @PathVariable("game_id") Long gId) {
 		Long userid = (Long) session.getAttribute("user_id");
 		User u = urepo.findById(userid).orElse(null);
-		Game g = grepo.findById(u.getGame().getId()).orElse(null);
+		Game g = grepo.findById(gId).orElse(null);
 		Job j = jrepo.findById(jId).orElse(null);
 		u.setJob(null);
 		u.setGame(null);

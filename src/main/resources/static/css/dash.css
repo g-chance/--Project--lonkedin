@@ -103,7 +103,7 @@ h3 {
 }
 .dashConnectionsRow {
 	display: grid;
-	margin: 0 0 10px 0;
+	margin: 0 4px 10px 4px;
 }
 .dashConnections img {
 	justify-self:center;
