@@ -1,16 +1,17 @@
+
 @charset "ISO-8859-1";
 
 body {
 	word-wrap: break-word;
-}
-.about {
-	padding: 5px 20px 20px 20px;
 }
 p {
 	font-size: 18px;
 }
 h2 {
 	padding: 0 0 25px 0;
+}
+.about {
+	padding: 5px 20px 20px 20px;
 }
 .jobListings h1 {
 	margin: 50px 0 25px 0;
@@ -22,18 +23,15 @@ h2 {
 .jobListings .header {
 	margin: 20px 0 25px 0;
 }
-.back {
-	direction: rtl;
+.lonkquote span {
+	font-style: italic;
+}
+.busblurb {
+	margin: 15px 0 0 0;
 }
 .QA{
 	margin: 0 0 25px 0;
 }
 .bold{
 	font-weight:bold;
-}
-.busblurb {
-	margin: 15px 0 0 0;
-}
-.lonkquote span {
-	font-style: italic;
 }

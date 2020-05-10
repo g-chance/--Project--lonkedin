@@ -1,20 +1,17 @@
 
 /* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */
 
-/* NORMALIZATION */
-
+/* NORMALIZATION RESET */
 * {
 	margin: 0;
 	padding: 0;
 }
 
-/* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */
 
-/* WRAPPER */
+/* GLOBAL */
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-
 body:after {
     content: "";
     display: block;
@@ -32,28 +29,20 @@ body:after {
     bottom: 0;
     right: 0;
 }
-
 button {
 	background-color: #00b138;
 	color: white;
 }
-.lgHide {
-	display: none;
-}
-.submit {
-	background-color: #00b138;
-	color: white;
-}
 
+
+/* WRAPPER */
 .wrapper {
 	width: 1200px;
 	margin: 0 auto 50px auto;
 }
 
-/* DO NOT TOUCH THIS STYLESHEET. CREATE A NEW STYLESHEET SPECIFICALLY FOR YOUR JSP PAGE AND ADD A LINK TO IT IN THE HEAD */
 
 /* NAV */
-
 .navwrapper {
 	position: fixed;
 	z-index: 1;
@@ -69,39 +58,21 @@ button {
 	margin: auto;
 	color: white;
 }
-.nav .llogo {
-	width: fit-content;
-	padding: 5px;
-	font-size: 20px;
-/* 	border: 2px solid white; */
+	.nav .llogo {
+		width: fit-content;
+		padding: 5px;
+		font-size: 20px;
+	}
+	.nav .llogo span {
+		font-weight: bolder;
+		margin: 0 0 0 2px;
+		padding: 0 2px;
+		background-color: white;
+		border-radius: 5%;
+		color: #284929;
+	}
 	
-}
-.nav .llogo span {
-	font-weight: bolder;
-	margin: 0 0 0 2px;
-	padding: 0 2px;
-	background-color: white;
-	border-radius: 5%;
-	color: #284929;
-}
-.nav2 {
-	align-self: center;
-	justify-self: center;	
-}
-.nav3 {
-	align-self: center;
-	justify-self: right;
-}
-.nav3 .links {
-	text-decoration: none;
-	color: white;
-}
-.nav3 .faq {
-	margin: 0 10px 0 0;
-}
-
 /* NAV (LOGGED IN) */
-
 .navLI .nav1 {
 	display: grid;
 	grid-template-columns: min-content auto;
@@ -109,17 +80,6 @@ button {
 }
 .navLI .nav p {
 	display: inline-block;
-}
-.navLI .nav .icons {
-	align-self: center;
-	justify-self: center;
-}
-.navLI .fafa {
-	width: 25px;
-	padding: 2px;
-	margin: 0 5px;
-	background-color: #00b238;
-	border-radius: 50%;
 }
 .navLI form {
 	display: inline-block;
@@ -136,9 +96,40 @@ button {
 	border-radius: 0%;
 	margin: 0 10px 0 0;
 }
+.nav2 {
+	align-self: center;
+	justify-self: center;	
+}
+.navLI .nav .icons {
+	align-self: center;
+	justify-self: center;
+}
+.navLI .fafa {
+	width: 25px;
+	padding: 2px;
+	margin: 0 5px;
+	background-color: #00b238;
+	border-radius: 50%;
+}
+.nav3 {
+	align-self: center;
+	justify-self: right;
+}
+	.nav3 .links {
+		text-decoration: none;
+		color: white;
+	}
+	.nav3 .faq {
+		margin: 0 10px 0 0;
+	}
+
+/* NAV DROPDOWN */
+.lgHide {
+	display: none;
+}
+
 
 /* NAV SPACERS */
-
 .navSpacer {
 	height: 50px;
 }
@@ -146,50 +137,51 @@ button {
 	height: 70px;
 }
 
-/* LOGIN */
-
-.log .header {
-	margin: 100px 0 40px 0;
-}
 
 /* REGISTRATION AND LOGIN */
-
 .regLog {
 	display: grid;
 	justify-items: center;
 }
-.regLog .welcome {
-	margin: 100px 0 0 0;
-}
+	.regLog .welcome {
+		margin: 100px 0 0 0;
+	}
+	.regLog .blurb {
+		width: 80%;
+		margin: 40px 0 40px 0;
+		font-size: 18px;
+		text-align: center;
+		color: #666666;
+	}
 .error {
 	text-align: center;
 	color: red;
 }
-.regLog .form {
-	display: grid;
-	justify-items: center;
+	.regLog .form {
+		display: grid;
+		justify-items: center;
+	}
+	.regLog .input {
+		width: 370px;
+		margin: 10px 0 0 0;
+		padding: 5px;
+		border-radius: 0%;
+		font-size: 15px;
+	}
+	.regLog .submit {
+		background-color: #00b138;
+		color: white;
+	}
+	.regLog .switch {
+		margin: 10px 0 0 0;
+	}
+
+
+/* LOGIN */
+.log .header {
+	margin: 100px 0 40px 0;
 }
-.regLog .blurb {
-	width: 80%;
-	margin: 40px 0 40px 0;
-	font-size: 18px;
-	text-align: center;
-	color: #666666;
-}
-.regLog .input {
-	width: 370px;
-	margin: 10px 0 0 0;
-	padding: 5px;
-	border-radius: 0%;
-	font-size: 15px;
-}
-.regLog .submit {
-	background-color: #00b138;
-	color: white;
-}
-.regLog .switch {
-	margin: 10px 0 0 0;
-}
+
 
 /* NEW CHARACTER */
 .newCharacter {
@@ -212,6 +204,11 @@ button {
 	width: 60%;
 	margin: 10px 0 40px 0;
 }
+	.newChar #images * {
+		margin: 2px;
+		padding: 2px;
+		border: 1px solid black;
+	}
 .newChar .flex, .newChar #flex {
 	display: flex;
 	justify-content: center;
@@ -221,43 +218,38 @@ button {
 	padding: 2px;
 	border: 1px solid black;
 }
-.newChar #images * {
-	margin: 2px;
-	padding: 2px;
-	border: 1px solid black;
-}
 .lonkImage {
 	width: 90px;
 	padding: 2px;
 	border: 1px solid black;
 }
 
-/* DASH */
 
+/* DASH */
 .dash {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	column-gap: 20px;
 	padding: 20px;
 }
-	.dash .col1 {
-		display: grid;
-		row-gap: 20px;
-		align-self: flex-start;
-	}
-/* 		.dash .col1 .row {
-			align-self: flex-start;
-			height: fit-content;
-		} */
-	.dash .col2 {
-		display: grid;
-		row-gap: 20px;
-		max-width: 100%;
-		align-self: flex-start;
-	}
+.dash .col1 {
+	display: grid;
+	row-gap: 20px;
+	align-self: flex-start;
+}
+.submit {
+	background-color: #00b138;
+	color: white;
+}
+.dash .col2 {
+	display: grid;
+	row-gap: 20px;
+	max-width: 100%;
+	align-self: flex-start;
+}
+
 
 /* JOBS */
-
 .jobForms {
 	display: grid;
 	grid-template-columns: 1fr;
@@ -267,36 +259,12 @@ button {
 	text-align: center;
 }
 
-/* SKILLS */
 
-.skillForms {
-	display: grid;
-	grid-template-columns: 1fr;
-}
+/* SKILLS */
 .skillForm {
 	justify-self: center;
 	text-align: center;
 }
-
-/* CONNECTIONS */
-
-.connections {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	column-gap: 20px;
-	padding: 20px;
-}
-	.connectionscol1 {
-		display: grid;
-		row-gap: 20px;
-	}
-	.connectionscol2 {
-		display: grid;
-		row-gap: 20px;
-	}
-
-
-
 
 
 /* MEDIA QUERIES */
@@ -311,23 +279,25 @@ button {
 }
 
 @media only screen and (max-width:768px) {
-	.dash, .jobForms {
-		grid-template-columns: 1fr;
-	}
 	.nav {
 		grid-template-columns: 1fr auto;
+	}
+		.nav .smHide {
+			display: none;
+		}
+	.dash, .jobForms {
+		grid-template-columns: 1fr;
 	}
 	.dash .col2 {
 		margin-top: 20px;
 	}
+
+/* NAV DROPDOWN */
 	.lgHide {
 		display: block;
 		justify-self: right;
 		align-self: center;
 		padding: 0 22px 0 0;
-	}
-	.smHide {
-		display: none;
 	}
 	.nav .hamburger {
 		width: 20px;

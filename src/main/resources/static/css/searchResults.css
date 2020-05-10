@@ -1,6 +1,6 @@
 
-.searchResults h1 {
-	margin: 0 0 10px 15px;
+.connectionsGrid {
+	padding: 0 20px;
 }
 .main {
     display: grid;
@@ -15,29 +15,36 @@
 	border: 1px solid black;
 	padding: 10px;
 }
-.row img {
-	width: 35px;
-	margin: 0 5px 0 0;
-	border: 1px solid black;
-	border-radius: 50%;
-}
-.row .status {
-	justify-self: right;
-}
+	.row img {
+		width: 35px;
+		margin: 0 5px 0 0;
+		border: 1px solid black;
+		border-radius: 50%;
+	}
+	.row .status {
+		justify-self: right;
+	}
 .resultInfo {
 	display:grid;
 }
-.resultInfo * {
-	max-width: 100%;
-	overflow-x: auto;
-	word-wrap: break-word;
-}
-.connectionsGrid {
-	padding: 0 20px;
+	.resultInfo * {
+		max-width: 100%;
+		overflow-x: auto;
+		word-wrap: break-word;
+	}
+
+
+/* CONNECTIONSV2.JSP */
+
+.searchResults h1 {
+	margin: 0 0 10px 15px;
 }
 .searchResults .enemyHeader {
 	margin-top: 50px;
 }
+
+
+/* MEDIA QUERIES */
 
 @media only screen and (max-width: 768px) {
 	.connectionsGrid {

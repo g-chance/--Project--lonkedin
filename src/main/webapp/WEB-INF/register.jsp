@@ -14,15 +14,13 @@
 <body>
 
 	<div class="wrapper">
-	
 		<div class="navwrapper">
 			<div class="nav">
 				<div class="nav1">
 					<p class="llogo">Lonked<span>in</span></p>
 				</div>
-				<div></div>
-				<div class="nav3">
-				</div>
+				<div class="nav2"></div>
+				<div class="nav3"></div>
 			</div>
 		</div>	
 		

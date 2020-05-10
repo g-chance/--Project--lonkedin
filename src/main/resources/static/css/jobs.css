@@ -1,64 +1,43 @@
+
 @charset "ISO-8859-1";
 
 body {
 	word-wrap: break-word;
 }
+h2{
+	background-color: #00b238;
+}
+button {
+	padding: 4px 5px;
+	background-color: #00b238;
+	color: white;
+}
 .jobContainer {
 	padding: 0 20px;
-}
-
-table{
-	width: 100%;
-	table-layout: fixed;
-}
-table th, table td {
-	border:2px solid black;
-	padding:2px;
-	text-align: center;
-}
-table th {
-	font-size: 18px;
-	background-color: #00b2389e;
-}
-table .mdCol {
-	width: 15%;
-}
-table .lgCol {
-	width: 25%;
-}
-table .smCol {
-	width: 80px;
 }
 .jobForms{
 	padding:2px;
 	margin:5px;
 }
-/* h1{
-	background-color:green;
-} */
-h2{
-	background-color: #00b238;
-}
 .header {
 	margin: 50px 0 20px 0;
 }
-
-.jobForms .companyForm input, .jobForms .jobForm input, .jobForms .companyForm select, .jobForms .jobForm select {
+.companyForm input, .jobForm input, .companyForm select, .jobForm select {
 	width: 370px;
 	margin: 10px 0 0 0;
 	padding: 5px;
 	border-radius: 0%;
 	font-size: 15px;
 }
-.jobForms .companyForm select, .jobForms .jobForm select, .jobForms .jobForm .number {
+.companyForm select, .jobForm select, .jobForm .number {
 	width: 185px;
 }
-.jobForms .jobForm select {
-	box-shadow: 1px 1px 2px black;
-}
-.jobForms .companyForm .submit, .jobForms .jobForm .submit {
+.companyForm .submit, .jobForm .submit {
 	background-color: #00b138;
 	color: white;
+}
+.jobForm select {
+	box-shadow: 1px 1px 2px black;
 }
 .jobListings h1 {
 	margin: 10px 0 20px 0;
@@ -67,45 +46,25 @@ h2{
 	color:white;
 	text-align: center;
 }
-.employees h1 {
-	margin: 50px 0 20px 0;
-}
-button {
-	padding: 4px 5px;
-	background-color: #00b238;
-	color: white;
-
-}
-
 .currentJob {
 	display: grid;
-/* 	grid-template-columns: auto 1fr; */
 	column-gap: 10px;
 	padding: 0 10px;
 	margin: 55px 0 0 0;
 }
-.currentJob button {
-	color: white;
-	background-color: red;
-}
-.currentJob * {
-	display: inline-block;
-	max-width: 100%;
-	overflow-x: auto;
-	word-wrap: break-word;	
-}
+	.currentJob button {
+		color: white;
+		background-color: red;
+	}
+	.currentJob * {
+		display: inline-block;
+		max-width: 100%;
+		overflow-x: auto;
+		word-wrap: break-word;	
+	}
 .sortRow {
 	margin: 10px 5px 5px 0;
 	direction: rtl;	
-}
-.gameHeader, .aboutGame {
-	margin: 0 0 20px 0;
-}
-.gameHeader p, .aboutGame p {
-	padding: 0 0 0 5px;
-}
-.back {
-	direction: rtl;
 }
 .jobListGrid {
 	display: grid;
@@ -114,29 +73,45 @@ button {
 	column-gap: 2px;
 	text-align: center;
 }
-.jobListGrid .th {
-	font-weight: bold;
+	.jobListGrid .th {
+		font-weight: bold;
+	}
+	.jobListGrid p, .jobListGrid form {
+		padding: 2px;
+		border: 2px solid black;
+		max-width: 100%;
+		overflow-x: auto;
+		word-wrap: break-word;
+		background-color: rgba(255, 255, 255, 0.502);
+	}
+
+
+/* COMPANY.JSP */
+
+.back {
+	direction: rtl;
 }
-.jobListGrid p, .jobListGrid form {
-	padding: 2px;
-	border: 2px solid black;
-	max-width: 100%;
-	overflow-x: auto;
-	word-wrap: break-word;
-	background-color: rgba(255, 255, 255, 0.502);
+.gameHeader, .aboutGame {
+	margin: 0 0 20px 0;
+}
+	.gameHeader p, .aboutGame p {
+		padding: 0 0 0 5px;
+	}
+.employees h1 {
+	margin: 50px 0 20px 0;
 }
 .gameConnections {
 	padding: 0;
 }
+
+
+/* MEDIA QUERIES */
 
 @media only screen and (max-width: 786px) {
 	.jobListGrid {
 		grid-template-columns: repeat(3, 1fr);
 		row-gap: 2px;
 	}
-/* 	.th {
-		display: none;
-	} */
 	.smCol {
 		margin: 0 0 20px 0;
 	}

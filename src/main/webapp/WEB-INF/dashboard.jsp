@@ -67,16 +67,15 @@
 			</div>
 		</div>
 
+	<!-- Nav Spacer -->
 		<div class="navSpacer"></div>
 
 	<!-- HEADER -->
 
 	<!-- DASH GRID -->
 		<div class="dash">
-
-		<!-- COLUMN 1 -->
+		<!-- Dash Grid COLUMN 1 -->
 			<div class="col1">
-
 			<!-- Profile -->
 				<div class="row profileRow">
 					<img id="profileImage" src="${ user.picture }" alt="logo" class="logo" />
@@ -244,15 +243,13 @@
 					</div>
 				</div>
 			</div>
-
-		<!-- COLUMN 2 -->
+		<!-- Dash Grid COLUMN 2 -->
 			<div class="col2">
-				
 			<!-- Feed -->
 				<div class="row">
 					<h3>Feed</h3>
+				<!-- Feed Grid -->
 					<div class="feed">
-					
 					<!-- Post Form -->
 						<p class="error">
 							${ postError }
@@ -262,14 +259,11 @@
 							<form:input class="content" path="content" placeholder="Share what's on your mind!" />
 							<input class="submit" type="submit" value="Post" />
 						</form:form>
-						
 					<!-- Feed Subheaders -->
 						<div class="feed">
-
 						<!-- Posts -->
 							<div class="feedSubHeader">
 								<h3>Posts</h3>
-
 								<c:forEach items="${ posts }" var="post">
 									<div class="post">
 										<div class="postGrid">
@@ -339,17 +333,18 @@
 								<a href="/game/${ games.get(games.size()-1).id }" class="gameListing lastGame">${
 									games.get(games.size()-1).name }</a>
 							</div>
-					<!-- End Feed Subheaders -->
 						</div>
+					<!-- End Feed Subheaders -->
 					</div>
-			<!-- End Feed -->
+				<!-- End Feed Grid -->
 				</div>
-		<!-- End Col 2 -->
+			<!-- End Feed Row -->
 			</div>
-	<!-- End Dash Grid -->
+		<!-- End Dash Grid Col 2 -->
 		</div>
-<!-- End Wrapper -->
+	<!-- End Dash Grid -->
 	</div>
+<!-- End Wrapper -->
 
 </body>
 

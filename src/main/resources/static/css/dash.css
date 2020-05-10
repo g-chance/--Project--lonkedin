@@ -2,6 +2,12 @@
 body {
 	word-wrap: break-word;
 }
+h3 {
+	margin: 0 0 10px 0;
+	padding: 0 5px;
+	background-color: #00b2389e;
+	color: black;
+}
 .dash {
 	column-gap: 20px;
 }
@@ -10,28 +16,84 @@ body {
 	border: 1px solid black;
 	background-color: rgba(255, 255, 255, 0.502);
 }
+.profileRow {
+	display: grid;
+	grid-template-columns: auto 1fr;
+}
 #profileImage {
 	margin: 0 15px 0 0;
 	vertical-align: middle;
 	width: 150px;
 }
-h3 {
-	margin: 0 0 10px 0;
-	padding: 0 5px;
-	background-color: #00b2389e;
-	color: black;
-}
-.profileRow {
-	display: grid;
-	grid-template-columns: auto 1fr;
-}
 .profileInfo {
 	display: grid;
 	align-self:flex-start;
 }
-.profileInfo * {
-	max-width: 100%;
-	overflow-x: auto;
+	.profileInfo * {
+		max-width: 100%;
+		overflow-x: auto;
+	}
+.connectionsCount {
+	margin: 10px 0 0 0;
+}
+.friendRequests {
+	display: grid;
+	justify-items: center;
+}
+	.friendRequests form, .friendRequests p {
+		display: inline-block;
+		margin: 0 0 5px 0;
+	}
+	.friendRequests input {
+		padding: 2px 5px;
+		border-radius: 0%;
+		box-shadow: 1px 1px 1px red;
+		color: red;
+	}
+	.friendRequests .accept {
+		color: green;
+		box-shadow: 1px 1px 1px green;
+	}
+.error {
+	justify-self:center;
+	margin: 0 0 10px 0;
+	color:red;
+}
+.form {
+	display: grid;
+	grid-template-columns: 5fr 1fr;
+	column-gap: 5px;
+	justify-self: center;
+	margin: 0 0 20px 0;
+	width: 80%;
+}
+	.formDesc {
+		grid-template-columns: 1fr;
+		margin: 0 0 10px 0;
+		width: 100%;
+	}
+	.formDesc textarea {
+		min-height: 100px;
+	}
+.content {
+	padding: 5px;
+	border-radius: 0%;
+	font-size: 15px;
+}
+.submit {
+	padding: 5px;
+	font-size: 15px;
+	border-radius: 0%;
+}
+.subDesc {
+	justify-self: center;
+	margin: 10px 0 0 0;
+}
+.description {
+	padding: 5px 10px;
+}
+.editDesc {
+	margin: 10px auto 0 auto;
 }
 .dashConnections {
 	display: grid;
@@ -53,8 +115,6 @@ h3 {
 }
 .dashConnections a {
 	max-width: 100%;
-	/* font-size: 1vw; */
-	/* width: 75px; */
 	text-align: center;
 	justify-self: center;
 	overflow-x: auto;
@@ -63,132 +123,15 @@ h3 {
 .dashConnections p {
 	text-align: center;
 }
-.feed {
-	display: grid;
-}
-.error {
-	justify-self:center;
-	margin: 0 0 10px 0;
-	color:red;
-}
-.form {
-	display: grid;
-	grid-template-columns: 5fr 1fr;
-	column-gap: 5px;
-	justify-self: center;
-	margin: 0 0 20px 0;
-	width: 80%;
-}
-.formDesc {
-	grid-template-columns: 1fr;
-	margin: 0 0 10px 0;
-	width: 100%;
-}
-.formDesc textarea {
-	min-height: 100px;
-}
-.content {
-	padding: 5px;
-	border-radius: 0%;
-	font-size: 15px;
-}
-.submit {
-	padding: 5px;
-	font-size: 15px;
-	border-radius: 0%;
-}
-.subDesc {
-	justify-self: center;
-	margin: 10px 0 0 0;
-}
-.editDesc {
-	margin: 10px auto 0 auto;
-}
-.description {
-	padding: 5px 10px;
-}
-.feedSubHeader {
-	display:grid;
-	margin: 0 0 10px 0;
-}
-.feedSubHeader * {
-	max-width: 100%;
-	overflow-x: auto;
-}
-.friendRequests {
-	display: grid;
-	justify-items: center;
-}
-.friendRequests form, .friendRequests p {
-	display: inline-block;
-	margin: 0 0 5px 0;
-}
-.friendRequests input {
-	padding: 2px 5px;
-	border-radius: 0%;
-	box-shadow: 1px 1px 1px red;
-	color: red;
-}
-.friendRequests .accept {
-	color: green;
-	box-shadow: 1px 1px 1px green;
-}
-.jobListing, .gameListing, .postContent, .postPic {
-	padding: 2px 5px;
-	margin: 0 5px 5px 5px;
-}
-.jobListing, .gameListing {
-	padding: 5px 0 10px 5px;
-	border-bottom: 1px dotted black;
-}
-.gameListing {
-	
-	margin: 0 5px 5px 5px;
-}
-.lastGame {
-	border-bottom: none;
-	margin-bottom: 0px;
-	padding-bottom: 0px
-}
-.jobListing .jobListLink {
-	color: green;
-	font-weight: 500;
-}
-.connectionsCount {
-	margin: 10px 0 0 0;
-}
-.postPic {
-	width: 50px;
-	border-radius: 50%;
-}
-.postGrid {
-	display: grid;
-	grid-template-columns: auto 1fr;
-}
-.postName {
-	font-weight: bold;
-}
-.postJob, .postCreated {
-	font-size: 15px;
-	color: gray;
-}
-.postContent {
-	margin: 5px 5px 0 5px
-}
-.post {
-	padding: 10px 10px 10px 0;
-	margin: 0 0 10px 0;
-	border: 1px solid black;
-}
 .skillLink {
 	width: fit-content;
 	margin: 15px auto 15px auto;
 }
-.skillLink button {
-	padding: 5px;
-	font-size: 15px;
-	border-radius: 0%;
-}
+	.skillLink button {
+		padding: 5px;
+		font-size: 15px;
+		border-radius: 0%;
+	}
 .skillsGrid {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -197,22 +140,22 @@ h3 {
 	border-top: 1px solid black;
 	font-size: 18px;
 }
-.skillsGrid form {
-	display: inline-block;
+	.skillsGrid form {
+		display: inline-block;
+	}
+.green {
+	color: green;
+}
+.red {
+	color: red;
+}
+.green, .red {
+	font-size: 15px;
 }
 .skillLevel {
 	font-size: 15px;
 	color: gray;
 	display: inline-block;
-}
-.loadMore {
-	width: fit-content;
-	margin: 5px auto 5px auto;
-}
-.loadMore button {
-	padding: 5px;
-	font-size: 15px;
-	border-radius: 0%;
 }
 .endorse {
 	padding: 2px 4px;
@@ -226,12 +169,67 @@ h3 {
 	background-color: red;
 	color:white;
 }
-.green, .red {
+.feed {
+	display: grid;
+}
+.feedSubHeader {
+	display:grid;
+	margin: 0 0 10px 0;
+}
+	.feedSubHeader * {
+		max-width: 100%;
+		overflow-x: auto;
+	}
+.post {
+	padding: 10px 10px 10px 0;
+	margin: 0 0 10px 0;
+	border: 1px solid black;
+}
+.postGrid {
+	display: grid;
+	grid-template-columns: auto 1fr;
+}
+.postPic {
+	width: 50px;
+	border-radius: 50%;
+}
+.postName {
+	font-weight: bold;
+}
+.postJob, .postCreated {
 	font-size: 15px;
+	color: gray;
 }
-.green {
+.postContent {
+	margin: 5px 5px 0 5px
+}
+.loadMore {
+	width: fit-content;
+	margin: 5px auto 5px auto;
+}
+	.loadMore button {
+		padding: 5px;
+		font-size: 15px;
+		border-radius: 0%;
+	}
+.jobListing, .gameListing, .postContent, .postPic {
+	padding: 2px 5px;
+	margin: 0 5px 5px 5px;
+}
+.jobListing, .gameListing {
+	padding: 5px 0 10px 5px;
+	border-bottom: 1px dotted black;
+}
+.jobListing .jobListLink {
 	color: green;
+	font-weight: 500;
 }
-.red {
-	color: red;
+.gameListing {
+	
+	margin: 0 5px 5px 5px;
+}
+.lastGame {
+	border-bottom: none;
+	margin-bottom: 0px;
+	padding-bottom: 0px
 }
