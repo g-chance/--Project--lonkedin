@@ -34,12 +34,15 @@
 					<div class="icons">
 						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
 							<img class="fafa" src="/images/home.png" alt="home" title="Home">
-						</a> <a href="/jobs"> <img class="icon-box fafa" src="/images/friendsI_Icon.jpg" alt="logo"
-								title="Jobs" />
-						</a> <a class="icon-box" href="/connections/${sessionScope.user_id}">
+						</a> 
+						<a class="icon-box" href="/jobs"> 
+							<img class="fafa job" src="/images/briefcase.png" alt="logo" title="Jobs" />
+						</a> 
+						<a class="icon-box" href="/connections/${sessionScope.user_id}">
 							<img class="fafa" src="/images/friends2.png" alt="friends" title="Connections" />
-						</a> <a class="icon-box" href="/skill"> <img class="fafa" src="/images/ghost.png" alt="skills"
-								title="Skills" />
+						</a> 
+						<a class="icon-box" href="/skill"> 
+							<img class="fafa skill" src="/images/skill.png" alt="skills" title="Skills" />
 						</a>
 					</div>
 				</div>
@@ -75,7 +78,7 @@
 					<c:if test="${ result.name == null }">
 						<div class="row">
 							<p></p>
-							<p>This user hasn't finished their profile</p>
+							<p>This character hasn't finished their profile</p>
 						</div>
 					</c:if>
 					<c:if test="${ result.name != null }">

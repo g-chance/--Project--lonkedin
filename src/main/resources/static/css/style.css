@@ -104,12 +104,19 @@ button {
 	align-self: center;
 	justify-self: center;
 }
+.navLI .icon-box {
+	width: 0;
+	height: 0;
+	color: #284a28;
+}
 .navLI .fafa {
 	width: 25px;
+	vertical-align: middle;
 	padding: 2px;
 	margin: 0 5px;
-	background-color: #00b238;
+	background-color: white;
 	border-radius: 50%;
+	border: 2px solid #00b238;
 }
 .nav3 {
 	align-self: center;

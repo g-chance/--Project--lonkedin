@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -35,12 +36,15 @@
 					<div class="icons">
 						<a class="icon-box" href="/dashboard/${ sessionScope.user_id }">
 							<img class="fafa" src="/images/home.png" alt="home" title="Home">
-						</a> <a href="/jobs"> <img class="icon-box fafa" src="/images/friendsI_Icon.jpg" alt="logo"
-								title="Jobs" />
-						</a> <a class="icon-box" href="/connections/${sessionScope.user_id}">
+						</a> 
+						<a class="icon-box" href="/jobs"> 
+							<img class="fafa job" src="/images/briefcase.png" alt="logo" title="Jobs" />
+						</a> 
+						<a class="icon-box" href="/connections/${sessionScope.user_id}">
 							<img class="fafa" src="/images/friends2.png" alt="friends" title="Connections" />
-						</a> <a class="icon-box" href="/skill"> <img class="fafa" src="/images/ghost.png" alt="skills"
-								title="Skills" />
+						</a> 
+						<a class="icon-box" href="/skill"> 
+							<img class="fafa skill" src="/images/skill.png" alt="skills" title="Skills" />
 						</a>
 					</div>
 				</div>
@@ -95,9 +99,11 @@
 						<p>${ user.email }</p>
 						<p class="connectionsCount">
 							<a href="/connections/${ user.id }">${ connectionsCount } Connections</a>
-							<c:if
-								test="${ user != loggedIn && !user.friends.contains(loggedIn) && !user.friendRequests.contains(loggedIn) }">
+							<c:if test="${ user != loggedIn && !user.friends.contains(loggedIn) && !user.friendRequests.contains(loggedIn) && !loggedIn.friendRequests.contains(user) }">
 								<span>(<a href="/requestConnection3/${ user.id }">Request Connection</a>)</span>
+							</c:if>
+							<c:if test="${ user.friendRequests.contains(loggedIn) || loggedIn.friendRequests.contains(user) }">
+								<span>Pending Connection</span>
 							</c:if>
 						</p>
 						<p><a class="enemyCount" href="/connections/${ user.id }">${ enemiesCount } Enemies</a></p>
@@ -217,8 +223,11 @@
 									<c:if test="${ us.count >= 10 && us.count < 20}">
 										Intermediate
 									</c:if>
-									<c:if test="${ us.count >= 20}">
+									<c:if test="${ us.count >= 20 && us.count < 1000}">
 										Advanced
+									</c:if>
+									<c:if test="${ us.count > 1000}">
+										Master
 									</c:if>
 								</p>
 								<c:if test="${ user != loggedIn }">
@@ -284,7 +293,7 @@
 												<p class="postJob">${ post.creator.job != null ?
 													post.creator.job.title.concat(" -- ").concat(post.creator.game.name)
 													: "Seeking Work" } </p>
-												<p class="postCreated">${ post.createdAt }</p>
+												<p class="postCreated"><fmt:formatDate pattern="yyyy" value="${ post.createdAt }" /></p>
 											</div>
 										</div>
 										<p class="postContent">${ post.content }</p>
@@ -300,7 +309,7 @@
 														lonkpost.creator.name }</a> (${ lonkpost.creator.universe })</p>
 												<p class="postJob">${ lonkpost.creator.job.title } -- ${
 													lonkpost.creator.game.name }</p>
-												<p class="postCreated">${ lonkpost.createdAt }</p>
+												<p class="postCreated"><fmt:formatDate pattern="MMM dd, yyyy -- hh:mm a" value="${ lonkpost.createdAt }" /></p>
 											</div>
 										</div>
 										<p class="postContent">${ lonkpost.content }</p>

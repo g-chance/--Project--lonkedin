@@ -3,6 +3,7 @@ package com.wabdavinc.lonkedin.controllers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -111,6 +112,30 @@ public class MainController {
 		us.setUser(u);
 		us.setSkill(skill);
 		usrepo.save(us);
+//	Random chance for new jobs to be created in the Legend of Zorldo
+		Random r = new Random();
+		int randNum = r.nextInt(100);
+		if(randNum == 0) {
+			Game zorldo = grepo.findByName("The Legend of Zorldo");
+			Job shopkeeper = new Job();
+			shopkeeper.setTitle("Shopkeeper");
+			shopkeeper.setDescription("Stock bombs, arrows, and potions at one of the shops in Hyrool");
+			shopkeeper.setSalary(100);
+			shopkeeper.setMorality(true);
+			shopkeeper.setGame(zorldo);
+			jrepo.save(shopkeeper);
+		}
+		int randNum2 = r.nextInt(10000);
+		if(randNum2 == 0) {
+			Game zorldo = grepo.findByName("The Legend of Zorldo");
+			Job shopkeeper = new Job();
+			shopkeeper.setTitle("Palace Guard");
+			shopkeeper.setDescription("Protect Pricess Zorldo at the palace");
+			shopkeeper.setSalary(1000000);
+			shopkeeper.setMorality(true);
+			shopkeeper.setGame(zorldo);
+			jrepo.save(shopkeeper);
+		}
 		
 		return ("redirect:/dashboard/" + u.getId());
 	}
@@ -210,7 +235,7 @@ public class MainController {
 		model.addAttribute("connectionsCount", user.getFriends().size() + user.getEnemies().size());
 		model.addAttribute("friendsCount", user.getFriends().size());
 		model.addAttribute("enemiesCount", enemyCount);
-
+		
 		return "dashboard.jsp";
 	}
 
