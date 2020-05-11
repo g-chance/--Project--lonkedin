@@ -128,13 +128,13 @@ public class MainController {
 		int randNum2 = r.nextInt(10000);
 		if(randNum2 == 0) {
 			Game zorldo = grepo.findByName("The Legend of Zorldo");
-			Job shopkeeper = new Job();
-			shopkeeper.setTitle("Palace Guard");
-			shopkeeper.setDescription("Protect Pricess Zorldo at the palace");
-			shopkeeper.setSalary(1000000);
-			shopkeeper.setMorality(true);
-			shopkeeper.setGame(zorldo);
-			jrepo.save(shopkeeper);
+			Job palaceguard = new Job();
+			palaceguard.setTitle("Palace Guard");
+			palaceguard.setDescription("Protect Pricess Zorldo at the palace");
+			palaceguard.setSalary(1000000);
+			palaceguard.setMorality(true);
+			palaceguard.setGame(zorldo);
+			jrepo.save(palaceguard);
 		}
 		
 		return ("redirect:/dashboard/" + u.getId());

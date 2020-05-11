@@ -226,7 +226,7 @@
 									<c:if test="${ us.count >= 20 && us.count < 1000}">
 										Advanced
 									</c:if>
-									<c:if test="${ us.count > 1000}">
+									<c:if test="${ us.count >= 1000}">
 										Master
 									</c:if>
 								</p>

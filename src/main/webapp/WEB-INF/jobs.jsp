@@ -121,7 +121,10 @@
 									<form:option value="false" label="Bad Guy" />
 								</form:select>
 							</p>
-							<input class="submit" type="submit" value="Create Job!" />
+							<input class="submit" type="submit" value="Create Job!" ${ usersgame.name == "The Legend of Zorldo" ? "style='background:lightgray' disabled" : null } />
+							<c:if test="${ usersgame.name == 'The Legend of Zorldo'}">
+								<p class="cant">You can't create jobs for The Legend of Zorldo</p>
+							</c:if>
 						</form:form>
 					</div>
 				</c:if>
