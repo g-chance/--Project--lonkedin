@@ -293,7 +293,7 @@
 												<p class="postJob">${ post.creator.job != null ?
 													post.creator.job.title.concat(" -- ").concat(post.creator.game.name)
 													: "Seeking Work" } </p>
-												<p class="postCreated"><fmt:formatDate pattern="yyyy" value="${ post.createdAt }" /></p>
+												<p class="postCreated"><fmt:formatDate pattern="MMM dd, yyyy -- hh:mm a" value="${ post.createdAt }" /></p>
 											</div>
 										</div>
 										<p class="postContent">${ post.content }</p>
