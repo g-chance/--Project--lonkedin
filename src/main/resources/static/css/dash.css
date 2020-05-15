@@ -8,6 +8,9 @@ h3 {
 	background-color: #00b2389e;
 	color: black;
 }
+textarea {
+	resize: none;
+}
 .dash {
 	column-gap: 20px;
 }
