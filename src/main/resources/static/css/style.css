@@ -172,12 +172,14 @@ button {
 		width: 370px;
 		margin: 10px 0 0 0;
 		padding: 5px;
+		border: 2px inset #e9e8ea;
 		border-radius: 0%;
 		font-size: 15px;
 	}
 	.regLog .submit {
 		background-color: #00b138;
 		color: white;
+		border: 1px solid #b7b6b8;
 	}
 	.regLog .switch {
 		margin: 10px 0 0 0;
