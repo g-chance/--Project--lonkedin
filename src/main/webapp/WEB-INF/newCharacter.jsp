@@ -11,7 +11,7 @@
 	<title>New Character</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/app.js"></script>
 	<script>
 	// Character randomization variables
@@ -43,7 +43,7 @@
 				"timeout": 0,
 				"headers": {
 					'Accept': 'application/json',
-					"user-key": "fad35d151de40e5ff0d5b772bc15b3ef",
+					"user-key": "8a50eecd18de3490df8a98a7dafdea8e",
 				},
 				"data": "fields name; where id = (" + randList + "); limit 20;"
 			}).done(function (response) {
@@ -60,7 +60,7 @@
 				"timeout": 0,
 				"headers": {
 					'Accept': 'application/json',
-					"user-key": "fad35d151de40e5ff0d5b772bc15b3ef",
+					"user-key": "8a50eecd18de3490df8a98a7dafdea8e",
 				},
 				"data": "fields image_id; where image_id!=(null); limit 374;"
 			}).done(function (response) {
