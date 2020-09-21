@@ -8,6 +8,7 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>New Character</title>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
