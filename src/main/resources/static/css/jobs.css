@@ -66,8 +66,11 @@ button {
 		word-wrap: break-word;	
 	}
 .sortRow {
-	margin: 10px 5px 5px 0;
+	margin: 5px 5px 5px 0;
 	direction: rtl;	
+}
+.sortRow button {
+	margin: 5px 0 0 0;
 }
 .jobListGrid {
 	display: grid;
@@ -109,6 +112,14 @@ button {
 
 
 /* MEDIA QUERIES */
+@media only screen and (max-width: 400px) {
+	.jobForms .companyForm, .jobForms .jobForm {
+		width: 100%
+	}
+	.companyForm input, .jobForm input, .companyForm select, .jobForm select {
+		width: 90%;
+	}
+}
 
 @media only screen and (max-width: 786px) {
 	.jobListGrid {

@@ -8,8 +8,8 @@ h2 {
 	padding: 0 20px;
 }
 .skillForm {
-	padding: 2px;
-	margin: 5px;
+/* 	padding: 2px;
+	margin: 5px; */
 }
 	.skillForm input, .skillForm select {
 		width: 370px;
@@ -44,6 +44,14 @@ h2 {
 
 
 /* MEDIA QUERIES */
+@media only screen and (max-width: 400px) {
+	.skillForm {
+		width: 100%
+	}
+	.skillForm input, .skillForm select {
+		width: 90%;
+	}
+}
 
 @media only screen and (max-width:768px) {
 	.yourSkills {

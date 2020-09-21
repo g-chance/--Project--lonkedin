@@ -149,12 +149,14 @@ button {
 .regLog {
 	display: grid;
 	justify-items: center;
+	padding: 10px;
 }
 	.regLog .welcome {
 		margin: 100px 0 0 0;
+		text-align: center;
 	}
 	.regLog .blurb {
-		width: 80%;
+		width: 85%;
 		margin: 40px 0 40px 0;
 		font-size: 18px;
 		text-align: center;
@@ -167,6 +169,7 @@ button {
 	.regLog .form {
 		display: grid;
 		justify-items: center;
+		width: 85%;
 	}
 	.regLog .input {
 		width: 370px;
@@ -201,6 +204,7 @@ button {
 }
 .newChar .header {
 	margin: 100px 0 40px 0;
+	text-align: center;
 }
 .newChar .picture {
 	margin: 40px 0 0 0;
@@ -211,6 +215,7 @@ button {
 }
 .newChar #images, .newChar .images {
 	width: 60%;
+	min-width: 275px;
 	margin: 10px 0 40px 0;
 }
 	.newChar #images * {
@@ -222,6 +227,8 @@ button {
 	display: flex;
 	justify-content: center;
 	flex-flow: wrap;
+	/* min-width: 275px;
+	margin: auto; */
 }
 .newChar .randomImage {
 	padding: 2px;
@@ -277,6 +284,11 @@ button {
 
 
 /* MEDIA QUERIES */
+@media only screen and (max-width: 400px) {
+	.regLog .input {
+		width: 100%;
+	}
+}
 
 @media only screen and (max-width: 1200px) {
 	.wrapper, .nav {

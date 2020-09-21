@@ -71,9 +71,14 @@
 				}
 				$("#flex").html(images);
 			});
-
+			$('.lonkImage').click(function () {
+				let picValue = $(this).attr("src");
+				$("#picinput").attr("value", picValue);
+				$("img").css("outline", "none");
+				$(this).css("outline", "3px solid green");
+			})
 			$(document).ajaxComplete(function (e, xhr, settings) {
-				$('img').click(function () {
+				$('.randomImage').click(function () {
 					let picValue = $(this).attr("src");
 					$("#picinput").attr("value", picValue);
 					$("img").css("outline", "none");

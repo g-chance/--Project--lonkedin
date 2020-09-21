@@ -11,6 +11,7 @@
 .row {
 	display: grid;
 	grid-template-columns: min-content auto auto;
+	column-gap: 5px;
 	align-items: center;
 	border: 1px solid black;
 	padding: 10px;
