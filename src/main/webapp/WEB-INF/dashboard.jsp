@@ -205,32 +205,8 @@
 						<c:forEach items="${ skills }" var="us">
 							<div>
 								<c:set var="ct">${ us.count }</c:set>
-								<p>${ us.skill.name } <span ${ us.count> -1 || us.count == null ? "class='green'" :
-										"class='red'" }>${ us.count > -1 || us.count == null ? "+".concat(ct) : ct
-										}</span></p>
-								<p class="skillLevel">
-									<c:if test="${ us.count <= -1000}">
-										Atrocious
-									</c:if>
-									<c:if test="${ us.count <= -20 && us.count > -1000}">
-										Incompetent
-									</c:if>
-									<c:if test="${ us.count < 0 && us.count > -20}">
-										Questionable
-									</c:if>
-									<c:if test="${ us.count >= 0 && us.count < 10}">
-										Novice
-									</c:if>
-									<c:if test="${ us.count >= 10 && us.count < 20}">
-										Intermediate
-									</c:if>
-									<c:if test="${ us.count >= 20 && us.count < 1000}">
-										Advanced
-									</c:if>
-									<c:if test="${ us.count >= 1000}">
-										Master
-									</c:if>
-								</p>
+								<p>${ us.skill.name } <span ${ us.count> -1 || us.count == null ? "class='green'" :"class='red'" }>
+									${ us.count > -1 || us.count == null ? "+".concat(ct) : ct }</span></p>
 								<c:if test="${ user != loggedIn }">
 									<c:choose>
 										<c:when
@@ -257,6 +233,29 @@
 										<c:otherwise>${ null }</c:otherwise>
 									</c:choose>
 								</c:if>
+								<p class="skillLevel">
+									<c:if test="${ us.count <= -1000}">
+										Atrocious
+									</c:if>
+									<c:if test="${ us.count <= -20 && us.count > -1000}">
+										Incompetent
+									</c:if>
+									<c:if test="${ us.count < 0 && us.count > -20}">
+										Questionable
+									</c:if>
+									<c:if test="${ us.count >= 0 && us.count < 10}">
+										Novice
+									</c:if>
+									<c:if test="${ us.count >= 10 && us.count < 20}">
+										Intermediate
+									</c:if>
+									<c:if test="${ us.count >= 20 && us.count < 1000}">
+										Advanced
+									</c:if>
+									<c:if test="${ us.count >= 1000}">
+										Master
+									</c:if>
+								</p>
 							</div>
 						</c:forEach>
 					</div>
