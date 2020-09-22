@@ -288,9 +288,16 @@
 										<div class="postGrid">
 											<img class="postPic" src="${ post.creator.picture }" alt="" />
 											<div>
-												<p class="postName"><a style="text-decoration:none; color:black"
-														href="/dashboard/${ post.creator.id }">${ post.creator.name
-														}</a> (${ post.creator.universe })</p>
+												<div class="postNameGrid">
+													<p class="postName">
+														<a style="text-decoration:none; color:black"
+															href="/dashboard/${ post.creator.id }">${ post.creator.name }</a>
+														(${ post.creator.universe })
+													</p>
+													<c:if test="${ user.id == loggedIn.id or post.creator.id == loggedIn.id or loggedIn.id == superUser.id }">
+														<p><a class="deletePost" href="/post/${post.id}/delete">Delete</a></p>
+													</c:if>
+												</div>
 												<p class="postJob">${ post.creator.job != null ?
 													post.creator.job.title.concat(" -- ").concat(post.creator.game.name)
 													: "Seeking Work" } </p>

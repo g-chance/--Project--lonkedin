@@ -8,6 +8,7 @@ import java.util.Random;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -178,9 +179,11 @@ public class MainController {
 		Long id = (Long) session.getAttribute("user_id");
 		User user = urepo.findById(userId).orElse(null);
 		User loggedIn = urepo.findById(id).orElse(null);
+		User superUser = urepo.findByEmail("butters@lonkedin.in");
 //	Add model attributes
 		model.addAttribute("user", user);
 		model.addAttribute("loggedIn", loggedIn);
+		model.addAttribute("superUser", superUser);
 		model.addAttribute("skills", usrepo.findAllByUser(user));
 		model.addAttribute("lonkpost", urepo.findByEmail("lonk@lonkedin.com").getCreatedPosts().get(0));
 		model.addAttribute("friendRequests", user.getFriendRequests());
@@ -339,7 +342,9 @@ public class MainController {
 			return "redirect:/dashboard/"+id;
 		}
 		User u = urepo.findById((Long)session.getAttribute("user_id")).orElse(null);
-		u.setDescription(user.getDescription());
+//	Sanitize User Description before saving
+		String escapedHtml = StringEscapeUtils.escapeHtml4(user.getDescription());
+		u.setDescription(escapedHtml);
 		urepo.save(u);
 		return "redirect:/dashboard/"+id;
 	}
@@ -382,8 +387,25 @@ public class MainController {
 		}
 		post.setCreator(user);
 		post.setCharacter(otherUser);
+//	Sanitize Post Content before saving
+		String escapedHtml = StringEscapeUtils.escapeHtml4(post.getContent());
+		post.setContent(escapedHtml);
 		prepo.save(post);
 		return "redirect:/dashboard/" + otherUser.getId();
+	}
+	
+	@GetMapping("/post/{post_id}/delete")
+	public String deletePost(Model model, HttpSession session, @PathVariable("post_id") Long pId) {
+		if (session.getAttribute("user_id") == null) {
+			return "redirect:/login";
+		} else if(urepo.findById((Long)session.getAttribute("user_id")).orElse(null).getName() == null) {
+			return "redirect:/newcharacter";
+		}
+//		Long uId = (Long) session.getAttribute("user_id");
+		Post p = prepo.findById(pId).orElse(null);
+		Long uId = p.getCharacter().getId();
+		prepo.delete(p);
+		return "redirect:/dashboard/" + uId;
 	}
 
 //	**************************************************************
@@ -561,11 +583,14 @@ public class MainController {
 		if(result.hasErrors()) {
 			return "skill.jsp";
 		}
+//	Sanitize Skill Name before saving
+		String sanitizedSkillName = StringEscapeUtils.escapeHtml4(skill.getName());
 //	Create Skill if it doesn't exist
-		if(srepo.findByName(skill.getName()) == null) {
+		if(srepo.findByName(sanitizedSkillName) == null) {
+			skill.setName(sanitizedSkillName);
 			srepo.save(skill);
 		}
-		Skill thisSkill = srepo.findByName(skill.getName());
+		Skill thisSkill = srepo.findByName(sanitizedSkillName);
 //	Re-render with error if user already has the skill
 		if(loggedIn.getSkills().contains(thisSkill)) {
 			model.addAttribute("skill", new Skill());
@@ -671,6 +696,11 @@ public class MainController {
 
 		} 
 		User user = urepo.findById((Long) session.getAttribute("user_id")).orElse(null);
+//	Sanitize Game Name and Description before saving
+		String sanitizedGameName = StringEscapeUtils.escapeHtml4(game.getName());
+		String sanitizedGameDesc = StringEscapeUtils.escapeHtml4(game.getDescription());
+		game.setName(sanitizedGameName);
+		game.setDescription(sanitizedGameDesc);
 //	create game
 		grepo.save(game);
 //	create ceo job
@@ -708,7 +738,12 @@ public class MainController {
 		Long userid = (Long) session.getAttribute("user_id");
 		User u = urepo.findById(userid).orElse(null);
 		Game g = grepo.findById(u.getGame().getId()).orElse(null);
-		Job j = jrepo.save(job);
+//	Sanitize Job Title and Description before saving
+		String sanitizedJobTitle = StringEscapeUtils.escapeHtml4(job.getTitle());
+		String sanitizedJobDesc = StringEscapeUtils.escapeHtml4(job.getDescription());
+		job.setTitle(sanitizedJobTitle);
+		job.setDescription(sanitizedJobDesc);
+		Job j = jrepo.save(job); 
 		j.setGame(g);
 		jrepo.save(j);
 		return "redirect:/jobs";
@@ -834,7 +869,11 @@ public class MainController {
 	}
 		
 	@GetMapping("/registration")
-	public String registerUser(Model model) {
+	public String registerUser(Model model, HttpSession session) {
+		if(session.getAttribute("user_id") != null) {
+			Long id = (Long) session.getAttribute("user_id");
+			return "redirect:/dashboard/" + id;
+		}
 		model.addAttribute("user", new User());
 		return "register.jsp";
 	}
@@ -966,7 +1005,11 @@ public class MainController {
 	}
 
 	@GetMapping("/login")
-	public String login() {
+	public String login(HttpSession session) {
+		if(session.getAttribute("user_id") != null) {
+			Long id = (Long) session.getAttribute("user_id");
+			return "redirect:/dashboard/" + id;
+		}
 		return "login.jsp";
 	}
 
