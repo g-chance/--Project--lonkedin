@@ -19,8 +19,7 @@ A LinkedIn lookalike with a theme based on a gaming meme. Create a profile, make
 <strong>What I Learned:</strong></br>
 -A small group of my classmates were interested in contributing to my project, and I had an opportunity to teach them to use git and GitHub. This allowed me to learn how to better utilize this powerful tool for version control, and gain experience collaborating with a team.</br>
 -Expanded my knowledge of CSS and CSS Grid through using a mobile-first design philosophy.</br>
--Gained a fundemental understanding of the Java programming language. As the other two languages I had learned were JavaScript and Python, 
-learning a strongly typed language also helped strengthen my understanding of the fundamentals shared between all languages.</br>
+-Gained a fundemental understanding of the Java programming language. In addition, learning learning a compiled/strongly typed language also helped strengthen my understanding of the fundamentals and differences between all languages, especially Python and JavaScript, which I had previously learned.</br>
 
 <strong>Demo:</strong></br>
 -Coming soon! For now, please feel free to create an account and explore the site! The site's FAQ aims to give you an idea of all how to use the site.</br>
