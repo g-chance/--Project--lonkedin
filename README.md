@@ -3,7 +3,7 @@ Public URL: http://lonkedin.in</br>
 
 <strong>About:</strong></br>
 LonkedIn is a LinkedIn lookalike with a theme based on a gaming meme. Create a profile, make some connections, and look for a job as a good guy or a bad guy in your favorite video game.</br>
-
+<hr>
 <strong>Technologies Used:</strong>
 <ul>
   <li> Languages: Java, HTML / JSX, CSS
