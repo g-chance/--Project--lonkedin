@@ -5,7 +5,9 @@ Public URL: http://lonkedin.in</br>
 A LinkedIn lookalike with a theme based on a gaming meme. Create a profile, make some connections, and look for a job as a good guy or a bad guy in your favorite video game.</br>
 
 <strong>Technologies Used:</strong></br>
--Languages: Java, HTML / JSX, CSS</br>
+<ul>
+  <li> Languages: Java, HTML / JSX, CSS</br>
+ </ul>
 -Frameworks: Spring MVC</br>
 -Database: MySQL</br>
 -Server: Amazon EC2, Apache 2</br>
