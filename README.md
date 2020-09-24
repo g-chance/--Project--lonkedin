@@ -6,11 +6,11 @@ A LinkedIn lookalike with a theme based on a gaming meme. Create a profile, make
 
 <strong>Technologies Used:</strong></br>
 <ul>
-  <li> Languages: Java, HTML / JSX, CSS</br>
+  <li> Languages: Java, HTML / JSX, CSS
+  <li> Frameworks: Spring MVC
+  <li> Database: MySQL
+  <li> Server: Amazon EC2, Apache 2
  </ul>
--Frameworks: Spring MVC</br>
--Database: MySQL</br>
--Server: Amazon EC2, Apache 2</br>
 
 <strong>Process:</strong></br>
 -Beginning with the back-end, used MySQL Workbench to create an Entity Relationship Diagram.</br>
