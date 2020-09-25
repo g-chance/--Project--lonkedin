@@ -6,7 +6,7 @@ LonkedIn is a LinkedIn lookalike with a theme based on a gaming meme. Create a p
 <hr>
 <strong>Technologies Used:</strong></br>
 <ul>
-  <li> Languages: Java, HTML / JSX, CSS
+  <li> Languages: Java, HTML / JSTL, CSS
   <li> Frameworks: Spring MVC
   <li> Database: MySQL
   <li> Server: Amazon EC2, Apache 2
