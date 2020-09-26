@@ -118,7 +118,6 @@
 					<p><span class="bold">A:</span> To become the CEO of a game, can either apply for an open CEO
 						position, or create a new game automatically becoming the CEO.
 						Once you become the CEO, you can create new jobs for others to apply for.
-						Only CEOs have the ability to create new jobs for a given game.
 					</p>
 				</div>
 				<div class="QA">
@@ -134,10 +133,9 @@
 				</div>
 				<div class="QA">
 					<p><span class="bold">Q:</span> How do I create a new job?</p>
-					<p><span class="bold">A:</span> Only CEOs can create new jobs for others to apply for. You can
-						become a CEO by either applying for an open CEO
-						position, or creating a new game. Once you create a new game, you will automatically become the
-						CEO.
+					<p><span class="bold">A:</span> Once you land a position at a Game, you can create new jobs for 
+						others to apply for. You can land a job by either applying for an open position, or creating a
+						new game. Once you create a new game, you will automatically become the CEO.
 					</p>
 				</div>
 				<div class="QA">
