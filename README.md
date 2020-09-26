@@ -32,4 +32,4 @@ LonkedIn is a LinkedIn lookalike with a theme based on a gaming meme. Create a p
 <strong>Demo:</strong></br>
 -Coming soon! For now, please feel free to create an account and explore the site! The site's FAQ aims to give you an idea of all how to use the site.</br>
 
-<img src="https://photos.app.goo.gl/bQwgzXZuKwFj6Uf46" />
+<img src="https://imgur.com/nuFE8gH" />
