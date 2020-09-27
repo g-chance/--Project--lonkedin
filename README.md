@@ -3,14 +3,16 @@ Public URL: http://lonkedin.in</br>
 
 <strong>About:</strong></br>
 LonkedIn is a LinkedIn lookalike with a theme based on a gaming meme. Create a profile, make some connections, and look for a job as a good guy or a bad guy in your favorite video game.</br>
+
 <hr>
+
 <strong>Technologies Used:</strong></br>
 <ul>
   <li> Languages: Java, HTML / JSTL, CSS
   <li> Frameworks: Spring MVC
   <li> Database: MySQL
   <li> Server: Amazon EC2, Apache 2
- </ul>
+ </ul></br>
 
 <strong>Process:</strong></br>
 <ul>
@@ -20,16 +22,31 @@ LonkedIn is a LinkedIn lookalike with a theme based on a gaming meme. Create a p
   <li> Implemented Main Controller logic and setup routes to serve dynamic content to the front-end.</br>
   <li> Created dynamic front-end templates using JSP.</br>
   <li> Implemented styling with CSS, using Grid and media queries to make the website adapt to all screen sizes.</br>
-</ul>
+</ul></br>
 
 <strong>What I Learned:</strong></br>
 <ul>
   <li> A small group of my classmates were interested in contributing to my project, and I had an opportunity to teach them to use git and GitHub. This allowed me to learn how to better utilize this powerful tool for version control, and gain experience collaborating with a team.</br>
   <li> Expanded my knowledge of CSS and CSS Grid through using a mobile-first design philosophy.</br>
   <li> Gained a fundemental understanding of the Java programming language. In addition, learning learning a compiled/strongly typed language also helped strengthen my understanding of the fundamentals and differences between all languages, especially Python and JavaScript, which I had previously learned.</br>
-</ul>
+</ul></br>
 
 <strong>Demo:</strong></br>
--Coming soon! For now, please feel free to create an account and explore the site! The site's FAQ aims to give you an idea of all how to use the site.</br>
 
-![Imgur](https://imgur.com/nuFE8gH.gif)
+<ul>
+  <li>See below for some short videos which demo the site, but don't let that stop you from creating an account and exploring the site on your own! You can learn     about all of the things you can do in the FAQ after you lonkin.
+</ul>
+
+<hr>
+
+<strong>Create an account!</strong></br></br>
+![Create an account](https://github.com/g-chance/--Project--lonkedin/blob/master/demo_register.gif)</br></br>
+
+<strong>Create a game, or apply for a job. Then attack your enemies! (If you have any)</strong></br></br>
+![A](https://github.com/g-chance/--Project--lonkedin/blob/master/demo_job.gif)</br></br>
+
+<strong>Add some skills, then share them with your friends!</br></br>
+![B](https://github.com/g-chance/--Project--lonkedin/blob/master/demo_skill.gif)</strong></br></br>
+
+<strong>Search for connections, checkout Game pages for Game information and available jobs!</strong></br></br>
+![C](https://github.com/g-chance/--Project--lonkedin/blob/master/demo_friend.gif)
