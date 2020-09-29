@@ -2,7 +2,7 @@
 Public URL: http://lonkedin.in</br>
 
 <strong>About:</strong></br>
-LonkedIn is a LinkedIn lookalike with a theme based on a gaming meme. Create a profile, make some connections, and look for a job as a good guy or a bad guy in your favorite video game.</br>
+LonkedIn is a LinkedIn inspired social platform with a theme based on a gaming meme. Characters can search for jobs as a good guy or a bad guy in their favorite video game.</br>
 
 <hr>
 
@@ -16,12 +16,12 @@ LonkedIn is a LinkedIn lookalike with a theme based on a gaming meme. Create a p
 
 <strong>Process:</strong></br>
 <ul>
-  <li> Beginning with the back-end, used MySQL Workbench to create an Entity Relationship Diagram.</br>
+  <li> Began with planning and prototyping the website design and functionality, including creation of an Entity Relationship Diagram using MySQL Workbench</br>
   <li> Using Spring MVC's Object Relational Mapper, built the schema based on my ERD.</br>
-  <li> Created Repositories and Services to handle CRUD operations requested by the front-end.</br>
+  <li> Created Repositories and Services to handle CRUD operations to handle data requested by the front-end.</br>
   <li> Implemented Main Controller logic and setup routes to serve dynamic content to the front-end.</br>
   <li> Created dynamic front-end templates using JSP.</br>
-  <li> Implemented styling with CSS, using Grid and media queries to make the website adapt to all screen sizes.</br>
+  <li> Implemented styling with CSS, using Grid and media queries to make the website responsive to all screen sizes.</br>
 </ul></br>
 
 <strong>What I Learned:</strong></br>
