@@ -11,6 +11,7 @@ LonkedIn is a LinkedIn inspired social platform with a theme based on a gaming m
   <li> Languages: Java, HTML / JSTL, CSS
   <li> Frameworks: Spring MVC
   <li> Database: MySQL
+  <li> Third party APIs: https://api-docs.igdb.com/#about
   <li> Server: Amazon EC2, Apache 2
  </ul></br>
 
