@@ -148,7 +148,7 @@
 							</p>
 							<form:form class="form formDesc" action="/adddescription/${ user.id }" method="post"
 								modelAttribute="user">
-								<form:textarea class="content" path="description" placeholder="Show yourself off!" />
+								<form:textarea class="content" path="description" placeholder="Show yourself off! (please note: your description will be truncated after 255 characters)" />
 								<input class="submit subDesc" type="submit" value="Update" />
 							</form:form>
 						</c:if>

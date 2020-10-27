@@ -168,7 +168,7 @@ public class MainController {
 		}
 //	Get errors from post routes for posts and description if present
 		if(session.getAttribute("postError") != null) {
-			model.addAttribute("postError", "Post must include content");
+			model.addAttribute("postError", "Post must include content and cannot exceed 255 characters");
 			session.removeAttribute("postError");
 		}
 		if(session.getAttribute("editDesc") != null) {

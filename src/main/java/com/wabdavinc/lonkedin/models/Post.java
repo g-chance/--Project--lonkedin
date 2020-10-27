@@ -23,7 +23,7 @@ public class Post {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Size(min = 1, message = "Post must include content")
+	@Size(min = 1, max = 255, message = "Post must include content and cannot exceed 255 characters")
 	private String content;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

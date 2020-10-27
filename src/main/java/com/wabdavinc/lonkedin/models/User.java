@@ -32,12 +32,13 @@ public class User {
 	private Long id;
 	@Email(message = "Invalid Email")
 	private String email;
-	@Size(min = 1, message = "Character Name must be at least 3 characters")
+	@Size(min = 3, max = 30, message = "Character Name must be between 3 and 30 characters")
 	private String name;
-	@Size(min = 5, message = "Universe must be at least 5 characters")
+	@Size(min = 5, max = 30, message = "Universe must be between 5 and 30 characters")
 	private String universe;
 	@Size(min = 1, message = "Choose a profile image")
 	private String picture;
+	@Size(max = 255, message = "Description cannot be more than 255 characters")
 	private String description;
 	@Size(min = 8, message = "Password must be at least 8 characters")
 	private String password;
