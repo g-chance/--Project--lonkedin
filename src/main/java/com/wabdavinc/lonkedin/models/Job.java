@@ -27,9 +27,9 @@ public class Job {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Size(min = 3, message = "Title must be at least 3 characters")
+	@Size(min = 3, max = 20, message = "Title must be between 3 and 20 characters")
 	private String title;
-	@Size(min = 10, message = "Description must be at least 10 characters")
+	@Size(min = 10, max = 200, message = "Description must be between 10 and 200 characters")
 	private String description;
 	@NotNull(message = "Select a Morality")
 	private Boolean morality;

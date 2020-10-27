@@ -77,7 +77,12 @@
 			<p class="back"><a href="/jobs">All Jobs</a></p>
 			<div class="gameHeader">
 				<h1>${ game.name }</h1>
-				<p>CEO: ${ceo !=null ? ceo.name : " Position Available!"}</p>
+				<c:if test="${ceo.name != null}">
+					<p>CEO: ${ceo.name} (${ceo.universe})</p>
+				</c:if>
+				<c:if test="${ceo.name == null}">
+					<p>CEO: Position Available!</p>
+				</c:if>
 			</div>
 
 			<div class="aboutGame">

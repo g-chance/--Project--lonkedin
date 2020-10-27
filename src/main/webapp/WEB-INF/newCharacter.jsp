@@ -32,9 +32,11 @@
 
 	// API calls
 		const proxyurl = "https://cors-anywhere.herokuapp.com/";
-		const url = "https://api-v3.igdb.com/characters";
+		/* const url = "https://api-v3.igdb.com/characters"; */
+		const url = "https://api.igdb.com/v4/characters"
 		console.log(proxyurl + url)
-		const url2 = "https://api-v3.igdb.com/character_mug_shots";
+		/* const url2 = "https://api-v3.igdb.com/character_mug_shots"; */
+		const url2 = "https://api.igdb.com/v4character_mug_shots";
 		console.log(proxyurl + url2)
 
 		$(document).ready(function () {
