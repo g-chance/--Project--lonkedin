@@ -50,7 +50,7 @@ LonkedIn is a LinkedIn inspired social platform with a theme based on a gaming m
 ![B](https://github.com/g-chance/--Project--lonkedin/blob/master/demo_skill.gif)</strong></br></br>
 
 <strong>Search for connections, checkout Game pages for Game information and available jobs!</strong></br></br>
-![C](https://github.com/g-chance/--Project--lonkedin/blob/master/demo_friend.gif)
+![C](https://github.com/g-chance/--Project--lonkedin/blob/master/demo_friend.gif)</br></br>
 
 <strong>Site is fully responsive</strong></br></br>
 ![D](https://github.com/g-chance/--Project--lonkedin/blob/master/demo_responsive.gif)
