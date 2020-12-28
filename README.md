@@ -1,5 +1,4 @@
 # LonkedIn
-Public URL: http://lonkedin.in</br>
 
 <strong>About:</strong></br>
 LonkedIn is a LinkedIn inspired social platform with a theme based on a gaming meme. Characters can search for jobs as a good guy or a bad guy in their favorite video game.</br>
@@ -35,7 +34,7 @@ LonkedIn is a LinkedIn inspired social platform with a theme based on a gaming m
 <strong>Demo:</strong></br>
 
 <ul>
-  <li>See below for some short videos which demo the site, but don't let that stop you from creating an account and exploring the site on your own! You can learn     about all of the things you can do in the FAQ after you lonkin.
+  <li>See below for some short videos which demo the site!
 </ul>
 
 <hr>
